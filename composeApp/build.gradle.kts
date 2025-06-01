@@ -33,7 +33,16 @@ kotlin {
         androidMain.dependencies {
             implementation(compose.preview)
             implementation(libs.androidx.activity.compose)
+
+            implementation("io.ktor:ktor-client-android:3.1.3")
         }
+
+        appleMain {
+            dependencies {
+                implementation("io.ktor:ktor-client-darwin:3.1.3")
+            }
+        }
+
         commonMain.dependencies {
             implementation(compose.runtime)
             implementation(compose.foundation)
@@ -43,7 +52,11 @@ kotlin {
             implementation(compose.components.uiToolingPreview)
             implementation(libs.androidx.lifecycle.viewmodel)
             implementation(libs.androidx.lifecycle.runtimeCompose)
+
+            implementation("io.coil-kt.coil3:coil-compose:3.2.0")
+            implementation("io.coil-kt.coil3:coil-network-ktor3:3.2.0")
         }
+
         commonTest.dependencies {
             implementation(libs.kotlin.test)
         }

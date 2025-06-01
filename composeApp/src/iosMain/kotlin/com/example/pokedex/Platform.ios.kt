@@ -7,3 +7,5 @@ class IOSPlatform: Platform {
 }
 
 actual fun getPlatform(): Platform = IOSPlatform()
+
+actual fun formatId(id: Int) = "#${id.toString().padStart(3, '0')}"
