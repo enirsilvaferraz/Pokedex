@@ -25,6 +25,8 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -42,9 +44,13 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 import pokedex.composeapp.generated.resources.Res
 import pokedex.composeapp.generated.resources.pokeball
 
+// You'll need to provide the ViewModel instance.
+// This is a placeholder, in a real app you'd use a ViewModel provider (e.g., Hilt, Koin, or manual)
+val pokemonViewModel = PokemonViewModel()
+
 @Composable
-@Preview
 fun App() {
+    val pokemonList by pokemonViewModel.pokemonList.collectAsState()
 
     MaterialTheme(
         colorScheme = MaterialTheme.colorScheme.copy(
@@ -52,11 +58,10 @@ fun App() {
             surface = Color.White
         )
     ) {
-
         AppScaffold(title = "Kanto") {
             CollectionScreen(
                 modifier = it,
-                list = getList(),
+                list = pokemonList,
                 onItem = {
                     ItemList(model = it) {
                         // navigate to pokemon
@@ -73,7 +78,6 @@ fun AppScaffold(
     title: String,
     content: @Composable (Modifier) -> Unit
 ) {
-
     Scaffold(
         topBar = {
             TopAppBar(
@@ -87,35 +91,31 @@ fun AppScaffold(
             )
         }
     ) { innerPadding ->
-
         val modifier = Modifier.padding(
             top = innerPadding.calculateTopPadding(),
             start = innerPadding.calculateStartPadding(LocalLayoutDirection.current),
             end = innerPadding.calculateEndPadding(LocalLayoutDirection.current),
         )
-
         content(modifier)
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CollectionScreen(
     modifier: Modifier,
     list: List<PokemonVO>,
     onItem: @Composable (PokemonVO) -> Unit
 ) {
-
     LazyColumn(
         modifier = modifier,
         contentPadding = PaddingValues(24.dp)
     ) {
-
         items(list) {
             onItem(it)
         }
     }
 }
+
 
 data class PokemonVO(
     val color: Color = Color.LightGray,
@@ -132,29 +132,23 @@ private fun ItemList(
     model: PokemonVO,
     onClick: (PokemonVO) -> Unit
 ) {
-
     Card(
         modifier = Modifier.padding(vertical = 4.dp),
         colors = CardDefaults.cardColors(containerColor = model.color.copy(alpha = 0.3f))
     ) {
-
         Row(
             modifier = Modifier.fillMaxSize().clickable { onClick(model) }
         ) {
-
             Column(
                 modifier = Modifier.padding(16.dp).weight(1f),
                 verticalArrangement = Arrangement.Center
             ) {
-
                 Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                     Text(model.formatedId(), fontWeight = FontWeight.Bold)
                     Text(model.name)
                 }
-
                 TypeTags(model.types)
             }
-
             Image(model.url, model.name)
         }
     }
@@ -162,7 +156,6 @@ private fun ItemList(
 
 @Composable
 private fun Image(url: String, contentDescription: String) {
-
     AsyncImage(
         model = ImageRequest.Builder(LocalPlatformContext.current).data(url).crossfade(true).build(),
         contentDescription = contentDescription,
@@ -179,14 +172,11 @@ private fun Image(url: String, contentDescription: String) {
 
 @Composable
 private fun TypeTags(types: List<String>) {
-
     LazyRow(
         modifier = Modifier.padding(top = 12.dp),
         horizontalArrangement = Arrangement.spacedBy(8.dp)
     ) {
-
         items(types) { type ->
-
             Box(
                 modifier = Modifier.clip(RoundedCornerShape(6.dp)).background(Color.Gray.copy(alpha = 0.2f)),
                 contentAlignment = Alignment.Center
@@ -201,26 +191,41 @@ private fun TypeTags(types: List<String>) {
     }
 }
 
+@Composable
+@Preview
+fun AppPreview() {
+    MaterialTheme(
+        colorScheme = MaterialTheme.colorScheme.copy(
+            background = Color.White,
+            surface = Color.White
+        )
+    ) {
+        AppScaffold(title = "Kanto") {
+            CollectionScreen(
+                modifier = it,
+                list = previewGetList(), // Use a dedicated preview list
+                onItem = {
+                    ItemList(model = it) {
+                        // navigate to pokemon
+                    }
+                }
+            )
+        }
+    }
+}
 
-private fun getList(): ArrayList<PokemonVO> = arrayListOf<PokemonVO>().apply {
-    repeat(151) {
+
+// Keep this for the @Preview or provide a mock ViewModel
+private fun previewGetList(): ArrayList<PokemonVO> = arrayListOf<PokemonVO>().apply {
+    repeat(10) { // Reduced for preview
         add(
             PokemonVO(
                 color = listOf(
-                    Color.Green,
-                    Color.Green,
-                    Color.Green,
-                    Color.Red,
-                    Color.Red,
-                    Color.Red,
-                    Color.Blue,
-                    Color.Blue,
-                    Color.Blue,
-                    Color.Green
-                ).getOrNull(it) ?: Color.LightGray,
+                    Color.Green, Color.Red, Color.Blue
+                ).random(),
                 id = it + 1,
-                name = "Bastoise",
-                types = listOf("Type 1", "Type 2")
+                name = "SampleMon",
+                types = listOf("Type A", "Type B")
             )
         )
     }
