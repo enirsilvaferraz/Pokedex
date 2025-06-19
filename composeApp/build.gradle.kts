@@ -6,6 +6,7 @@ plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
+//    alias(libs.plugins.ksp)
 }
 
 kotlin {
@@ -56,6 +57,12 @@ kotlin {
             implementation("io.coil-kt.coil3:coil-network-ktor3:3.2.0")
 
             implementation("org.jetbrains.compose.material:material-icons-core:1.7.3")
+
+            implementation(project.dependencies.platform(libs.koin.bom))
+            implementation(libs.koin.core)
+            implementation(libs.koin.compose)
+            implementation(libs.koin.compose.viewmodel)
+            implementation(libs.koin.compose.viewmodel.navigation)
         }
 
         commonTest.dependencies {

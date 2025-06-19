@@ -33,27 +33,31 @@ import coil3.request.ImageRequest
 import coil3.request.crossfade
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
+import org.koin.compose.koinInject
+import org.koin.compose.viewmodel.koinViewModel
 import pokedex.composeapp.generated.resources.Res
 import pokedex.composeapp.generated.resources.pokeball
 
 @Composable
 internal fun PokedexRoute(
-    pokemonViewModel: PokemonViewModel = PokemonViewModel()
+    pokemonViewModel: PokemonViewModel = koinViewModel(),
+    onClick: (PokemonVO) -> Unit
 ) {
     val pokemonList by pokemonViewModel.pokemonList.collectAsState()
-    PokedexScreen(pokemonList)
+    PokedexScreen(pokemonList, onClick)
 }
 
 @Composable
-private fun PokedexScreen(pokemonList: List<PokemonVO>) {
+private fun PokedexScreen(
+    pokemonList: List<PokemonVO>,
+    onClick: (PokemonVO) -> Unit
+) {
     AppScaffold(title = "Kanto") {
         CollectionScreen(
             modifier = it,
             list = pokemonList,
             onItem = {
-                ItemList(model = it) {
-                    // navigate to pokemon
-                }
+                ItemList(model = it, onClick = onClick)
             }
         )
     }
@@ -126,7 +130,7 @@ private fun TypeTags(types: List<String>) {
 @Composable
 @Preview
 private fun PokedexScreenPreview() {
-    PokedexScreen(previewGetList())
+    PokedexScreen(previewGetList(), {})
 }
 
 
