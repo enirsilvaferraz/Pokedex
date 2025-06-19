@@ -6,6 +6,7 @@ plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
+    alias(libs.plugins.kotlin.serialization)
 //    alias(libs.plugins.ksp)
 }
 
@@ -63,6 +64,10 @@ kotlin {
             implementation(libs.koin.compose)
             implementation(libs.koin.compose.viewmodel)
             implementation(libs.koin.compose.viewmodel.navigation)
+
+            implementation("org.jetbrains.androidx.navigation:navigation-compose:2.9.0-beta03")
+
+            implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.8.1")
         }
 
         commonTest.dependencies {

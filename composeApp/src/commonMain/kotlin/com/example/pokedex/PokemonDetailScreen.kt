@@ -79,7 +79,7 @@ private object PokemonDetailDimens {
 @Composable
 internal fun PokemonDetailRoute(pokemonId: Int /* or pass full VO if fetched earlier */) {
     // In a real app, you would fetch PokemonDetailVo using pokemonId via a ViewModel
-    val samplePokemon: PokemonDetailVo = createSamplePokemonDetailVo() // Replace with actual data fetching
+    val samplePokemon: PokemonDetailVo = createSamplePokemonDetailVo().copy(id = pokemonId) // Replace with actual data fetching
     var isFavoriteState: Boolean by remember { mutableStateOf(samplePokemon.isFavorite) }
 
     PokemonDetailScreen(
