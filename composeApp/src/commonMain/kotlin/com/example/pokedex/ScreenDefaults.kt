@@ -64,7 +64,7 @@ internal fun CollectionScreen(
         modifier = modifier,
         contentPadding = PaddingValues(24.dp)
     ) {
-        items(list) {
+        items(items = list, key = { it.id }) {
             onItem(it)
         }
     }

@@ -4,6 +4,7 @@ import com.example.pokedex.list.PokedexRepository
 import com.example.pokedex.list.PokedexRepositoryImpl
 import com.example.pokedex.list.PokedexViewModel
 import com.example.pokedex.network.PokedexDataSourceApi
+import com.example.pokedex.network.PokemonDataSourceApi
 import com.example.pokedex.network.PokemonSpeciesDataSourceApi
 import com.example.pokedex.network.configurations.ClientConfig
 import com.example.pokedex.network.configurations.KtorClientConfig
@@ -19,6 +20,7 @@ internal object AppDI {
         viewModelOf(::PokedexViewModel)
         singleOf(::PokedexDataSourceApi)
         singleOf(::PokemonSpeciesDataSourceApi)
+        singleOf(::PokemonDataSourceApi)
         singleOf(::KtorClientConfig) bind ClientConfig::class
         singleOf(::PokedexRepositoryImpl) bind PokedexRepository::class
     }

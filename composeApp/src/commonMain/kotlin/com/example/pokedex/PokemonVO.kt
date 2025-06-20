@@ -1,7 +1,9 @@
 package com.example.pokedex
 
+import androidx.compose.runtime.Stable
 import androidx.compose.ui.graphics.Color
 
+@Stable
 data class PokemonVO(
     val id: Int,
     val color: Color = Color.Companion.LightGray,
