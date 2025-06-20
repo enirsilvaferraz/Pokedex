@@ -2,46 +2,36 @@ package com.example.pokedex.list
 
 import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.pokedex.PokemonVO
+import com.example.pokedex.entity.Pokedex
+import com.example.pokedex.network.PokedexDataSource
+import com.example.pokedex.network.PokedexDataSourceApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.launch
 
 internal class PokedexViewModel(
-    private val useCase: GetPokedexUseCase
+    private val useCase: PokedexDataSourceApi
 ) : ViewModel() {
 
     private val _pokemonList = MutableStateFlow<List<PokemonVO>>(emptyList())
     val pokemonList: StateFlow<List<PokemonVO>> = _pokemonList
 
     init {
-        _pokemonList.value = getPokemonList()
+        viewModelScope.launch {
+            _pokemonList.value = useCase.getAll().toVO()
+        }
     }
 
-    private fun getPokemonList(): List<PokemonVO> {
-        return arrayListOf<PokemonVO>().apply {
-            repeat(151) {
-                add(
-                    PokemonVO(
-                        color = listOf(
-                            Color.Companion.Green,
-                            Color.Companion.Green,
-                            Color.Companion.Green,
-                            Color.Companion.Red,
-                            Color.Companion.Red,
-                            Color.Companion.Red,
-                            Color.Companion.Blue,
-                            Color.Companion.Blue,
-                            Color.Companion.Blue,
-                            Color.Companion.Green
-                        ).getOrNull(it) ?: Color.Companion.LightGray,
-                        id = it + 1,
-                        name = "Blastoise",
-                        types = listOf("Type 1", "Type 2")
-                    )
-                )
-            }
-        }
+    private fun Pokedex.toVO() : List<PokemonVO> {
+        return pokemonEntries.map { entry -> PokemonVO(
+            id = entry.entryNumber.toInt(),
+            color = Color.Red,
+            name = entry.pokemonSpecies.name,
+            types = listOf()
+        ) }
     }
 }
 
