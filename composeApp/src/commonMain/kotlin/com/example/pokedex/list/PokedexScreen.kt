@@ -69,13 +69,13 @@ private fun PokedexScreen(
 
 @Composable
 private fun ItemList(
-    modifier: Modifier= Modifier,
+    modifier: Modifier = Modifier,
     model: PokemonVO,
     onClick: (PokemonVO) -> Unit
 ) {
     Card(
         modifier = modifier.padding(vertical = 4.dp),
-        colors = CardDefaults.cardColors(containerColor = model.color.copy(alpha = 0.3f))
+        colors = CardDefaults.cardColors(containerColor = model.color().copy(alpha = 0.3f))
     ) {
         Row(
             modifier = Modifier.fillMaxSize().clickable { onClick(model) }
@@ -143,16 +143,16 @@ private fun PokedexScreenPreview(
 private class PokedexScreenPreviewProvider : PreviewParameterProvider<List<PokemonVO>> {
     override val values = sequenceOf(
         listOf(
-            PokemonVO(id = 1, name = "Bulbasaur", types = listOf("Grass", "Poison"), color = Color(0xFF78C850)),
-            PokemonVO(id = 2, name = "Ivysaur", types = listOf("Grass", "Poison"), color = Color(0xFF78C850)),
-            PokemonVO(id = 3, name = "Venusaur", types = listOf("Grass", "Poison"), color = Color(0xFF78C850)),
-            PokemonVO(id = 4, name = "Charmander", types = listOf("Fire"), color = Color(0xFFF08030)),
-            PokemonVO(id = 5, name = "Charmeleon", types = listOf("Fire"), color = Color(0xFFF08030)),
-            PokemonVO(id = 6, name = "Charizard", types = listOf("Fire", "Flying"), color = Color(0xFFF08030)),
-            PokemonVO(id = 7, name = "Squirtle", types = listOf("Water"), color = Color(0xFF6890F0)),
-            PokemonVO(id = 8, name = "Wartortle", types = listOf("Water"), color = Color(0xFF6890F0)),
-            PokemonVO(id = 9, name = "Blastoise", types = listOf("Water"), color = Color(0xFF6890F0)),
-            PokemonVO(id = 10, name = "Caterpie", types = listOf("Bug"), color = Color(0xFFA8B820))
+            PokemonVO(id = 1, name = "Bulbasaur", types = listOf("Grass", "Poison"), url = ""),
+            PokemonVO(id = 2, name = "Ivysaur", types = listOf("Grass", "Poison"), url = ""),
+            PokemonVO(id = 3, name = "Venusaur", types = listOf("Grass", "Poison"), url = ""),
+            PokemonVO(id = 4, name = "Charmander", types = listOf("Fire"), url = ""),
+            PokemonVO(id = 5, name = "Charmeleon", types = listOf("Fire"), url = ""),
+            PokemonVO(id = 6, name = "Charizard", types = listOf("Fire", "Flying"), url = ""),
+            PokemonVO(id = 7, name = "Squirtle", types = listOf("Water"), url = ""),
+            PokemonVO(id = 8, name = "Wartortle", types = listOf("Water"), url = ""),
+            PokemonVO(id = 9, name = "Blastoise", types = listOf("Water"), url = ""),
+            PokemonVO(id = 10, name = "Caterpie", types = listOf("Bug"), url = "")
         )
     )
 }

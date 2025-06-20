@@ -14,7 +14,7 @@ data class Sprites(
     @SerialName("back_shiny_female")
     val backShinyFemale: String?,
     @SerialName("front_default")
-    val frontDefault: String?,
+    val frontDefault: String,
     @SerialName("front_female")
     val frontFemale: String?,
     @SerialName("front_shiny")

@@ -25,9 +25,9 @@ internal class PokedexRepositoryImpl(
             emit(
                 PokemonVO(
                     id = pokemon.id,
-                    color = pokemon.types.first().type.name.orEmpty().getColorForType(),
                     name = pokemon.name.capitalize(Locale.Companion.current),
-                    types = pokemon.types.map { it.type.name.orEmpty() }
+                    types = pokemon.types.map { it.type.name.orEmpty() },
+                    url = pokemon.sprites.frontDefault
                 )
             )
         }

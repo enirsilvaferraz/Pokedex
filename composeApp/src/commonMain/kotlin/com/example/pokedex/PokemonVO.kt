@@ -2,18 +2,16 @@ package com.example.pokedex
 
 import androidx.compose.runtime.Stable
 import androidx.compose.ui.graphics.Color
+import com.example.pokedex.ui.theme.getColorForType
 
 @Stable
 data class PokemonVO(
     val id: Int,
-    val color: Color = Color.Companion.LightGray,
     val name: String,
-    val types: List<String> = emptyList(),
-    val url: String = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/$id.png",
+    val types: List<String>,
+    val url: String// = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/$id.png",
 ) {
     fun formatedId() = formatId(id)
 
-    companion object {
-        fun Empty() = PokemonVO(id = 0, name = "")
-    }
+    fun color() = types.first().getColorForType()
 }
