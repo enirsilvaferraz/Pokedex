@@ -10,7 +10,7 @@ class PokedexDataSourceApi(
     private val config: ClientConfig
 ) : PokedexDataSource {
 
-    override suspend fun getAll(): Pokedex = config.client.get {
+    override suspend fun get(): Pokedex = config.client.get {
         url("pokedex/2")
     }.body<Pokedex>()
 }

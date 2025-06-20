@@ -4,5 +4,6 @@ import com.example.pokedex.entity.Pokedex
 
 interface PokedexDataSource {
 
-    suspend fun getAll(): Pokedex
+    suspend fun get(): Pokedex
 }
+

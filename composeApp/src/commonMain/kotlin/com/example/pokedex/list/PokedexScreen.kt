@@ -13,6 +13,11 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -20,6 +25,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil3.compose.AsyncImage
 import coil3.compose.LocalPlatformContext
 import coil3.request.ImageRequest
@@ -27,6 +33,7 @@ import coil3.request.crossfade
 import com.example.pokedex.AppScaffold
 import com.example.pokedex.CollectionScreen
 import com.example.pokedex.PokemonVO
+import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.jetbrains.compose.ui.tooling.preview.PreviewParameter
@@ -34,6 +41,7 @@ import org.jetbrains.compose.ui.tooling.preview.PreviewParameterProvider
 import org.koin.compose.viewmodel.koinViewModel
 import pokedex.composeapp.generated.resources.Res
 import pokedex.composeapp.generated.resources.pokeball
+import kotlin.collections.mutableListOf
 
 @Composable
 internal fun PokedexRoute(
@@ -41,6 +49,21 @@ internal fun PokedexRoute(
     onClick: (PokemonVO) -> Unit
 ) {
     val pokemonList by vm.pokemonList.collectAsState()
+//    val pokemonList = remember {  vm.pkm }
+//    val list by pokemonList.collectAsStateWithLifecycle(emptyList())
+
+//    val pokemonList: SnapshotStateList<PokemonVO> = remember {
+//        mutableStateListOf<PokemonVO>()
+//    }
+//
+//    val scope = rememberCoroutineScope()
+//   scope.launch {
+//       vm.pkm.collect {
+//           pokemonList.add(it)
+//       }
+//   }
+
+
     PokedexScreen(pokemonList, onClick)
 }
 
