@@ -1,15 +1,8 @@
-package com.example.pokedex
+package com.example.pokedex.list
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -31,19 +24,23 @@ import coil3.compose.AsyncImage
 import coil3.compose.LocalPlatformContext
 import coil3.request.ImageRequest
 import coil3.request.crossfade
+import com.example.pokedex.AppScaffold
+import com.example.pokedex.CollectionScreen
+import com.example.pokedex.PokemonVO
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
-import org.koin.compose.koinInject
+import org.jetbrains.compose.ui.tooling.preview.PreviewParameter
+import org.jetbrains.compose.ui.tooling.preview.PreviewParameterProvider
 import org.koin.compose.viewmodel.koinViewModel
 import pokedex.composeapp.generated.resources.Res
 import pokedex.composeapp.generated.resources.pokeball
 
 @Composable
 internal fun PokedexRoute(
-    pokemonViewModel: PokemonViewModel = koinViewModel(),
+    vm: PokedexViewModel = koinViewModel(),
     onClick: (PokemonVO) -> Unit
 ) {
-    val pokemonList by pokemonViewModel.pokemonList.collectAsState()
+    val pokemonList by vm.pokemonList.collectAsState()
     PokedexScreen(pokemonList, onClick)
 }
 
@@ -129,23 +126,25 @@ private fun TypeTags(types: List<String>) {
 
 @Composable
 @Preview
-private fun PokedexScreenPreview() {
-    PokedexScreen(previewGetList(), {})
+private fun PokedexScreenPreview(
+    @PreviewParameter(PokedexScreenPreviewProvider::class) model: List<PokemonVO>
+) {
+    PokedexScreen(model, {})
 }
 
-
-// Keep this for the @Preview or provide a mock ViewModel
-private fun previewGetList(): ArrayList<PokemonVO> = arrayListOf<PokemonVO>().apply {
-    repeat(10) { // Reduced for preview
-        add(
-            PokemonVO(
-                color = listOf(
-                    Color.Green, Color.Red, Color.Blue
-                ).random(),
-                id = it + 1,
-                name = "SampleMon",
-                types = listOf("Type A", "Type B")
-            )
+private class PokedexScreenPreviewProvider : PreviewParameterProvider<List<PokemonVO>> {
+    override val values = sequenceOf(
+        listOf(
+            PokemonVO(id = 1, name = "Bulbasaur", types = listOf("Grass", "Poison"), color = Color(0xFF78C850)),
+            PokemonVO(id = 2, name = "Ivysaur", types = listOf("Grass", "Poison"), color = Color(0xFF78C850)),
+            PokemonVO(id = 3, name = "Venusaur", types = listOf("Grass", "Poison"), color = Color(0xFF78C850)),
+            PokemonVO(id = 4, name = "Charmander", types = listOf("Fire"), color = Color(0xFFF08030)),
+            PokemonVO(id = 5, name = "Charmeleon", types = listOf("Fire"), color = Color(0xFFF08030)),
+            PokemonVO(id = 6, name = "Charizard", types = listOf("Fire", "Flying"), color = Color(0xFFF08030)),
+            PokemonVO(id = 7, name = "Squirtle", types = listOf("Water"), color = Color(0xFF6890F0)),
+            PokemonVO(id = 8, name = "Wartortle", types = listOf("Water"), color = Color(0xFF6890F0)),
+            PokemonVO(id = 9, name = "Blastoise", types = listOf("Water"), color = Color(0xFF6890F0)),
+            PokemonVO(id = 10, name = "Caterpie", types = listOf("Bug"), color = Color(0xFFA8B820))
         )
-    }
+    )
 }

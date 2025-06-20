@@ -6,12 +6,13 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
 import com.example.pokedex.di.AppDI
+import com.example.pokedex.list.PokedexRoute
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import org.koin.compose.KoinMultiplatformApplication
 import org.koin.core.annotation.KoinExperimentalAPI
 
-internal object AppRoutes {
+private object AppRoutes {
 
     @Serializable
     object Pokedex
