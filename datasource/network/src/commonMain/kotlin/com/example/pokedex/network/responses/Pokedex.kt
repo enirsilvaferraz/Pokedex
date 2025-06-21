@@ -4,7 +4,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class Pokedex(
+internal data class Pokedex(
     @SerialName("id")
     val id: Long,
     @SerialName("is_main_series")

@@ -2,7 +2,7 @@ package com.example.pokedex.network.datasources
 
 import com.example.pokedex.network.responses.Pokedex
 
-interface PokedexDataSource {
+internal interface PokedexDataSource {
 
     suspend fun get(): Pokedex
 }

@@ -4,7 +4,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class GameSprites(
+internal data class GameSprites(
     @SerialName("back_default")
     val backDefault: String?,
     @SerialName("back_female")

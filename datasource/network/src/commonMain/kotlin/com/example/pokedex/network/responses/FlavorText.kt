@@ -4,7 +4,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class FlavorText(
+internal data class FlavorText(
     @SerialName("flavor_text")
     val flavorText: String,
     @SerialName("language")

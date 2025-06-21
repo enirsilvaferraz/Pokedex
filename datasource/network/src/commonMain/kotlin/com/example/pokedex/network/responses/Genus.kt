@@ -4,7 +4,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class Genus(
+internal data class Genus(
     @SerialName("genus")
     val genus: String,
     @SerialName("language")

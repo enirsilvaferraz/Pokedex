@@ -34,6 +34,7 @@ import com.example.pokedex.CollectionScreen
 import com.example.pokedex.entity.PokemonVO
 import com.example.pokedex.extensions.color
 import com.example.pokedex.extensions.formatedId
+import com.example.pokedex.extensions.formatedName
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.jetbrains.compose.ui.tooling.preview.PreviewParameter
@@ -85,11 +86,11 @@ private fun ItemList(
             ) {
                 Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                     Text(model.formatedId(), fontWeight = FontWeight.Bold)
-                    Text(model.name)
+                    Text(model.formatedName())
                 }
                 TypeTags(model.types)
             }
-            Image(model.url, model.name)
+            Image(model.url, model.formatedName())
         }
     }
 }

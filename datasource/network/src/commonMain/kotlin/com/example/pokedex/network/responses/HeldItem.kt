@@ -4,7 +4,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class HeldItem(
+internal data class HeldItem(
     @SerialName("item")
     val item: NamedApiResource,
     @SerialName("version_details")

@@ -4,7 +4,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class GenerationSprites(
+internal data class GenerationSprites(
     @SerialName("red-blue")
     val redBlue: GameSprites?,
     @SerialName("yellow")

@@ -6,7 +6,7 @@ import io.ktor.client.call.body
 import io.ktor.client.request.get
 import io.ktor.client.request.url
 
-class PokemonSpeciesDataSourceApi(
+internal class PokemonSpeciesDataSourceApi(
     private val config: ClientConfig
 ) : PokemonSpeciesDataSource {
 

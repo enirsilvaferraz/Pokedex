@@ -4,7 +4,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class VersionSprites(
+internal data class VersionSprites(
     @SerialName("generation-i")
     val generationI: GenerationSprites?,
     @SerialName("generation-ii")

@@ -4,7 +4,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class StatEntry(
+internal data class StatEntry(
     @SerialName("base_stat")
     val baseStat: Int,
     @SerialName("effort")

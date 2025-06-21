@@ -4,7 +4,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class OtherSprites(
+internal data class OtherSprites(
     @SerialName("dream_world")
     val dreamWorld: DreamWorld?,
     @SerialName("home")

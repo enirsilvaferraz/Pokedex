@@ -1,17 +1,15 @@
-package com.example.pokedex.list
+package com.example.pokedex.network.adapters
 
-import androidx.compose.ui.text.capitalize
-import androidx.compose.ui.text.intl.Locale
 import com.example.pokedex.entity.PokemonVO
 import com.example.pokedex.network.datasources.PokedexDataSourceApi
 import com.example.pokedex.network.datasources.PokemonDataSourceApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
-internal class PokedexRepositoryImpl(
+internal class PokedexAdapterImpl(
     private val podekexDS: PokedexDataSourceApi,
     private val pokemonDS: PokemonDataSourceApi
-) : PokedexRepository {
+) : PokedexAdapter {
 
     override fun get(): Flow<PokemonVO> = flow {
 
@@ -24,7 +22,7 @@ internal class PokedexRepositoryImpl(
             emit(
                 PokemonVO(
                     id = pokemon.id,
-                    name = pokemon.name.capitalize(Locale.Companion.current),
+                    name = pokemon.name,
                     types = pokemon.types.map { it.type.name.orEmpty() },
                     url = pokemon.sprites.frontDefault
                 )

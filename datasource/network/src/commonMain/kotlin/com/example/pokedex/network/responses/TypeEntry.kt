@@ -4,7 +4,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class TypeEntry(
+internal data class TypeEntry(
     @SerialName("slot")
     val slot: Int,
     @SerialName("type")

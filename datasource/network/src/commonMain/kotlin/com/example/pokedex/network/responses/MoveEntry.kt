@@ -4,7 +4,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class MoveEntry(
+internal data class MoveEntry(
     @SerialName("move")
     val move: NamedApiResource,
     @SerialName("version_group_details")

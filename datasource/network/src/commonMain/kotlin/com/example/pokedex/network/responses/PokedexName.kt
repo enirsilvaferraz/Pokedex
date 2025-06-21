@@ -4,7 +4,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class PokedexName(
+internal data class PokedexName(
     @SerialName("name")
     val name: String,
     @SerialName("language")

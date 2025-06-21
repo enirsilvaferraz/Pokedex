@@ -4,7 +4,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class PokemonSpeciesVariety(
+internal data class PokemonSpeciesVariety(
     @SerialName("is_default")
     val isDefault: Boolean,
     @SerialName("pokemon")

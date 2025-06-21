@@ -4,7 +4,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class PastTypeEntry(
+internal data class PastTypeEntry(
     @SerialName("generation")
     val generation: NamedApiResource,
     @SerialName("types")

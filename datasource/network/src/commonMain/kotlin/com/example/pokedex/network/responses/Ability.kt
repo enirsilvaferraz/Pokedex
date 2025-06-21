@@ -4,7 +4,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class Ability(
+internal data class Ability(
     @SerialName("ability")
     val ability: NamedApiResource?,
     @SerialName("is_hidden")

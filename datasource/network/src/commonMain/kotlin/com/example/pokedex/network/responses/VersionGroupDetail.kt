@@ -4,7 +4,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class VersionGroupDetail(
+internal data class VersionGroupDetail(
     @SerialName("level_learned_at")
     val levelLearnedAt: Int,
     @SerialName("move_learn_method")

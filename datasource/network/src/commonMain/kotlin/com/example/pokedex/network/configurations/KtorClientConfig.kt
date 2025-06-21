@@ -11,13 +11,13 @@ import io.ktor.client.plugins.logging.Logger
 import io.ktor.client.plugins.logging.Logging
 import io.ktor.client.request.header
 import io.ktor.serialization.kotlinx.json.json
-import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.json.Json
 
-class KtorClientConfig : ClientConfig {
+internal class KtorClientConfig : ClientConfig {
 
-    @OptIn(ExperimentalSerializationApi::class)
-    override val client: HttpClient = HttpClient(httpEngine()) {
+    override val client: HttpClient by lazy { configure() }
+
+    private fun configure(): HttpClient = HttpClient(httpEngine()) {
 
         //Timeout plugin to set up timeout milliseconds for client
         install(HttpTimeout) {

@@ -4,7 +4,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class PalParkEncounterArea(
+internal data class PalParkEncounterArea(
     @SerialName("area")
     val area: NamedApiResource,
     @SerialName("base_score")
