@@ -1,24 +1,22 @@
 package com.example.pokedex.list
 
-import androidx.compose.runtime.snapshots.SnapshotStateList
+import androidx.compose.runtime.mutableStateListOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.pokedex.PokemonVO
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
+import com.example.pokedex.entity.PokemonVO
 import kotlinx.coroutines.launch
 
 internal class PokedexViewModel(
     private val useCase: PokedexRepository
 ) : ViewModel() {
 
-    private val _pokemonList = MutableStateFlow<SnapshotStateList<PokemonVO>>(SnapshotStateList())
-    val pokemonList = _pokemonList.asStateFlow()
+    private val _pokemonList = mutableStateListOf<PokemonVO>()
+    val pokemonList: List<PokemonVO> = _pokemonList
 
     init {
         viewModelScope.launch {
             useCase.get().collect {
-                _pokemonList.value.add(it)
+                _pokemonList.add(it)
             }
         }
     }

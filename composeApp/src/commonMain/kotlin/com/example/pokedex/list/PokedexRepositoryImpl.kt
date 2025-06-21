@@ -2,10 +2,9 @@ package com.example.pokedex.list
 
 import androidx.compose.ui.text.capitalize
 import androidx.compose.ui.text.intl.Locale
-import com.example.pokedex.PokemonVO
-import com.example.pokedex.network.PokedexDataSourceApi
-import com.example.pokedex.network.PokemonDataSourceApi
-import com.example.pokedex.ui.theme.getColorForType
+import com.example.pokedex.entity.PokemonVO
+import com.example.pokedex.network.datasources.PokedexDataSourceApi
+import com.example.pokedex.network.datasources.PokemonDataSourceApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 

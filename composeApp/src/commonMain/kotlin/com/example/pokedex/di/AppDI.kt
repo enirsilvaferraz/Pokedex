@@ -3,9 +3,9 @@ package com.example.pokedex.di
 import com.example.pokedex.list.PokedexRepository
 import com.example.pokedex.list.PokedexRepositoryImpl
 import com.example.pokedex.list.PokedexViewModel
-import com.example.pokedex.network.PokedexDataSourceApi
-import com.example.pokedex.network.PokemonDataSourceApi
-import com.example.pokedex.network.PokemonSpeciesDataSourceApi
+import com.example.pokedex.network.datasources.PokedexDataSourceApi
+import com.example.pokedex.network.datasources.PokemonDataSourceApi
+import com.example.pokedex.network.datasources.PokemonSpeciesDataSourceApi
 import com.example.pokedex.network.configurations.ClientConfig
 import com.example.pokedex.network.configurations.KtorClientConfig
 import org.koin.core.module.dsl.singleOf
