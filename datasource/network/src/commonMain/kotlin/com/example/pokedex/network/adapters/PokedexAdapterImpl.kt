@@ -13,20 +13,19 @@ internal class PokedexAdapterImpl(
 
     override fun get(): Flow<PokemonVO> = flow {
 
-        val pokedex = podekexDS.get()
+        podekexDS.get().pokemonEntries.forEach { entry ->
 
-        pokedex.pokemonEntries.forEach { entry ->
+            pokemonDS.get(entry.entryNumber).let { pokemon ->
 
-            val pokemon = pokemonDS.get(entry.entryNumber)
-
-            emit(
-                PokemonVO(
-                    id = pokemon.id,
-                    name = pokemon.name,
-                    types = pokemon.types.map { it.type.name.orEmpty() },
-                    url = pokemon.sprites.frontDefault
+                emit(
+                    PokemonVO(
+                        id = pokemon.id,
+                        name = pokemon.name,
+                        types = pokemon.types.map { it.type.name.orEmpty() },
+                        url = pokemon.sprites.frontDefault
+                    )
                 )
-            )
+            }
         }
     }
 }

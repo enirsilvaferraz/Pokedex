@@ -33,7 +33,7 @@ fun App() {
 
             composable<AppRoutes.Pokedex> {
                 PokedexRoute {
-                    navController.navigate(AppRoutes.Pokemon(it.id))
+                    navController.navigate(AppRoutes.Pokemon(it))
                 }
             }
 

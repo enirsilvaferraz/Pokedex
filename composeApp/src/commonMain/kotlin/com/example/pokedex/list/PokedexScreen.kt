@@ -5,11 +5,13 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -30,7 +32,6 @@ import coil3.compose.LocalPlatformContext
 import coil3.request.ImageRequest
 import coil3.request.crossfade
 import com.example.pokedex.AppScaffold
-import com.example.pokedex.CollectionScreen
 import com.example.pokedex.entity.PokemonVO
 import com.example.pokedex.extensions.color
 import com.example.pokedex.extensions.formatedId
@@ -45,25 +46,38 @@ import pokedex.composeapp.generated.resources.pokeball
 
 @Composable
 internal fun PokedexRoute(
+    modifier: Modifier = Modifier,
     vm: PokedexViewModel = koinViewModel(),
-    onClick: (PokemonVO) -> Unit
+    onClick: (Int) -> Unit
 ) {
-    PokedexScreen(vm.pokemonList, onClick)
+
+    PokedexScreen(
+        modifier = modifier,
+        pokemonList = vm.pokemonList,
+        onClick = onClick
+    )
 }
 
 @Composable
 private fun PokedexScreen(
+    modifier: Modifier = Modifier,
     pokemonList: List<PokemonVO>,
-    onClick: (PokemonVO) -> Unit
+    onClick: (Int) -> Unit
 ) {
-    AppScaffold(title = "Kanto") {
-        CollectionScreen(
-            modifier = it,
-            list = pokemonList,
-            onItem = {
+
+    AppScaffold(
+        modifier = modifier,
+        title = "Kanto"
+    ) {
+
+        LazyColumn(
+            contentPadding = PaddingValues(24.dp)
+        ) {
+
+            items(items = pokemonList, key = { it.id }) {
                 ItemList(model = it, onClick = onClick)
             }
-        )
+        }
     }
 }
 
@@ -71,25 +85,31 @@ private fun PokedexScreen(
 private fun ItemList(
     modifier: Modifier = Modifier,
     model: PokemonVO,
-    onClick: (PokemonVO) -> Unit
+    onClick: (Int) -> Unit
 ) {
+
     Card(
         modifier = modifier.padding(vertical = 4.dp),
         colors = CardDefaults.cardColors(containerColor = model.color().copy(alpha = 0.3f))
     ) {
+
         Row(
-            modifier = Modifier.fillMaxSize().clickable { onClick(model) }
+            modifier = Modifier.fillMaxSize().clickable { onClick(model.id) }
         ) {
+
             Column(
                 modifier = Modifier.padding(16.dp).weight(1f),
                 verticalArrangement = Arrangement.Center
             ) {
+
                 Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                     Text(model.formatedId(), fontWeight = FontWeight.Bold)
                     Text(model.formatedName())
                 }
+
                 TypeTags(model.types)
             }
+
             Image(model.url, model.formatedName())
         }
     }
@@ -113,15 +133,19 @@ private fun Image(url: String, contentDescription: String) {
 
 @Composable
 private fun TypeTags(types: List<String>) {
+
     LazyRow(
         modifier = Modifier.padding(top = 12.dp),
         horizontalArrangement = Arrangement.spacedBy(8.dp)
     ) {
+
         items(types) { type ->
+
             Box(
                 modifier = Modifier.clip(RoundedCornerShape(6.dp)).background(Color.Gray.copy(alpha = 0.2f)),
                 contentAlignment = Alignment.Center
             ) {
+
                 Text(
                     modifier = Modifier.padding(horizontal = 8.dp, vertical = 6.dp),
                     text = type,
@@ -137,7 +161,7 @@ private fun TypeTags(types: List<String>) {
 private fun PokedexScreenPreview(
     @PreviewParameter(PokedexScreenPreviewProvider::class) model: List<PokemonVO>
 ) {
-    PokedexScreen(model, {})
+    PokedexScreen(Modifier, model, {})
 }
 
 private class PokedexScreenPreviewProvider : PreviewParameterProvider<List<PokemonVO>> {
