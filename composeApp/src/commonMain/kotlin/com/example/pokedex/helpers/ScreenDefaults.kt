@@ -1,4 +1,4 @@
-package com.example.pokedex
+package com.example.pokedex.helpers
 
 import androidx.compose.foundation.layout.calculateEndPadding
 import androidx.compose.foundation.layout.calculateStartPadding

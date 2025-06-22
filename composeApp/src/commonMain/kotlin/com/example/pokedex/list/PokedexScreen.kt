@@ -31,7 +31,7 @@ import coil3.compose.AsyncImage
 import coil3.compose.LocalPlatformContext
 import coil3.request.ImageRequest
 import coil3.request.crossfade
-import com.example.pokedex.AppScaffold
+import com.example.pokedex.helpers.AppScaffold
 import com.example.pokedex.entity.PokemonVO
 import com.example.pokedex.extensions.color
 import com.example.pokedex.extensions.formatedId
@@ -68,9 +68,10 @@ private fun PokedexScreen(
     AppScaffold(
         modifier = modifier,
         title = "Kanto"
-    ) {
+    ) { innerModifier ->
 
         LazyColumn(
+            modifier = innerModifier,
             contentPadding = PaddingValues(24.dp)
         ) {
 

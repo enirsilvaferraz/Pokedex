@@ -1,7 +1,7 @@
 package com.example.pokedex.di
 
-import com.example.pokedex.list.PokedexRepository
-import com.example.pokedex.list.PokedexRepositoryImpl
+import com.example.repositories.PokedexRepository
+import com.example.repositories.PokedexRepositoryImpl
 import com.example.pokedex.list.PokedexViewModel
 import com.example.pokedex.network.di.NetworkDI
 import org.koin.core.module.dsl.factoryOf

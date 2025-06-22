@@ -12,15 +12,6 @@ import kotlinx.serialization.Serializable
 import org.koin.compose.KoinMultiplatformApplication
 import org.koin.core.annotation.KoinExperimentalAPI
 
-private object AppRoutes {
-
-    @Serializable
-    object Pokedex
-
-    @Serializable
-    data class Pokemon(@SerialName("id") val id: Int)
-}
-
 @Composable
 fun App() {
 

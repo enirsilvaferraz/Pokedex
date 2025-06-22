@@ -4,6 +4,7 @@ import androidx.compose.runtime.mutableStateListOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.pokedex.entity.PokemonVO
+import com.example.repositories.PokedexRepository
 import kotlinx.coroutines.launch
 
 internal class PokedexViewModel(

@@ -1,4 +1,4 @@
-package com.example.pokedex.list
+package com.example.repositories
 
 import com.example.pokedex.entity.PokemonVO
 import com.example.pokedex.network.adapters.PokedexAdapter
