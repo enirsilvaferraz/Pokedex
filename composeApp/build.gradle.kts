@@ -34,14 +34,6 @@ kotlin {
         androidMain.dependencies {
             implementation(compose.preview)
             implementation(libs.androidx.activity.compose)
-
-            implementation("io.ktor:ktor-client-android:3.1.3")
-        }
-
-        appleMain {
-            dependencies {
-                implementation("io.ktor:ktor-client-darwin:3.1.3")
-            }
         }
 
         commonMain.dependencies {
