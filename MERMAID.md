@@ -7,7 +7,7 @@
   }
 }%%
 
-graph TB
+graph LR
   :composeApp["composeApp"]
   subgraph :business
     :business:entity["entity"]
