@@ -33,13 +33,14 @@ graph LR
 %%  :composeApp --> :adapters:repositories
 %%  :composeApp --> :datasource:network
 %%  :composeApp --> :datasource:database
-   :adapters:repositories --> :business:entity
+
+%%   :adapters:repositories --> :business:entity
    :adapters:repositories --> :business:useCases
   
-  :datasource:network --> :business:entity
+%%  :datasource:network --> :business:entity
   :datasource:network --> :adapters:repositories
   
-  :datasource:database --> :business:entity
+%%  :datasource:database --> :business:entity
   :datasource:database --> :adapters:repositories
 
 classDef android-application fill:#2C4162,stroke:#fff,stroke-width:2px,color:#fff;
