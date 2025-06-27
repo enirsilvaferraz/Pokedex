@@ -8,8 +8,10 @@
 }%%
 
 graph LR
-    
-  :composeApp["composeApp"]
+
+  subgraph :Ui
+    :composeApp["composeApp"] 
+  end
   
   subgraph :business
     :business:entity["entity"]
