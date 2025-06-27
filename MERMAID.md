@@ -26,8 +26,8 @@ graph LR
     :datasource:database["database"]
   end
 
-  :composeApp --> :business:viewModels
-  :business:viewModels --> :business:useCases
+  :composeApp --> :adapters:viewModels
+  :adapters:viewModels --> :business:useCases
   :business:useCases --> :business:entity
 %%  :composeApp --> :business:entity
 %%  :composeApp --> :adapters:repositories
