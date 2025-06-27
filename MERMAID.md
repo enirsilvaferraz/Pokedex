@@ -1,4 +1,4 @@
-# Module Graph
+### Module Graph - Compose
 
 ```mermaid
 %%{
@@ -8,16 +8,18 @@
 }%%
 
 graph LR
-  subgraph :adapters
-    :adapters:repositories["repositories"]
-  end
+  :composeApp["composeApp"]
   subgraph :business
     :business:entity["entity"]
+  end
+  subgraph :adapters
+    :adapters:repositories["repositories"]
   end
   subgraph :datasource
     :datasource:network["network"]
     :datasource:database["database"]
   end
+
   :composeApp --> :business:entity
   :composeApp --> :adapters:repositories
   :composeApp --> :datasource:network
