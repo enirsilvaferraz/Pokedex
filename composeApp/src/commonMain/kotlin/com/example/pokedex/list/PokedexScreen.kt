@@ -122,8 +122,6 @@ private fun Image(url: String, contentDescription: String) {
         model = ImageRequest.Builder(LocalPlatformContext.current).data(url).crossfade(true).build(),
         contentDescription = contentDescription,
         contentScale = ContentScale.Fit,
-        placeholder = painterResource(Res.drawable.pokeball),
-        error = painterResource(Res.drawable.pokeball),
         modifier = Modifier
             .height(95.dp)
             .width(120.dp)

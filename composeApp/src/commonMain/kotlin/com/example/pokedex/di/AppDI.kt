@@ -1,5 +1,6 @@
 package com.example.pokedex.di
 
+import com.example.pokedex.database.di.DatabaseDI
 import com.example.pokedex.list.PokedexViewModel
 import com.example.pokedex.network.di.NetworkDI
 import com.example.repositories.di.RepositoryDI
@@ -19,7 +20,8 @@ internal object AppDI {
         modules(
             AppDI(),
             RepositoryDI(),
-            NetworkDI()
+            NetworkDI(),
+            DatabaseDI()
         )
     }
 }

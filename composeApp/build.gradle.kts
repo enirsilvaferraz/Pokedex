@@ -1,3 +1,5 @@
+import dev.iurysouza.modulegraph.LinkText
+import dev.iurysouza.modulegraph.Orientation
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
@@ -7,7 +9,7 @@ plugins {
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
     alias(libs.plugins.kotlin.serialization)
-//    alias(libs.plugins.ksp)
+    alias(libs.plugins.modulegraph)
 }
 
 kotlin {
@@ -62,6 +64,7 @@ kotlin {
             implementation(project(path = ":business:entity"))
             implementation(project(path = ":adapters::repositories"))
             implementation(project(path = ":datasource:network"))
+            implementation(project(path = ":datasource:database"))
         }
 
         commonTest.dependencies {
@@ -110,3 +113,51 @@ dependencies {
     debugImplementation(compose.uiTooling)
 }
 
+moduleGraphConfig {
+
+    heading.set("# Primary Graph - Compose 1")
+    readmePath.set("${rootDir}/MERMAID.md")
+
+    showFullPath.set(true)
+    orientation.set(Orientation.TOP_TO_BOTTOM)
+    linkText.set(LinkText.NONE)
+    setStyleByModuleType.set(true)
+    nestingEnabled.set(true)
+
+//    graph(
+//        readmePath = "${rootDir}/MERMAID.md",
+//        heading = "### Module Graph - Compose",
+//    ) {
+//        nestingEnabled = true
+//        setStyleByModuleType = true
+//    }
+//
+//    graph(
+//        readmePath = "${rootDir}/MERMAID.md",
+//        heading = "### Module Graph - Entity",
+//    ) {
+//        nestingEnabled = true
+//    }
+//
+//    graph(
+//        readmePath = "${rootDir}/MERMAID.md",
+//        heading = "### Module Graph - Repository",
+//    ) {
+//        nestingEnabled = true
+//    }
+//
+//    graph(
+//        readmePath = "${rootDir}/MERMAID.md",
+//        heading = "### Module Graph - Network",
+//    ) {
+//        nestingEnabled = true
+//    }
+//
+//    graph(
+//        readmePath = "${rootDir}/MERMAID.md",
+//        heading = "### Module Graph - Database",
+//    ) {
+//        nestingEnabled = true
+//        focusedModulesRegex = ".*(database).*"
+//    }
+}
