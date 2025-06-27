@@ -9,13 +9,16 @@
 
 graph LR
 
-  subgraph :Ui
+  subgraph :ui
     :composeApp["composeApp"] 
   end
   
   subgraph :business
-    :business:entity["entity"]
     :business:useCases["useCases"]
+  end
+
+  subgraph :entity
+    :business:entity["entity"]
   end
   
   subgraph :adapters
