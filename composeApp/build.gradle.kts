@@ -61,7 +61,8 @@ kotlin {
 
             implementation(libs.kotlinx.serialization.json)
 
-            implementation(project(path = ":business:entity"))
+//            implementation(project(path = ":business:entity"))
+            implementation(project(path = ":business:usecases"))
             implementation(project(path = ":adapters::repositories"))
             implementation(project(path = ":datasource:network"))
             implementation(project(path = ":datasource:database"))

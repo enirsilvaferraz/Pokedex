@@ -31,5 +31,6 @@ dependencyResolutionManagement {
 include(":composeApp")
 include(":adapters:repositories")
 include(":business:entity")
+include(":business:usecases")
 include(":datasource:network")
 include(":datasource:database")
