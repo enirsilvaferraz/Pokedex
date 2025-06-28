@@ -1,4 +1,4 @@
-package com.example.pokedex.network.configurations
+package com.example.pokedex.network.core
 
 import com.example.pokedex.network.httpEngine
 import io.ktor.client.HttpClient

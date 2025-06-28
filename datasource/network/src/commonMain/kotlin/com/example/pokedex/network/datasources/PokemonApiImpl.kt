@@ -1,14 +1,14 @@
 package com.example.pokedex.network.datasources
 
 import com.example.pokedex.network.responses.Pokemon
-import com.example.pokedex.network.configurations.ClientConfig
+import com.example.pokedex.network.core.ClientConfig
 import io.ktor.client.call.body
 import io.ktor.client.request.get
 import io.ktor.client.request.url
 
-internal class PokemonDataSourceApi(
+internal class PokemonApiImpl(
     private val config: ClientConfig
-) : PokemonDataSource {
+) : PokemonApi {
 
     override suspend fun get(id: Long): Pokemon = config.client.get {
         url("pokemon/$id")

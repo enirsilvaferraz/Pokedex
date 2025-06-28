@@ -20,7 +20,7 @@ internal data class Pokemon(
     @SerialName("held_items")
     val heldItems: List<HeldItem>,
     @SerialName("id")
-    val id: Int,
+    val id: Long,
     @SerialName("is_default")
     val isDefault: Boolean,
     @SerialName("location_area_encounters")
