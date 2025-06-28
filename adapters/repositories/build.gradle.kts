@@ -35,7 +35,7 @@ kotlin {
                 implementation(libs.koin.core)
 
                 implementation(project(path = ":business:entity"))
-                implementation(project(path = ":datasource:network"))
+//                implementation(project(path = ":datasource:network"))
             }
         }
 
