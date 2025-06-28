@@ -6,6 +6,8 @@ plugins {
 
 kotlin {
 
+    explicitApi()
+
     androidLibrary {
         namespace = "com.example.pokedex.network"
         compileSdk = libs.versions.android.targetSdk.get().toInt()
@@ -30,6 +32,7 @@ kotlin {
             dependencies {
 
                 implementation(project(path = ":business:entity"))
+                implementation(project(path = ":adapters:repositories"))
 
                 implementation(libs.kotlin.stdlib)
                 implementation(libs.kotlinx.coroutines.core)
