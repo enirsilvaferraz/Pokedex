@@ -8,6 +8,8 @@ plugins {
 
 kotlin {
 
+    explicitApi()
+
     androidLibrary {
         namespace = "com.example.pokedex.database"
         compileSdk = libs.versions.android.targetSdk.get().toInt()
@@ -34,7 +36,9 @@ kotlin {
             kotlin.srcDir("build/generated/ksp/metadata")
 
             dependencies {
+
                 implementation(project(path = ":business:entity"))
+                implementation(project(path = ":adapters:repositories"))
 
                 implementation(libs.kotlin.stdlib)
 

@@ -5,14 +5,16 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity("pokemon")
-internal data class Pokemon(
+internal data class PokemonTable(
 
     @PrimaryKey
-    @ColumnInfo(name = "id")
+    @ColumnInfo(name = "pokemon_id")
     val id: Long,
 
     @ColumnInfo(name = "name")
     val name: String,
 
-
+    @ColumnInfo(name = "image")
+    val image: String
 )
+

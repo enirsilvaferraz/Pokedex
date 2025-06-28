@@ -1,15 +1,35 @@
 package com.example.pokedex.database.di
 
+import com.example.pokedex.database.contracts.PokemonDataSourceDB
+import com.example.pokedex.database.core.AppDatabase
+import com.example.pokedex.database.core.PlatformDataBaseBuilder
+import com.example.repositories.datasources.ReadableDataSource
+import com.example.repositories.di.AppQualifiers
 import org.koin.core.module.Module
+import org.koin.core.module.dsl.factoryOf
+import org.koin.dsl.bind
 import org.koin.dsl.module
 
-object DatabaseDI {
+public object DatabaseDI {
 
-    operator fun invoke() = module {
+    public operator fun invoke(): Module = module {
 
-        // Platform specific modules
-        platformModule()
+        /**
+         * Database Platform specific modules
+         */
+
+        single<AppDatabase> { PlatformDataBaseBuilder.build() }
+
+        /**
+         * DAOs
+         */
+
+        single { get<AppDatabase>().pokemonDao() }
+
+        /**
+         * Data Sources
+         */
+
+        factoryOf(::PokemonDataSourceDB, { qualifier = AppQualifiers.Pokemon.database() }) bind ReadableDataSource::class
     }
 }
-
-internal expect fun Module.platformModule()

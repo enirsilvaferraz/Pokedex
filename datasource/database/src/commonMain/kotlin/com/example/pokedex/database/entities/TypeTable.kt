@@ -4,13 +4,13 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity("pokedex")
-internal data class Pokedex(
+@Entity("type")
+internal data class TypeTable(
 
     @PrimaryKey
-    @ColumnInfo(name = "id")
+    @ColumnInfo(name = "type_id")
     val id: Long,
 
     @ColumnInfo(name = "name")
-    val name: String,
+    val name: String
 )

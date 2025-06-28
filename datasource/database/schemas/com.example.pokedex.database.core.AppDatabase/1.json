@@ -2,15 +2,70 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "a686ff14ef6b41c3be1825393ccb27c8",
+    "identityHash": "7ed1a475ebc8992cf85ac560d93e286e",
     "entities": [
       {
-        "tableName": "pokedex",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `name` TEXT NOT NULL, PRIMARY KEY(`id`))",
+        "tableName": "pokemon",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`pokemon_id` INTEGER NOT NULL, `name` TEXT NOT NULL, `image` TEXT NOT NULL, PRIMARY KEY(`pokemon_id`))",
         "fields": [
           {
             "fieldPath": "id",
-            "columnName": "id",
+            "columnName": "pokemon_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "name",
+            "columnName": "name",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "image",
+            "columnName": "image",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "pokemon_id"
+          ]
+        }
+      },
+      {
+        "tableName": "pokemon_type",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`pokemon_id` INTEGER NOT NULL, `type_id` INTEGER NOT NULL, PRIMARY KEY(`pokemon_id`, `type_id`))",
+        "fields": [
+          {
+            "fieldPath": "pokemonId",
+            "columnName": "pokemon_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "typeId",
+            "columnName": "type_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "pokemon_id",
+            "type_id"
+          ]
+        }
+      },
+      {
+        "tableName": "type",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`type_id` INTEGER NOT NULL, `name` TEXT NOT NULL, PRIMARY KEY(`type_id`))",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "type_id",
             "affinity": "INTEGER",
             "notNull": true
           },
@@ -24,14 +79,14 @@
         "primaryKey": {
           "autoGenerate": false,
           "columnNames": [
-            "id"
+            "type_id"
           ]
         }
       }
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'a686ff14ef6b41c3be1825393ccb27c8')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '7ed1a475ebc8992cf85ac560d93e286e')"
     ]
   }
 }
