@@ -9,5 +9,5 @@ internal object AppRoutes {
     object Pokedex
 
     @Serializable
-    data class Pokemon(@SerialName("id") val id: Int)
+    data class Pokemon(@SerialName("id") val id: Long)
 }

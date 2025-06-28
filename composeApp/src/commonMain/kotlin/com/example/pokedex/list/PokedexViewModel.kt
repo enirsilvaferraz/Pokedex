@@ -4,11 +4,11 @@ import androidx.compose.runtime.mutableStateListOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.pokedex.entity.PokemonVO
-import com.example.repositories.PokedexRepository
+import com.example.repositories.PokemonRepository
 import kotlinx.coroutines.launch
 
 internal class PokedexViewModel(
-    private val useCase: PokedexRepository
+    private val useCase: PokemonRepository
 ) : ViewModel() {
 
     private val _pokemonList = mutableStateListOf<PokemonVO>()
@@ -16,8 +16,8 @@ internal class PokedexViewModel(
 
     init {
         viewModelScope.launch {
-            useCase.get().collect {
-                _pokemonList.add(it)
+            useCase.getAll()?.collect {
+                _pokemonList.addAll(it)
             }
         }
     }

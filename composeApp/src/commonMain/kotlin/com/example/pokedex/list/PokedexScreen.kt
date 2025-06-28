@@ -48,7 +48,7 @@ import pokedex.composeapp.generated.resources.pokeball
 internal fun PokedexRoute(
     modifier: Modifier = Modifier,
     vm: PokedexViewModel = koinViewModel(),
-    onClick: (Int) -> Unit
+    onClick: (Long) -> Unit
 ) {
 
     PokedexScreen(
@@ -62,7 +62,7 @@ internal fun PokedexRoute(
 private fun PokedexScreen(
     modifier: Modifier = Modifier,
     pokemonList: List<PokemonVO>,
-    onClick: (Int) -> Unit
+    onClick: (Long) -> Unit
 ) {
 
     AppScaffold(
@@ -86,7 +86,7 @@ private fun PokedexScreen(
 private fun ItemList(
     modifier: Modifier = Modifier,
     model: PokemonVO,
-    onClick: (Int) -> Unit
+    onClick: (Long) -> Unit
 ) {
 
     Card(
@@ -111,7 +111,7 @@ private fun ItemList(
                 TypeTags(model.types)
             }
 
-            Image(model.url, model.formatedName())
+            Image(model.image, model.formatedName())
         }
     }
 }
@@ -166,16 +166,16 @@ private fun PokedexScreenPreview(
 private class PokedexScreenPreviewProvider : PreviewParameterProvider<List<PokemonVO>> {
     override val values = sequenceOf(
         listOf(
-            PokemonVO(id = 1, name = "Bulbasaur", types = listOf("Grass", "Poison"), url = ""),
-            PokemonVO(id = 2, name = "Ivysaur", types = listOf("Grass", "Poison"), url = ""),
-            PokemonVO(id = 3, name = "Venusaur", types = listOf("Grass", "Poison"), url = ""),
-            PokemonVO(id = 4, name = "Charmander", types = listOf("Fire"), url = ""),
-            PokemonVO(id = 5, name = "Charmeleon", types = listOf("Fire"), url = ""),
-            PokemonVO(id = 6, name = "Charizard", types = listOf("Fire", "Flying"), url = ""),
-            PokemonVO(id = 7, name = "Squirtle", types = listOf("Water"), url = ""),
-            PokemonVO(id = 8, name = "Wartortle", types = listOf("Water"), url = ""),
-            PokemonVO(id = 9, name = "Blastoise", types = listOf("Water"), url = ""),
-            PokemonVO(id = 10, name = "Caterpie", types = listOf("Bug"), url = "")
+            PokemonVO(id = 1, name = "Bulbasaur", types = listOf("Grass", "Poison"), image = ""),
+            PokemonVO(id = 2, name = "Ivysaur", types = listOf("Grass", "Poison"), image = ""),
+            PokemonVO(id = 3, name = "Venusaur", types = listOf("Grass", "Poison"), image = ""),
+            PokemonVO(id = 4, name = "Charmander", types = listOf("Fire"), image = ""),
+            PokemonVO(id = 5, name = "Charmeleon", types = listOf("Fire"), image = ""),
+            PokemonVO(id = 6, name = "Charizard", types = listOf("Fire", "Flying"), image = ""),
+            PokemonVO(id = 7, name = "Squirtle", types = listOf("Water"), image = ""),
+            PokemonVO(id = 8, name = "Wartortle", types = listOf("Water"), image = ""),
+            PokemonVO(id = 9, name = "Blastoise", types = listOf("Water"), image = ""),
+            PokemonVO(id = 10, name = "Caterpie", types = listOf("Bug"), image = "")
         )
     )
 }

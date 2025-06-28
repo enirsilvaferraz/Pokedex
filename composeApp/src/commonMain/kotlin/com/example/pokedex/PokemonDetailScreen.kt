@@ -21,17 +21,14 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Path
-import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import coil3.compose.AsyncImage
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
@@ -48,7 +45,7 @@ data class PokemonStatVo(
 )
 
 data class PokemonDetailVo(
-    val id: Int,
+    val id: Long,
     val name: String,
     val imageUrl: String,
     val types: List<PokemonTypeVo>,
@@ -77,7 +74,7 @@ private object PokemonDetailDimens {
 
 // --- Main Composable ---
 @Composable
-internal fun PokemonDetailRoute(pokemonId: Int /* or pass full VO if fetched earlier */) {
+internal fun PokemonDetailRoute(pokemonId: Long /* or pass full VO if fetched earlier */) {
     // In a real app, you would fetch PokemonDetailVo using pokemonId via a ViewModel
     val samplePokemon: PokemonDetailVo = createSamplePokemonDetailVo().copy(id = pokemonId) // Replace with actual data fetching
     var isFavoriteState: Boolean by remember { mutableStateOf(samplePokemon.isFavorite) }

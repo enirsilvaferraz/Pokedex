@@ -6,4 +6,4 @@ interface Platform {
 
 expect fun getPlatform(): Platform
 
-expect fun formatId(id: Int): String
+expect fun formatId(id: Long): String

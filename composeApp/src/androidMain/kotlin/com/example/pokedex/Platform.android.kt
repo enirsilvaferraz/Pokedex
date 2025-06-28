@@ -9,4 +9,4 @@ class AndroidPlatform : Platform {
 
 actual fun getPlatform(): Platform = AndroidPlatform()
 
-actual fun formatId(id: Int) = String.format(Locale.getDefault(), "#%03d", id)
+actual fun formatId(id: Long) = String.format(Locale.getDefault(), "#%03d", id)
