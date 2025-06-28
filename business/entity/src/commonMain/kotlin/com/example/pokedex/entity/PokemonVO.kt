@@ -4,9 +4,10 @@ data class PokemonVO(
     val id: Long,
     val name: String,
     val image: String,
-    val types: List<String>
-) {
+    val types: List<TypeVO>,
+)
 
-    fun imageUrl() =
-        "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/$id.png"
-}
+data class TypeVO(
+    val id: Long,
+    val name: String,
+)
