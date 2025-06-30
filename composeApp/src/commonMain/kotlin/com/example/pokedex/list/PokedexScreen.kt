@@ -37,13 +37,10 @@ import com.example.pokedex.entity.TypeVO
 import com.example.pokedex.extensions.color
 import com.example.pokedex.extensions.formatedId
 import com.example.pokedex.extensions.formatedName
-import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.jetbrains.compose.ui.tooling.preview.PreviewParameter
 import org.jetbrains.compose.ui.tooling.preview.PreviewParameterProvider
 import org.koin.compose.viewmodel.koinViewModel
-import pokedex.composeapp.generated.resources.Res
-import pokedex.composeapp.generated.resources.pokeball
 
 @Composable
 internal fun PokedexRoute(

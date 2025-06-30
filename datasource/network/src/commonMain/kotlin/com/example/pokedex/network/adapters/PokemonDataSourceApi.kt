@@ -8,16 +8,14 @@ import com.example.pokedex.network.responses.PokedexPokemonEntry
 import com.example.pokedex.network.responses.Pokemon
 import com.example.pokedex.network.responses.TypeEntry
 import com.example.repositories.datasources.ReadableDataSource
-import kotlinx.coroutines.flow.flow
 
 internal class PokemonDataSourceApi(
     private val podekexDS: PokedexApi,
     private val pokemonDS: PokemonApi,
 ) : ReadableDataSource<PokemonVO> {
 
-    override suspend fun getAll() = flow {
-        emit(podekexDS.get().pokemonEntries.map { it.transform() }.map { it.transform() })
-    }
+    override suspend fun getAll() =
+        podekexDS.get().pokemonEntries.map { it.transform() }.map { it.transform() }
 
     private suspend fun PokedexPokemonEntry.transform(): Pokemon = pokemonDS.get(entryNumber)
 

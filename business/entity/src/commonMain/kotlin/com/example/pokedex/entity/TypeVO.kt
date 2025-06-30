@@ -1,8 +1,6 @@
 package com.example.pokedex.entity
 
-data class PokemonVO(
+data class TypeVO(
     val id: Long,
     val name: String,
-    val image: String,
-    val types: List<TypeVO>,
 )

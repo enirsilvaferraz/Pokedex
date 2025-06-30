@@ -11,7 +11,6 @@ import com.example.pokedex.entity.PokemonVO
 import com.example.pokedex.entity.TypeVO
 import com.example.repositories.datasources.ReadableDataSource
 import com.example.repositories.datasources.WritableDataSource
-import kotlinx.coroutines.flow.flow
 
 internal class PokemonDataSourceDB(
     private val pokemonDao: PokemonDao,
@@ -19,9 +18,8 @@ internal class PokemonDataSourceDB(
     private val pokemonTypeDao: PokemonTypeDao,
 ) : ReadableDataSource<PokemonVO>, WritableDataSource<PokemonVO> {
 
-    override suspend fun getAll() = flow {
-        emit(pokemonDao.getAll().map { it.transform() })
-    }
+    override suspend fun getAll() =
+        pokemonDao.getAll().map { it.transform() }
 
     override suspend fun insert(entities: List<PokemonVO>) {
 
