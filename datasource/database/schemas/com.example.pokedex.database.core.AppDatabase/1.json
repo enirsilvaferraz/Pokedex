@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "7ed1a475ebc8992cf85ac560d93e286e",
+    "identityHash": "d5a25a1aefc07e34d5f992b5ecafd68d",
     "entities": [
       {
         "tableName": "pokemon",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`pokemon_id` INTEGER NOT NULL, `name` TEXT NOT NULL, `image` TEXT NOT NULL, PRIMARY KEY(`pokemon_id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`pokemon_id` INTEGER NOT NULL, `name` TEXT NOT NULL, `image` TEXT NOT NULL, `type1` INTEGER NOT NULL, `type2` INTEGER, PRIMARY KEY(`pokemon_id`), FOREIGN KEY(`type1`) REFERENCES `type`(`type_id`) ON UPDATE CASCADE ON DELETE CASCADE , FOREIGN KEY(`type2`) REFERENCES `type`(`type_id`) ON UPDATE CASCADE ON DELETE CASCADE )",
         "fields": [
           {
             "fieldPath": "id",
@@ -25,6 +25,17 @@
             "columnName": "image",
             "affinity": "TEXT",
             "notNull": true
+          },
+          {
+            "fieldPath": "typeID1",
+            "columnName": "type1",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "typeID2",
+            "columnName": "type2",
+            "affinity": "INTEGER"
           }
         ],
         "primaryKey": {
@@ -32,32 +43,31 @@
           "columnNames": [
             "pokemon_id"
           ]
-        }
-      },
-      {
-        "tableName": "pokemon_type",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`pokemon_id` INTEGER NOT NULL, `type_id` INTEGER NOT NULL, PRIMARY KEY(`pokemon_id`, `type_id`))",
-        "fields": [
+        },
+        "foreignKeys": [
           {
-            "fieldPath": "pokemonId",
-            "columnName": "pokemon_id",
-            "affinity": "INTEGER",
-            "notNull": true
+            "table": "type",
+            "onDelete": "CASCADE",
+            "onUpdate": "CASCADE",
+            "columns": [
+              "type1"
+            ],
+            "referencedColumns": [
+              "type_id"
+            ]
           },
           {
-            "fieldPath": "typeId",
-            "columnName": "type_id",
-            "affinity": "INTEGER",
-            "notNull": true
+            "table": "type",
+            "onDelete": "CASCADE",
+            "onUpdate": "CASCADE",
+            "columns": [
+              "type2"
+            ],
+            "referencedColumns": [
+              "type_id"
+            ]
           }
-        ],
-        "primaryKey": {
-          "autoGenerate": false,
-          "columnNames": [
-            "pokemon_id",
-            "type_id"
-          ]
-        }
+        ]
       },
       {
         "tableName": "type",
@@ -86,7 +96,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '7ed1a475ebc8992cf85ac560d93e286e')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'd5a25a1aefc07e34d5f992b5ecafd68d')"
     ]
   }
 }

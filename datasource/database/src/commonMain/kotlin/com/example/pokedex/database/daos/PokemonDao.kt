@@ -5,15 +5,17 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.example.pokedex.database.entities.PokemonTable
-import com.example.pokedex.database.relationships.PokemonWithTypes
-import kotlinx.coroutines.flow.Flow
+import com.example.pokedex.database.relationships.PokemonAndType
 
 @Dao
 internal interface PokemonDao {
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend  fun insertAll(vararg entity: PokemonTable)
+    suspend fun insertAll(vararg entity: PokemonTable)
 
     @Query("SELECT * FROM Pokemon")
-    suspend   fun getAll(): List<PokemonWithTypes>
+    suspend fun getAll(): List<PokemonAndType>
+
+    @Query("SELECT * FROM Pokemon LIMIT :limit OFFSET :offset")
+    suspend fun get(limit: Int, offset: Int): List<PokemonAndType>
 }

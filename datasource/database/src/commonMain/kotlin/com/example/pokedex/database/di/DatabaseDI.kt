@@ -27,7 +27,6 @@ public object DatabaseDI {
 
         single { get<AppDatabase>().pokemonDao() }
         single { get<AppDatabase>().typeDao() }
-        single { get<AppDatabase>().pokemonTypeDao() }
 
         /**
          * Data Sources

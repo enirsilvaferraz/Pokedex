@@ -4,5 +4,6 @@ data class PokemonVO(
     val id: Long,
     val name: String,
     val image: String,
-    val types: List<TypeVO>,
+    val type1: TypeVO,
+    val type2: TypeVO? = null
 )

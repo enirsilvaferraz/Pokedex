@@ -2,9 +2,28 @@ package com.example.pokedex.database.entities
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
+import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
 
-@Entity("pokemon")
+@Entity(
+    tableName = "pokemon",
+    foreignKeys = [
+        ForeignKey(
+            entity = TypeTable::class,
+            parentColumns = ["type_id"],
+            childColumns = ["type1"],
+            onDelete = ForeignKey.CASCADE,
+            onUpdate = ForeignKey.CASCADE
+        ),
+        ForeignKey(
+            entity = TypeTable::class,
+            parentColumns = ["type_id"],
+            childColumns = ["type2"],
+            onDelete = ForeignKey.CASCADE,
+            onUpdate = ForeignKey.CASCADE
+        ),
+    ]
+)
 internal data class PokemonTable(
 
     @PrimaryKey
@@ -15,6 +34,12 @@ internal data class PokemonTable(
     val name: String,
 
     @ColumnInfo(name = "image")
-    val image: String
+    val image: String,
+
+    @ColumnInfo(name = "type1")
+    val typeID1: Long,
+
+    @ColumnInfo(name = "type2")
+    val typeID2: Long?
 )
 

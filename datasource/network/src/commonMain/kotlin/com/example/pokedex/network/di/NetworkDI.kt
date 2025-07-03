@@ -3,8 +3,6 @@ package com.example.pokedex.network.di
 import com.example.pokedex.network.adapters.PokemonDataSourceApi
 import com.example.pokedex.network.core.ClientConfig
 import com.example.pokedex.network.core.KtorClientConfig
-import com.example.pokedex.network.datasources.PokedexApi
-import com.example.pokedex.network.datasources.PokedexApiImpl
 import com.example.pokedex.network.datasources.PokemonApi
 import com.example.pokedex.network.datasources.PokemonApiImpl
 import com.example.repositories.datasources.ReadableDataSource
@@ -23,7 +21,6 @@ public object NetworkDI {
         singleOf(::KtorClientConfig) bind ClientConfig::class
 
         // APIs
-        factoryOf(::PokedexApiImpl) bind PokedexApi::class
         factoryOf(::PokemonApiImpl) bind PokemonApi::class
 
         // Data Sources

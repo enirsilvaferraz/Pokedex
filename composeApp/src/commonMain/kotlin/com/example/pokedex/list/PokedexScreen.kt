@@ -31,12 +31,12 @@ import coil3.compose.AsyncImage
 import coil3.compose.LocalPlatformContext
 import coil3.request.ImageRequest
 import coil3.request.crossfade
-import com.example.pokedex.helpers.AppScaffold
 import com.example.pokedex.entity.PokemonVO
 import com.example.pokedex.entity.TypeVO
 import com.example.pokedex.extensions.color
 import com.example.pokedex.extensions.formatedId
 import com.example.pokedex.extensions.formatedName
+import com.example.pokedex.helpers.AppScaffold
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.jetbrains.compose.ui.tooling.preview.PreviewParameter
 import org.jetbrains.compose.ui.tooling.preview.PreviewParameterProvider
@@ -46,7 +46,7 @@ import org.koin.compose.viewmodel.koinViewModel
 internal fun PokedexRoute(
     modifier: Modifier = Modifier,
     vm: PokedexViewModel = koinViewModel(),
-    onClick: (Long) -> Unit
+    onClick: (Long) -> Unit,
 ) {
 
     PokedexScreen(
@@ -60,7 +60,7 @@ internal fun PokedexRoute(
 private fun PokedexScreen(
     modifier: Modifier = Modifier,
     pokemonList: List<PokemonVO>,
-    onClick: (Long) -> Unit
+    onClick: (Long) -> Unit,
 ) {
 
     AppScaffold(
@@ -84,7 +84,7 @@ private fun PokedexScreen(
 private fun ItemList(
     modifier: Modifier = Modifier,
     model: PokemonVO,
-    onClick: (Long) -> Unit
+    onClick: (Long) -> Unit,
 ) {
 
     Card(
@@ -106,7 +106,7 @@ private fun ItemList(
                     Text(model.formatedName())
                 }
 
-                TypeTags(model.types.sortedBy { it.name })
+                TypeTags(listOf(model.type1, model.type2).mapNotNull { it })
             }
 
             Image(model.image, model.formatedName())
@@ -156,7 +156,7 @@ private fun TypeTags(types: List<TypeVO>) {
 @Composable
 @Preview
 private fun PokedexScreenPreview(
-    @PreviewParameter(PokedexScreenPreviewProvider::class) model: List<PokemonVO>
+    @PreviewParameter(PokedexScreenPreviewProvider::class) model: List<PokemonVO>,
 ) {
     PokedexScreen(Modifier, model, {})
 }
@@ -164,16 +164,16 @@ private fun PokedexScreenPreview(
 private class PokedexScreenPreviewProvider : PreviewParameterProvider<List<PokemonVO>> {
     override val values = sequenceOf(
         listOf(
-            PokemonVO(id = 1, name = "Bulbasaur", types = listOf(TypeVO(0L,"Grass"), TypeVO(0L,"Poison")), image = ""),
-            PokemonVO(id = 2, name = "Ivysaur", types = listOf(TypeVO(0L,"Grass"), TypeVO(0L,"Poison")), image = ""),
-            PokemonVO(id = 3, name = "Venusaur", types = listOf(TypeVO(0L,"Grass"), TypeVO(0L,"Poison")), image = ""),
-            PokemonVO(id = 4, name = "Charmander", types = listOf(TypeVO(0L,"Fire")), image = ""),
-            PokemonVO(id = 5, name = "Charmeleon", types = listOf(TypeVO(0L,"Fire")), image = ""),
-            PokemonVO(id = 6, name = "Charizard", types = listOf(TypeVO(0L,"Fire"), TypeVO(0L,"Flying")), image = ""),
-            PokemonVO(id = 7, name = "Squirtle", types = listOf(TypeVO(0L,"Water")), image = ""),
-            PokemonVO(id = 8, name = "Wartortle", types = listOf(TypeVO(0L,"Water")), image = ""),
-            PokemonVO(id = 9, name = "Blastoise", types = listOf(TypeVO(0L,"Water")), image = ""),
-            PokemonVO(id = 10, name = "Caterpie", types = listOf(TypeVO(0L,"Bug")), image = "")
+            PokemonVO(id = 1, name = "Bulbasaur", type1 = TypeVO(0L, "Grass"), type2 = TypeVO(0L, "Poison"), image = ""),
+            PokemonVO(id = 2, name = "Ivysaur", type1 = TypeVO(0L, "Grass"), type2 = TypeVO(0L, "Poison"), image = ""),
+            PokemonVO(id = 3, name = "Venusaur", type1 = TypeVO(0L, "Grass"), type2 = TypeVO(0L, "Poison"), image = ""),
+            PokemonVO(id = 4, name = "Charmander", type1 = TypeVO(0L, "Fire"), image = ""),
+            PokemonVO(id = 5, name = "Charmeleon", type1 = TypeVO(0L, "Fire"), image = ""),
+            PokemonVO(id = 6, name = "Charizard", type1 = TypeVO(0L, "Fire"), type2 = TypeVO(0L, "Flying"), image = ""),
+            PokemonVO(id = 7, name = "Squirtle", type1 = TypeVO(0L, "Water"), image = ""),
+            PokemonVO(id = 8, name = "Wartortle", type1 = TypeVO(0L, "Water"), image = ""),
+            PokemonVO(id = 9, name = "Blastoise", type1 = TypeVO(0L, "Water"), image = ""),
+            PokemonVO(id = 10, name = "Caterpie", type1 = TypeVO(0L, "Bug"), image = "")
         )
     )
 }

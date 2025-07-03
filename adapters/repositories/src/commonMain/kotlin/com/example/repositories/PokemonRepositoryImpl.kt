@@ -17,7 +17,7 @@ internal class PokemonRepositoryImpl(
 
         readableDataSource.firstNotNullOfOrNull { dataSource ->
 
-            dataSource.getAll().takeIf { it.isNotEmpty() }?.let { models ->
+            dataSource.get(152,0).takeIf { it.isNotEmpty() }?.let { models ->
 
                 models.forEach {
                     emit(it)
