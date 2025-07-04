@@ -11,13 +11,16 @@ object RepositoryDI {
         // Repositories
         factory<PokemonRepository> {
             PokemonRepositoryImpl(
-                readableDataSource = listOf(
-                    get(AppQualifiers.Pokemon.database()),
-                    get(AppQualifiers.Pokemon.network())
-                ),
-                writableDataSource = listOf(
-                    get(AppQualifiers.Pokemon.database())
-                )
+//                readableDataSource = listOf(
+//                    get(AppQualifiers.Pokemon.database()),
+//                    get(AppQualifiers.Pokemon.network())
+//                ),
+//                writableDataSource = listOf(
+//                    get(AppQualifiers.Pokemon.database())
+//                )
+                get(),
+                get(),
+                get()
             )
         }
     }

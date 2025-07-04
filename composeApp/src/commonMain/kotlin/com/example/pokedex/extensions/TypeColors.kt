@@ -1,6 +1,7 @@
 package com.example.pokedex.extensions
 
 import androidx.compose.ui.graphics.Color
+import com.example.pokedex.entity.TypeVO
 
 /**
  * Returns a specific color associated with a given Pokemon type name.
@@ -9,8 +10,8 @@ import androidx.compose.ui.graphics.Color
  * @param typeName The name of the Pokemon type (e.g., "grass", "fire").
  * @return The Color associated with the type. Defaults to a neutral Gray if the type is not recognized.
  */
-fun String.getColorForType(): Color {
-    return when (this.lowercase()) {
+fun TypeVO?.getColorForType(): Color {
+    return when (this?.name?.lowercase()) {
         "normal" -> Color(0xFFA8A77A)    // Normal - Grayish Beige
         "fire" -> Color(0xFFEE8130)      // Fire - Orange-Red
         "water" -> Color(0xFF6390F0)     // Water - Blue

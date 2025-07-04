@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
@@ -88,7 +89,7 @@ private fun ItemList(
 ) {
 
     Card(
-        modifier = modifier.padding(vertical = 4.dp),
+        modifier = modifier.padding(vertical = 4.dp).height(95.dp),
         colors = CardDefaults.cardColors(containerColor = model.color().copy(alpha = 0.3f))
     ) {
 
@@ -138,13 +139,15 @@ private fun TypeTags(types: List<TypeVO>) {
 
         items(types) { typeVO ->
 
+            if (typeVO.name.isEmpty()) return@items
+
             Box(
                 modifier = Modifier.clip(RoundedCornerShape(6.dp)).background(Color.Gray.copy(alpha = 0.2f)),
                 contentAlignment = Alignment.Center
             ) {
 
                 Text(
-                    modifier = Modifier.padding(horizontal = 8.dp, vertical = 6.dp),
+                    modifier = Modifier.padding(horizontal = 8.dp, vertical = 6.dp).widthIn(min = 40.dp),
                     text = typeVO.name,
                     style = MaterialTheme.typography.bodySmall
                 )

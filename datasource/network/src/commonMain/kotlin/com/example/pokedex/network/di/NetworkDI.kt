@@ -1,12 +1,11 @@
 package com.example.pokedex.network.di
 
-import com.example.pokedex.network.adapters.PokemonDataSourceApi
 import com.example.pokedex.network.core.ClientConfig
 import com.example.pokedex.network.core.KtorClientConfig
+import com.example.pokedex.network.datasources.PokedexApi
 import com.example.pokedex.network.datasources.PokemonApi
-import com.example.pokedex.network.datasources.PokemonApiImpl
-import com.example.repositories.datasources.ReadableDataSource
-import com.example.repositories.di.AppQualifiers
+import com.example.repositories.datasources.PokedexDataSource
+import com.example.repositories.datasources.PokemonDataSource
 import org.koin.core.module.Module
 import org.koin.core.module.dsl.factoryOf
 import org.koin.core.module.dsl.singleOf
@@ -21,9 +20,11 @@ public object NetworkDI {
         singleOf(::KtorClientConfig) bind ClientConfig::class
 
         // APIs
-        factoryOf(::PokemonApiImpl) bind PokemonApi::class
+//        factoryOf(::PokemonApiImpl) bind PokemonApi::class
 
         // Data Sources
-        factoryOf(::PokemonDataSourceApi, { qualifier = AppQualifiers.Pokemon.network() }) bind ReadableDataSource::class
+//        factoryOf(::PokemonDataSourceApi, { qualifier = AppQualifiers.Pokemon.network() }) bind ReadableDataSource::class
+        factoryOf(::PokedexApi) bind PokedexDataSource.Network::class
+        factoryOf(::PokemonApi) bind PokemonDataSource.Network::class
     }
 }

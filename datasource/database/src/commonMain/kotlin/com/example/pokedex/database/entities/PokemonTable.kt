@@ -37,9 +37,9 @@ internal data class PokemonTable(
     val image: String,
 
     @ColumnInfo(name = "type1")
-    val typeID1: Long,
+    val typeID1: Long? = null,
 
     @ColumnInfo(name = "type2")
-    val typeID2: Long?
+    val typeID2: Long? = null,
 )
 

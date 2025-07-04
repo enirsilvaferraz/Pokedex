@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "d5a25a1aefc07e34d5f992b5ecafd68d",
+    "identityHash": "9c4736337b8f347217782ef565e79fa5",
     "entities": [
       {
         "tableName": "pokemon",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`pokemon_id` INTEGER NOT NULL, `name` TEXT NOT NULL, `image` TEXT NOT NULL, `type1` INTEGER NOT NULL, `type2` INTEGER, PRIMARY KEY(`pokemon_id`), FOREIGN KEY(`type1`) REFERENCES `type`(`type_id`) ON UPDATE CASCADE ON DELETE CASCADE , FOREIGN KEY(`type2`) REFERENCES `type`(`type_id`) ON UPDATE CASCADE ON DELETE CASCADE )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`pokemon_id` INTEGER NOT NULL, `name` TEXT NOT NULL, `image` TEXT NOT NULL, `type1` INTEGER, `type2` INTEGER, PRIMARY KEY(`pokemon_id`), FOREIGN KEY(`type1`) REFERENCES `type`(`type_id`) ON UPDATE CASCADE ON DELETE CASCADE , FOREIGN KEY(`type2`) REFERENCES `type`(`type_id`) ON UPDATE CASCADE ON DELETE CASCADE )",
         "fields": [
           {
             "fieldPath": "id",
@@ -29,8 +29,7 @@
           {
             "fieldPath": "typeID1",
             "columnName": "type1",
-            "affinity": "INTEGER",
-            "notNull": true
+            "affinity": "INTEGER"
           },
           {
             "fieldPath": "typeID2",
@@ -96,7 +95,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'd5a25a1aefc07e34d5f992b5ecafd68d')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '9c4736337b8f347217782ef565e79fa5')"
     ]
   }
 }

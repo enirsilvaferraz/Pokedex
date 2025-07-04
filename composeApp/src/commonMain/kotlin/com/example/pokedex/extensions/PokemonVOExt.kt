@@ -7,6 +7,6 @@ import com.example.pokedex.formatId
 
 fun PokemonVO.formatedId() = formatId(id)
 
-fun PokemonVO.color() = type1.name.getColorForType()
+fun PokemonVO.color() = type1.getColorForType()
 
 fun PokemonVO.formatedName() = name.capitalize(Locale.current)

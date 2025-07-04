@@ -7,30 +7,30 @@ import com.example.pokedex.database.entities.TypeTable
 import com.example.pokedex.database.relationships.PokemonAndType
 import com.example.pokedex.entity.PokemonVO
 import com.example.pokedex.entity.TypeVO
-import com.example.repositories.datasources.ReadableDataSource
-import com.example.repositories.datasources.WritableDataSource
+import com.example.repositories.datasources.PokemonDataSource
+import kotlinx.coroutines.flow.map
 
 internal class PokemonDataSourceDB(
     private val pokemonDao: PokemonDao,
     private val typeDao: TypeDao,
-) : ReadableDataSource<PokemonVO>, WritableDataSource<PokemonVO> {
+) : PokemonDataSource.Database {
 
-    override suspend fun get(limit: Int, offset: Int) =
-        pokemonDao.get(limit, offset).map { it.toVo() }
+    override suspend fun getAll() =
+        pokemonDao.getAll().map { it.map { it.toVo() } }
 
     override suspend fun insert(entities: List<PokemonVO>) {
+        pokemonDao.insert(*entities.map { it.toTable() }.toTypedArray())
+    }
 
-        val types1 = entities.map { it.type1.toTable() }
-        val types2 = entities.mapNotNull { it.type2?.toTable() }
+    override suspend fun update(vararg entities: PokemonVO) {
 
-        val types = types1 + types2
-
+        val types = (entities.mapNotNull { it.type1 } + entities.mapNotNull { it.type2 }).map { it.toTable() }
         types.distinctBy { it.id }.also {
             typeDao.insertAll(*it.toTypedArray())
         }
 
         entities.map { it.toTable() }.also { pokemon ->
-            pokemonDao.insertAll(*pokemon.toTypedArray())
+            pokemonDao.update(*pokemon.toTypedArray())
         }
     }
 
@@ -43,7 +43,7 @@ internal class PokemonDataSourceDB(
         id = id,
         name = name,
         image = image,
-        typeID1 = type1.id,
+        typeID1 = type1?.id,
         typeID2 = type2?.id
     )
 
@@ -56,7 +56,7 @@ internal class PokemonDataSourceDB(
         id = pokemon.id,
         name = pokemon.name,
         image = pokemon.image,
-        type1 = type1.transform(),
+        type1 = type1?.transform(),
         type2 = type2?.transform()
     )
 }

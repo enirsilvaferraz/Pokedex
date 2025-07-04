@@ -1,30 +1,39 @@
 package com.example.repositories
 
+
 import com.example.pokedex.entity.PokemonVO
-import com.example.repositories.datasources.ReadableDataSource
-import com.example.repositories.datasources.WritableDataSource
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.IO
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOn
+import com.example.repositories.datasources.PokedexDataSource
+import com.example.repositories.datasources.PokemonDataSource
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.map
 
 internal class PokemonRepositoryImpl(
-    private val readableDataSource: List<ReadableDataSource<PokemonVO>>,
-    private val writableDataSource: List<WritableDataSource<PokemonVO>>,
+//    private val readableDataSource: List<ReadableDataSource<PokemonVO>>,
+//    private val writableDataSource: List<WritableDataSource<PokemonVO>>,
+    private val pokedexApi: PokedexDataSource.Network,
+    private val pokemonApi: PokemonDataSource.Network,
+    private val pokemonDb: PokemonDataSource.Database,
 ) : PokemonRepository {
 
-    override suspend fun getAll() = flow {
+    override suspend fun getAll(): Flow<List<PokemonVO>> {
+        return pokemonDb.getAll()
+    }
 
-        readableDataSource.firstNotNullOfOrNull { dataSource ->
+    override suspend fun populateDatabase() {
 
-            dataSource.get(152,0).takeIf { it.isNotEmpty() }?.let { models ->
-
-                models.forEach {
-                    emit(it)
+        pokemonDb.getAll().collect {
+            if (it.isEmpty()) {
+                pokedexApi.get(2).map { it.pokemon }.collect {
+                    pokemonDb.insert(it)
                 }
-
-                writableDataSource.forEach { dataSource -> dataSource.insert(models) }
+            } else {
+                it.filter { it.type1 == null }.forEach {
+                    pokemonApi.get(it.id).collect {
+                        pokemonDb.update(it)
+                    }
+                }
             }
         }
-    }.flowOn(Dispatchers.IO)
+    }
 }
