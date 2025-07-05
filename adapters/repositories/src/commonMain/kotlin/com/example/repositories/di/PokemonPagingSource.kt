@@ -9,11 +9,6 @@ class PokemonPagingSource(
     private val pokemonApi: PokemonDataSource.Network,
 ) : PagingSource<Int, PokemonVO>() {
 
-    protected suspend fun fetchData(currentPage: Int, limit: Int): List<PokemonVO> {
-        val offset = (currentPage - 1) * limit + 1
-        return pokemonApi.get(limit = limit, offset = offset)
-    }
-
     override fun getRefreshKey(state: PagingState<Int, PokemonVO>): Int? {
         // Try to find the page key of the closest page to anchorPosition from
         // either the prevKey or the nextKey; you need to handle nullability
@@ -39,12 +34,13 @@ class PokemonPagingSource(
         val pokemonList = fetchData(limit = limit, currentPage = currentPage)
 
         val prevKey = if (currentPage == 1) null else currentPage - 1
-        val nextKey = (currentPage + 1).takeIf { it <= 500 }
+        val nextKey = (currentPage + 1).takeIf { it <= 151 }
 
-        return LoadResult.Page(
-            data = pokemonList,
-            prevKey = prevKey,
-            nextKey = nextKey
-        )
+        return LoadResult.Page(data = pokemonList, prevKey = prevKey, nextKey = nextKey)
+    }
+
+    private suspend fun fetchData(currentPage: Int, limit: Int): List<PokemonVO> {
+        val offset = (currentPage - 1) * limit + 1
+        return pokemonApi.get(limit = limit, offset = offset)
     }
 }

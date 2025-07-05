@@ -26,13 +26,6 @@ internal class PokemonApi(
             get(id.toLong()).lastOrNull()
         }
 
-
-//    override suspend fun get(limit: Int, offset: Int) = config.client.get {
-//        url("pokemon")
-//        parameter("limit", limit)
-//        parameter("offset", offset)
-//    }.body<ServiceOffsetResult<NamedApiResource>>().results
-
     private fun Pokemon.toVO(): PokemonVO = PokemonVO(
         id = id,
         name = name,

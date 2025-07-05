@@ -71,7 +71,7 @@ private fun PokedexScreen(
 
     AppScaffold(
         modifier = modifier,
-        title = "Kanto"
+        title = "Pokedex"
     ) { innerModifier ->
 
         LazyColumn(
@@ -80,13 +80,10 @@ private fun PokedexScreen(
         ) {
 
             items(pokemonList.itemCount, key = pokemonList.itemKey { it.id }) { index ->
-                val item = pokemonList[index] ?: return@items
-                ItemList(model = item, onClick = onClick)
+                pokemonList[index]?.let { item ->
+                    ItemList(model = item, onClick = onClick)
+                }
             }
-
-//            items(items = pokemonList, key = { it.id }) {
-//                ItemList(model = it, onClick = onClick)
-//            }
         }
     }
 }
