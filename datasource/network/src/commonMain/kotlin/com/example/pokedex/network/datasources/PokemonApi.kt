@@ -9,6 +9,7 @@ import com.example.repositories.datasources.PokemonDataSource
 import io.ktor.client.call.body
 import io.ktor.client.request.get
 import io.ktor.client.request.url
+import kotlinx.coroutines.flow.lastOrNull
 
 internal class PokemonApi(
     private val config: ClientConfig,
@@ -19,6 +20,12 @@ internal class PokemonApi(
             url("pokemon/$id")
         }.body<Pokemon>().toVO()
     }
+
+    override suspend fun get(limit: Int, offset: Int) =
+        (offset until (offset + limit)).mapNotNull { id ->
+            get(id.toLong()).lastOrNull()
+        }
+
 
 //    override suspend fun get(limit: Int, offset: Int) = config.client.get {
 //        url("pokemon")

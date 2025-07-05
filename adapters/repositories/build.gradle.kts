@@ -34,6 +34,10 @@ kotlin {
                 implementation(project.dependencies.platform(libs.koin.bom))
                 implementation(libs.koin.core)
 
+                implementation("app.cash.paging:paging-compose-common:3.3.0-alpha02-0.5.1")
+
+
+
                 implementation(project(path = ":business:entity"))
 //                implementation(project(path = ":datasource:network"))
             }

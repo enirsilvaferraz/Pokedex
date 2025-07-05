@@ -7,6 +7,8 @@ interface PokemonDataSource {
 
     interface Network {
         suspend fun get(id: Long): Flow<PokemonVO>
+
+        suspend fun get(limit: Int, offset: Int): List<PokemonVO>
     }
 
     interface Database {

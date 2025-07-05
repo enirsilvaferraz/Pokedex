@@ -28,6 +28,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import app.cash.paging.compose.LazyPagingItems
+import app.cash.paging.compose.collectAsLazyPagingItems
+import app.cash.paging.compose.itemKey
 import coil3.compose.AsyncImage
 import coil3.compose.LocalPlatformContext
 import coil3.request.ImageRequest
@@ -50,9 +53,11 @@ internal fun PokedexRoute(
     onClick: (Long) -> Unit,
 ) {
 
+    val list = vm.flow.collectAsLazyPagingItems()
+
     PokedexScreen(
         modifier = modifier,
-        pokemonList = vm.pokemonList,
+        pokemonList = list,
         onClick = onClick
     )
 }
@@ -60,7 +65,7 @@ internal fun PokedexRoute(
 @Composable
 private fun PokedexScreen(
     modifier: Modifier = Modifier,
-    pokemonList: List<PokemonVO>,
+    pokemonList: LazyPagingItems<PokemonVO>,
     onClick: (Long) -> Unit,
 ) {
 
@@ -74,9 +79,14 @@ private fun PokedexScreen(
             contentPadding = PaddingValues(24.dp)
         ) {
 
-            items(items = pokemonList, key = { it.id }) {
-                ItemList(model = it, onClick = onClick)
+            items(pokemonList.itemCount, key = pokemonList.itemKey { it.id }) { index ->
+                val item = pokemonList[index] ?: return@items
+                ItemList(model = item, onClick = onClick)
             }
+
+//            items(items = pokemonList, key = { it.id }) {
+//                ItemList(model = it, onClick = onClick)
+//            }
         }
     }
 }
@@ -142,12 +152,12 @@ private fun TypeTags(types: List<TypeVO>) {
             if (typeVO.name.isEmpty()) return@items
 
             Box(
-                modifier = Modifier.clip(RoundedCornerShape(6.dp)).background(Color.Gray.copy(alpha = 0.2f)),
+                modifier = Modifier.clip(RoundedCornerShape(6.dp)).background(Color.Gray.copy(alpha = 0.2f)).widthIn(min = 40.dp),
                 contentAlignment = Alignment.Center
             ) {
 
                 Text(
-                    modifier = Modifier.padding(horizontal = 8.dp, vertical = 6.dp).widthIn(min = 40.dp),
+                    modifier = Modifier.padding(horizontal = 8.dp, vertical = 6.dp),
                     text = typeVO.name,
                     style = MaterialTheme.typography.bodySmall
                 )
@@ -161,7 +171,7 @@ private fun TypeTags(types: List<TypeVO>) {
 private fun PokedexScreenPreview(
     @PreviewParameter(PokedexScreenPreviewProvider::class) model: List<PokemonVO>,
 ) {
-    PokedexScreen(Modifier, model, {})
+//    PokedexScreen(Modifier, model, {})
 }
 
 private class PokedexScreenPreviewProvider : PreviewParameterProvider<List<PokemonVO>> {
