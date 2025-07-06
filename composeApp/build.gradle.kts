@@ -59,8 +59,8 @@ kotlin {
 
             implementation("org.jetbrains.androidx.navigation:navigation-compose:2.9.0-beta03")
 
-            implementation(libs.paging.compose.common)
             implementation(libs.paging.common)
+            implementation(libs.paging.compose.common)
 
             implementation(libs.kotlinx.serialization.json)
 

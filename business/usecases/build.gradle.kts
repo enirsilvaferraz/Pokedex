@@ -28,6 +28,12 @@ kotlin {
             dependencies {
                 implementation(libs.kotlin.stdlib)
                 api(project(path = ":business:entity"))
+                implementation(project(path = ":adapters::repositories"))
+
+                implementation(project.dependencies.platform(libs.koin.bom))
+                implementation(libs.koin.core)
+
+                implementation(libs.paging.common)
             }
         }
 
