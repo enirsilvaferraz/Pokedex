@@ -18,9 +18,6 @@ internal class PokemonDataSourceDB(
     private val typeDao: TypeDao,
 ) : PokemonDataSource.Database {
 
-    override suspend fun getAll() =
-        pokemonDao.getAll().map { it.map { it.toVo() } }
-
     override suspend fun get(limit: Int, offset: Int): List<PokemonVO> = withContext(Dispatchers.IO) {
         pokemonDao.get(limit = limit, offset = offset).map { it.toVo() }
     }

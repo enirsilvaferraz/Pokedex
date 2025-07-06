@@ -3,6 +3,7 @@ package com.example.pokedex.network.datasources
 import com.example.pokedex.entity.PokemonVO
 import com.example.pokedex.entity.TypeVO
 import com.example.pokedex.network.core.ClientConfig
+import com.example.pokedex.network.core.emitFlow
 import com.example.pokedex.network.responses.Pokemon
 import com.example.pokedex.network.responses.TypeEntry
 import com.example.repositories.datasources.PokemonDataSource

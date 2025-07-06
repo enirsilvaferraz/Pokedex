@@ -12,7 +12,6 @@ interface PokemonDataSource {
     }
 
     interface Database {
-        suspend fun getAll(): Flow<List<PokemonVO>>
         suspend fun insert(entities: List<PokemonVO>)
         suspend fun update(entities: List<PokemonVO>)
         suspend fun get(limit: Int, offset: Int): List<PokemonVO>

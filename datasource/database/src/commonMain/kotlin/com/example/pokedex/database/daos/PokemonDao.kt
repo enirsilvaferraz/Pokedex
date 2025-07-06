@@ -17,9 +17,6 @@ internal interface PokemonDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun update(vararg entity: PokemonTable)
 
-    @Query("SELECT * FROM Pokemon")
-    fun getAll(): Flow<List<PokemonAndType>>
-
     @Query("SELECT * FROM Pokemon LIMIT :limit OFFSET :offset")
     suspend fun get(limit: Int, offset: Int): List<PokemonAndType>
 }
