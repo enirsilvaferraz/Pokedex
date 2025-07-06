@@ -49,6 +49,9 @@ kotlin {
                 // Room
                 implementation(libs.room.runtime)
                 implementation(libs.sqlite.bundled)
+
+                implementation(libs.paging.common)
+
             }
         }
     }

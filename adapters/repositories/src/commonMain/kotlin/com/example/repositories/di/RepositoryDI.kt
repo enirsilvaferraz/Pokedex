@@ -2,6 +2,8 @@ package com.example.repositories.di
 
 import com.example.repositories.PokemonRepository
 import com.example.repositories.PokemonRepositoryImpl
+import org.koin.core.module.dsl.factoryOf
+import org.koin.dsl.bind
 import org.koin.dsl.module
 
 object RepositoryDI {
@@ -9,19 +11,6 @@ object RepositoryDI {
     operator fun invoke() = module {
 
         // Repositories
-        factory<PokemonRepository> {
-            PokemonRepositoryImpl(
-//                readableDataSource = listOf(
-//                    get(AppQualifiers.Pokemon.database()),
-//                    get(AppQualifiers.Pokemon.network())
-//                ),
-//                writableDataSource = listOf(
-//                    get(AppQualifiers.Pokemon.database())
-//                )
-                get(),
-                get(),
-                get()
-            )
-        }
+        factoryOf(::PokemonRepositoryImpl) bind PokemonRepository::class
     }
 }

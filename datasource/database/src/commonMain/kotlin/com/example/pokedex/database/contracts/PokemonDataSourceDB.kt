@@ -8,7 +8,10 @@ import com.example.pokedex.database.relationships.PokemonAndType
 import com.example.pokedex.entity.PokemonVO
 import com.example.pokedex.entity.TypeVO
 import com.example.repositories.datasources.PokemonDataSource
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.IO
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.withContext
 
 internal class PokemonDataSourceDB(
     private val pokemonDao: PokemonDao,
@@ -18,11 +21,15 @@ internal class PokemonDataSourceDB(
     override suspend fun getAll() =
         pokemonDao.getAll().map { it.map { it.toVo() } }
 
-    override suspend fun insert(entities: List<PokemonVO>) {
+    override suspend fun get(limit: Int, offset: Int): List<PokemonVO> = withContext(Dispatchers.IO) {
+        pokemonDao.get(limit = limit, offset = offset).map { it.toVo() }
+    }
+
+    override suspend fun insert(entities: List<PokemonVO>) = withContext(Dispatchers.IO) {
         pokemonDao.insert(*entities.map { it.toTable() }.toTypedArray())
     }
 
-    override suspend fun update(vararg entities: PokemonVO) {
+    override suspend fun update(entities: List<PokemonVO>): Unit  = withContext(Dispatchers.IO) {
 
         val types = (entities.mapNotNull { it.type1 } + entities.mapNotNull { it.type2 }).map { it.toTable() }
         types.distinctBy { it.id }.also {

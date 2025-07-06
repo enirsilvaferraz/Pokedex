@@ -1,39 +1,37 @@
 package com.example.repositories
 
-
+import app.cash.paging.PagingState
 import com.example.pokedex.entity.PokemonVO
-import com.example.repositories.datasources.PokedexDataSource
 import com.example.repositories.datasources.PokemonDataSource
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.IO
+import kotlinx.coroutines.withContext
 
 internal class PokemonRepositoryImpl(
-//    private val readableDataSource: List<ReadableDataSource<PokemonVO>>,
-//    private val writableDataSource: List<WritableDataSource<PokemonVO>>,
-    private val pokedexApi: PokedexDataSource.Network,
-    private val pokemonApi: PokemonDataSource.Network,
-    private val pokemonDb: PokemonDataSource.Database,
-) : PokemonRepository {
+    private val api: PokemonDataSource.Network,
+    private val database: PokemonDataSource.Database,
+) : PokemonRepository() {
 
-    override suspend fun getAll(): Flow<List<PokemonVO>> {
-        return pokemonDb.getAll()
+    override fun getRefreshKey(state: PagingState<Int, PokemonVO>) = state.anchorPosition
+
+    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, PokemonVO> {
+
+        val currentPage = params.key ?: 1
+        val limit = params.loadSize
+
+        val pokemonList = fetchData(limit = limit, currentPage = currentPage)
+
+        val prevKey = if (currentPage == 1) null else currentPage - 1
+        val nextKey = (currentPage + 1).takeIf { it <= 151 }
+
+        return LoadResult.Page(data = pokemonList, prevKey = prevKey, nextKey = nextKey)
     }
 
-    override suspend fun populateDatabase() {
+    private suspend fun fetchData(currentPage: Int, limit: Int): List<PokemonVO> = withContext(Dispatchers.IO) {
 
-        pokemonDb.getAll().collect {
-            if (it.isEmpty()) {
-                pokedexApi.get(2).map { it.pokemon }.collect {
-                    pokemonDb.insert(it)
-                }
-            } else {
-                it.filter { it.type1 == null }.forEach {
-                    pokemonApi.get(it.id).collect {
-                        pokemonDb.update(it)
-                    }
-                }
-            }
-        }
+        val offset = (currentPage - 1) * limit
+
+        database.get(limit, offset).takeIf { it.isNotEmpty() }
+            ?: api.get(limit, offset).also { it -> database.update(it) }
     }
 }

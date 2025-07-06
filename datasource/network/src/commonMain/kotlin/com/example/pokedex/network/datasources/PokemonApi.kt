@@ -21,10 +21,11 @@ internal class PokemonApi(
         }.body<Pokemon>().toVO()
     }
 
-    override suspend fun get(limit: Int, offset: Int) =
-        (offset until (offset + limit)).mapNotNull { id ->
+    override suspend fun get(limit: Int, offset: Int) = (offset + 1).let { relativeOffset ->
+        (relativeOffset until (relativeOffset + limit)).mapNotNull { id ->
             get(id.toLong()).lastOrNull()
         }
+    }
 
     private fun Pokemon.toVO(): PokemonVO = PokemonVO(
         id = id,
