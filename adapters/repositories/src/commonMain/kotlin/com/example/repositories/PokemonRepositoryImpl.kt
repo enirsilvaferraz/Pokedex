@@ -32,6 +32,6 @@ internal class PokemonRepositoryImpl(
         val offset = (currentPage - 1) * limit
 
         database.get(limit, offset).takeIf { it.isNotEmpty() }
-            ?: api.get(limit, offset).also { it -> database.update(it) }
+            ?: api.get(limit, offset).also { it -> database.insert(it) }
     }
 }

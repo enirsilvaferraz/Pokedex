@@ -10,10 +10,7 @@ import com.example.pokedex.database.entities.TypeTable
 internal interface TypeDao {
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun insertAll(vararg entity: TypeTable)
-
-    @Query("SELECT * FROM type")
-    suspend fun getAll(): List<TypeTable>
+    suspend fun insert(vararg entity: TypeTable)
 
     @Query("SELECT * FROM type WHERE type_id = :id")
     suspend fun getById(id: Long): TypeTable?

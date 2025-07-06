@@ -1,6 +1,6 @@
 package com.example.pokedex.database.di
 
-import com.example.pokedex.database.contracts.PokemonDataSourceDB
+import com.example.pokedex.database.datasources.PokemonDataSourceDB
 import com.example.pokedex.database.core.AppDatabase
 import com.example.pokedex.database.core.PlatformDataBaseBuilder
 import com.example.repositories.datasources.PokemonDataSource

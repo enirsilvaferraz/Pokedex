@@ -1,4 +1,4 @@
-package com.example.pokedex.network.core
+package com.example.pokedex.network.helpers
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
