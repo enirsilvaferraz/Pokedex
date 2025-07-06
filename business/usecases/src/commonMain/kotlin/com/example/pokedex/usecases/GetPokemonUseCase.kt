@@ -4,6 +4,6 @@ import app.cash.paging.PagingData
 import com.example.pokedex.entity.PokemonVO
 import kotlinx.coroutines.flow.Flow
 
-interface GetPokemonUseCase {
-    operator fun invoke(): Flow<PagingData<PokemonVO>>
+public interface GetPokemonUseCase {
+    public operator fun invoke(): Flow<PagingData<PokemonVO>>
 }

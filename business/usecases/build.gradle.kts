@@ -5,6 +5,8 @@ plugins {
 
 kotlin {
 
+    explicitApi()
+
     androidLibrary {
         namespace = "com.example.pokedex.usecases"
         compileSdk = libs.versions.android.targetSdk.get().toInt()

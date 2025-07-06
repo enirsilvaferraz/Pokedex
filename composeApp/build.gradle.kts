@@ -14,6 +14,8 @@ plugins {
 
 kotlin {
 
+//    explicitApi()
+
     androidTarget {
         @OptIn(ExperimentalKotlinGradlePluginApi::class)
         compilerOptions {

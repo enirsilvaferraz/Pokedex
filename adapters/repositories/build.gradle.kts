@@ -6,6 +6,8 @@ plugins {
 
 kotlin {
 
+    explicitApi()
+
     androidLibrary {
         namespace = "com.example.repositories"
         compileSdk = libs.versions.android.targetSdk.get().toInt()
