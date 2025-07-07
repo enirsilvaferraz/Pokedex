@@ -11,6 +11,8 @@ internal fun Pokemon.toVO(): PokemonVO = PokemonVO(
     image = sprites.frontDefault,
     type1 = types.find { it.slot == 1 }?.toVO(),
     type2 = types.find { it.slot == 2 }?.toVO(),
+//    weightInKg = weight.toFloat(),
+//    heightInMeters = height.toFloat(),
 )
 
 private fun TypeEntry.toVO(): TypeVO = TypeVO(

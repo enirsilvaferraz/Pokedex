@@ -37,9 +37,9 @@ import coil3.request.ImageRequest
 import coil3.request.crossfade
 import com.example.pokedex.entity.PokemonVO
 import com.example.pokedex.entity.TypeVO
-import com.example.pokedex.extensions.color
-import com.example.pokedex.extensions.formatedId
-import com.example.pokedex.extensions.formatedName
+import com.example.pokedex.helpers.color
+import com.example.pokedex.helpers.formatedId
+import com.example.pokedex.helpers.formatedName
 import com.example.pokedex.helpers.AppScaffold
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.jetbrains.compose.ui.tooling.preview.PreviewParameter

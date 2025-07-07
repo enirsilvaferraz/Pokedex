@@ -1,4 +1,4 @@
-package com.example.pokedex.extensions
+package com.example.pokedex.helpers
 
 import androidx.compose.ui.graphics.Color
 import com.example.pokedex.entity.TypeVO

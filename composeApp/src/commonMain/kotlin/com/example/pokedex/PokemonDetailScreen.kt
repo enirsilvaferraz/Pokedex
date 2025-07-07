@@ -1,23 +1,42 @@
 package com.example.pokedex
 
+//import androidx.compose.material.icons.filled.Scale
+//import androidx.compose.material.icons.filled.Height
+//import androidx.compose.material.icons.filled.Category
+//import androidx.compose.material.icons.filled.Shield
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.RowScope
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material.icons.filled.Favorite
-import androidx.compose.material.icons.filled.FavoriteBorder
-//import androidx.compose.material.icons.filled.Scale
-//import androidx.compose.material.icons.filled.Height
-//import androidx.compose.material.icons.filled.Category
 import androidx.compose.material.icons.filled.Info
-//import androidx.compose.material.icons.filled.Shield
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.LinearProgressIndicator
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -30,25 +49,24 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
+import com.example.pokedex.entity.TypeVO
+import com.example.pokedex.helpers.AppScaffold
+import com.example.pokedex.helpers.getColorForType
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 // --- Data Classes ---
-data class PokemonTypeVo(
-    val name: String,
-    val color: Color
-)
 
 data class PokemonStatVo(
     val name: String,
     val value: Int,
-    val maxValue: Int = 100 // Assuming a max value for progress indication
+    val maxValue: Int = 100, // Assuming a max value for progress indication
 )
 
 data class PokemonDetailVo(
     val id: Long,
     val name: String,
     val imageUrl: String,
-    val types: List<PokemonTypeVo>,
+    val types: List<TypeVO>,
     val description: String,
     val weightInKg: Float,
     val heightInMeters: Float,
@@ -57,7 +75,7 @@ data class PokemonDetailVo(
     val genderRatioMale: Float, // e.g., 0.875 for 87.5% male
     val baseStats: List<PokemonStatVo>,
     val primaryColor: Color,
-    val isFavorite: Boolean
+    val isFavorite: Boolean,
 ) {
     fun getFormattedId(): String = formatId(id)
 }
@@ -66,10 +84,7 @@ data class PokemonDetailVo(
 private object PokemonDetailDimens {
     val screenPadding: Dp = 16.dp
     val sectionSpacing: Dp = 24.dp
-    val topSectionHeight: Dp = 300.dp
     val pokemonImageSize: Dp = 200.dp
-    val statItemIconSize: Dp = 24.dp
-    val genderBarHeight: Dp = 8.dp
 }
 
 // --- Main Composable ---
@@ -77,12 +92,10 @@ private object PokemonDetailDimens {
 internal fun PokemonDetailRoute(pokemonId: Long /* or pass full VO if fetched earlier */) {
     // In a real app, you would fetch PokemonDetailVo using pokemonId via a ViewModel
     val samplePokemon: PokemonDetailVo = createSamplePokemonDetailVo().copy(id = pokemonId) // Replace with actual data fetching
-    var isFavoriteState: Boolean by remember { mutableStateOf(samplePokemon.isFavorite) }
 
     PokemonDetailScreen(
-        pokemonDetail = samplePokemon.copy(isFavorite = isFavoriteState),
+        pokemonDetail = samplePokemon,
         onNavigateBack = { /* TODO: Implement navigation back */ },
-        onToggleFavorite = { isFavoriteState = !isFavoriteState }
     )
 }
 
@@ -90,26 +103,21 @@ internal fun PokemonDetailRoute(pokemonId: Long /* or pass full VO if fetched ea
 private fun PokemonDetailScreen(
     pokemonDetail: PokemonDetailVo,
     onNavigateBack: () -> Unit,
-    onToggleFavorite: () -> Unit
 ) {
-    Surface(
-        modifier = Modifier.fillMaxSize(),
-        color = MaterialTheme.colorScheme.background
-    ) {
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .verticalScroll(rememberScrollState())
-        ) {
+
+    AppScaffold {
+
+        Column(modifier = Modifier.fillMaxSize().verticalScroll(rememberScrollState())) {
+
             TopSection(
                 pokemonImageUrl = pokemonDetail.imageUrl,
                 pokemonName = pokemonDetail.name,
                 backgroundColor = pokemonDetail.primaryColor,
-                isFavorite = pokemonDetail.isFavorite,
-                onNavigateBack = onNavigateBack,
-                onToggleFavorite = onToggleFavorite
+                onNavigateBack = onNavigateBack
             )
+
             Spacer(modifier = Modifier.height(PokemonDetailDimens.sectionSpacing))
+
             NameAndIdSection(
                 name = pokemonDetail.name,
                 formattedId = pokemonDetail.getFormattedId()
@@ -145,14 +153,12 @@ private fun TopSection(
     pokemonImageUrl: String,
     pokemonName: String,
     backgroundColor: Color,
-    isFavorite: Boolean,
     onNavigateBack: () -> Unit,
-    onToggleFavorite: () -> Unit
 ) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .height(PokemonDetailDimens.topSectionHeight)
+            .height(200.dp)
     ) {
         CurvedBackground(color = backgroundColor)
         Row(
@@ -168,13 +174,6 @@ private fun TopSection(
                     imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                     contentDescription = "Navigate Back",
                     tint = Color.White
-                )
-            }
-            IconButton(onClick = onToggleFavorite) {
-                Icon(
-                    imageVector = if (isFavorite) Icons.Filled.Favorite else Icons.Filled.FavoriteBorder,
-                    contentDescription = if (isFavorite) "Remove from favorites" else "Add to favorites",
-                    tint = if (isFavorite) Color.Red else Color.White
                 )
             }
         }
@@ -231,7 +230,7 @@ private fun NameAndIdSection(name: String, formattedId: String) {
 }
 
 @Composable
-private fun TypeTagsSection(types: List<PokemonTypeVo>) {
+private fun TypeTagsSection(types: List<TypeVO>) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -239,8 +238,8 @@ private fun TypeTagsSection(types: List<PokemonTypeVo>) {
         horizontalArrangement = Arrangement.Center,
         verticalAlignment = Alignment.CenterVertically
     ) {
-        types.forEachIndexed { index: Int, type: PokemonTypeVo ->
-            TypeTag(typeName = type.name, typeColor = type.color)
+        types.forEachIndexed { index: Int, type: TypeVO ->
+            TypeTag(typeName = type.name, typeColor = type.getColorForType())
             if (index < types.size - 1) {
                 Spacer(modifier = Modifier.width(8.dp))
             }
@@ -287,7 +286,7 @@ private fun StatsInfoGrid(
     weight: Float,
     height: Float,
     category: String,
-    abilities: String
+    abilities: String,
 ) {
     Column(
         modifier = Modifier
@@ -311,12 +310,7 @@ private fun StatsInfoGrid(
         ) {
 //            StatInfoItem(icon = Icons.Filled.Category, label = "Category", value = category, fullWidth = true)
             StatInfoItem(icon = Icons.Filled.Info, label = "Category", value = category, fullWidth = true)
-        }
-        Spacer(modifier = Modifier.height(16.dp))
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceAround
-        ) {
+
 //            StatInfoItem(icon = Icons.Filled.Shield, label = "Abilities", value = abilities, fullWidth = true)
             StatInfoItem(icon = Icons.Filled.Info, label = "Abilities", value = abilities, fullWidth = true)
         }
@@ -328,7 +322,7 @@ private fun RowScope.StatInfoItem(
     icon: ImageVector,
     label: String,
     value: String,
-    fullWidth: Boolean = false
+    fullWidth: Boolean = false,
 ) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -339,7 +333,7 @@ private fun RowScope.StatInfoItem(
             imageVector = icon,
             contentDescription = label,
             tint = MaterialTheme.colorScheme.primary,
-            modifier = Modifier.size(PokemonDetailDimens.statItemIconSize)
+            modifier = Modifier.size(24.dp)
         )
         Spacer(modifier = Modifier.height(4.dp))
         Text(
@@ -376,7 +370,7 @@ private fun GenderRatioSection(malePercentage: Float, femalePercentage: Float) {
             Box(
                 modifier = Modifier
                     .weight(1f)
-                    .height(PokemonDetailDimens.genderBarHeight)
+                    .height(8.dp)
                     .clip(CircleShape)
                     .background(Color.LightGray)
             ) {
@@ -396,7 +390,7 @@ private fun GenderRatioSection(malePercentage: Float, femalePercentage: Float) {
             }
             if (femalePercentage > 0) {
 //                 Text(text = "♀ ${"%.1f".format(femalePercentage)}%", style = MaterialTheme.typography.bodyMedium, color = Color(0xFFF85888))
-                 Text(text = "♀ 70%", style = MaterialTheme.typography.bodyMedium, color = Color(0xFFF85888))
+                Text(text = "♀ 70%", style = MaterialTheme.typography.bodyMedium, color = Color(0xFFF85888))
             }
         }
         if (malePercentage == 0f && femalePercentage == 0f) {
@@ -431,7 +425,7 @@ private fun StatRow(
     statName: String,
     statValue: Int,
     maxValue: Int,
-    statColor: Color
+    statColor: Color,
 ) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
@@ -481,8 +475,7 @@ private fun PokemonDetailScreenPreview() {
     MaterialTheme { // Added MaterialTheme for proper preview rendering
         PokemonDetailScreen(
             pokemonDetail = samplePokemon.copy(isFavorite = isFavoriteState),
-            onNavigateBack = {},
-            onToggleFavorite = { isFavoriteState = !isFavoriteState }
+            onNavigateBack = {}
         )
     }
 }
@@ -494,7 +487,7 @@ private fun createSamplePokemonDetailVo(): PokemonDetailVo {
         name = "Pikachu",
         imageUrl = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/25.png", // Placeholder image
         types = listOf(
-            PokemonTypeVo("Electric", Color(0xFFF8D030))
+            TypeVO(1, "Electric")
         ),
         description = "Pikachu that can generate powerful electricity have cheek sacs that are extra soft and super stretchy.",
         weightInKg = 6.0f,

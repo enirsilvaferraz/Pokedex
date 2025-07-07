@@ -1,4 +1,4 @@
-package com.example.pokedex
+package com.example.pokedex.core
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
@@ -6,8 +6,8 @@ import kotlinx.serialization.Serializable
 internal object AppRoutes {
 
     @Serializable
-    object Pokedex
+    object PokemonListScreen
 
     @Serializable
-    data class Pokemon(@SerialName("id") val id: Long)
+    data class PokemonDetailScreen(@SerialName("id") val id: Long)
 }

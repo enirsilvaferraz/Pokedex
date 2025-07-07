@@ -12,22 +12,21 @@ internal class PokemonDataSourceDB(
     private val typeDao: TypeDao,
 ) : PokemonDataSource.Database {
 
-    override suspend fun get(limit: Int, offset: Int): List<PokemonVO> =
-        pokemonDao.get(limit = limit, offset = offset).map { it.toVO() }
+    override suspend fun get(id: Int): PokemonVO? =
+        pokemonDao.get(id)?.toVO()
 
-    override suspend fun insert(entities: List<PokemonVO>) {
+    override suspend fun insert(entity: PokemonVO) {
 
-        (entities.mapNotNull { it.type1 } + entities.mapNotNull { it.type2 })
-            .map { it.toTable() }
+        listOf(entity.type1, entity.type2)
+            .mapNotNull { it?.toTable() }
             .distinctBy { it.id }
             .also {
                 typeDao.insert(*it.toTypedArray())
             }
 
-        entities
-            .map { it.toTable() }
+        entity.toTable()
             .also { pokemon ->
-                pokemonDao.insert(*pokemon.toTypedArray())
+                pokemonDao.insert(pokemon)
             }
     }
 }

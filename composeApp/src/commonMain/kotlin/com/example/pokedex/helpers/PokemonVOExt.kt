@@ -1,4 +1,4 @@
-package com.example.pokedex.extensions
+package com.example.pokedex.helpers
 
 import androidx.compose.ui.text.capitalize
 import androidx.compose.ui.text.intl.Locale

@@ -18,8 +18,8 @@ import androidx.compose.ui.unit.dp
 @Composable
 internal fun AppScaffold(
     modifier: Modifier = Modifier,
-    title: String,
-    content: @Composable (Modifier) -> Unit
+    title: String? = null,
+    content: @Composable (Modifier) -> Unit,
 ) {
 
     MaterialTheme(
@@ -32,15 +32,17 @@ internal fun AppScaffold(
         Scaffold(
             modifier = modifier,
             topBar = {
-                TopAppBar(
-                    title = {
-                        Text(
-                            title,
-                            style = MaterialTheme.typography.headlineLarge,
-                            modifier = Modifier.padding(start = 8.dp)
-                        )
-                    }
-                )
+                title?.let {
+                    TopAppBar(
+                        title = {
+                            Text(
+                                title,
+                                style = MaterialTheme.typography.headlineLarge,
+                                modifier = Modifier.padding(start = 8.dp)
+                            )
+                        }
+                    )
+                }
             }
         ) { innerPadding ->
             val modifier = Modifier.padding(

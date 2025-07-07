@@ -13,6 +13,6 @@ internal interface PokemonDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insert(vararg entity: PokemonTable)
 
-    @Query("SELECT * FROM Pokemon LIMIT :limit OFFSET :offset")
-    suspend fun get(limit: Int, offset: Int): List<PokemonAndType>
+    @Query("SELECT * FROM Pokemon WHERE pokemon_id = :id")
+    suspend fun get(id: Int): PokemonAndType?
 }

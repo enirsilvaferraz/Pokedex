@@ -31,7 +31,18 @@ internal class PokemonRepositoryImpl(
 
         val offset = (currentPage - 1) * limit
 
-        database.get(limit, offset).takeIf { it.isNotEmpty() }
-            ?: api.get(limit, offset).also { it -> database.insert(it) }
+        iterateOffset(limit, offset) { id ->
+            database.get(id) ?: api.get(id).also { database.insert(it) }
+        }
+    }
+
+    private suspend fun <T> iterateOffset(limit: Int, offset: Int, callback: suspend (Int) -> T): List<T> {
+
+        val start = offset + 1
+        val end = limit + start
+
+        return (start until end).mapNotNull { id ->
+            callback(id)
+        }
     }
 }
