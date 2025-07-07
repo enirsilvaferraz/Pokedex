@@ -15,16 +15,32 @@ internal fun PokemonAndType.toVO() = PokemonVO(
     id = pokemon.id,
     name = pokemon.name,
     image = pokemon.image,
-    type1 = type1?.toVO(),
-    type2 = type2?.toVO()
+    type1 = type1.toVO(),
+    type2 = type2?.toVO(),
+    description = pokemon.description,
+    weight = pokemon.weight,
+    height = pokemon.height,
+    category = pokemon.category,
+//    abilities = pokemon.abilities,
+    genderRatioMale = pokemon.genderRatio,
+//    baseStats = pokemon.stats.map { it.toVO() },
+    primaryColor = pokemon.primaryColor
 )
 
 internal fun PokemonVO.toTable() = PokemonTable(
     id = id,
     name = name,
     image = image,
-    typeID1 = type1?.id,
-    typeID2 = type2?.id
+    typeID1 = type1.id,
+    typeID2 = type2?.id,
+    description = description,
+    weight = weight,
+    height = height,
+    category = category,
+//    abilities = abilities,
+    genderRatio = genderRatioMale,
+//    stats = baseStats.map { it.toTable() },
+    primaryColor = primaryColor
 )
 
 internal fun TypeVO.toTable() = TypeTable(

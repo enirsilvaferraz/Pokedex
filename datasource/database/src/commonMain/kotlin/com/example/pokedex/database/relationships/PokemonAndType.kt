@@ -14,7 +14,7 @@ internal data class PokemonAndType(
         parentColumn = "type1",
         entityColumn = "type_id",
     )
-    val type1: TypeTable?,
+    val type1: TypeTable,
 
     @Relation(
         parentColumn = "type2",

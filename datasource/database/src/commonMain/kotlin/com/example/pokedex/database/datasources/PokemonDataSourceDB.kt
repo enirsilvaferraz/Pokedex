@@ -17,8 +17,8 @@ internal class PokemonDataSourceDB(
 
     override suspend fun insert(entity: PokemonVO) {
 
-        listOf(entity.type1, entity.type2)
-            .mapNotNull { it?.toTable() }
+        listOfNotNull(entity.type1, entity.type2)
+            .map { it.toTable() }
             .distinctBy { it.id }
             .also {
                 typeDao.insert(*it.toTypedArray())

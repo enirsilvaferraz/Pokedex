@@ -1,4 +1,4 @@
-package com.example.pokedex.list
+package com.example.pokedex.ui
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -50,7 +50,7 @@ import org.koin.compose.viewmodel.koinViewModel
 internal fun PokedexRoute(
     modifier: Modifier = Modifier,
     vm: PokedexViewModel = koinViewModel(),
-    onClick: (Long) -> Unit,
+    onClick: (PokemonVO) -> Unit,
 ) {
 
     val list = vm.flow.collectAsLazyPagingItems()
@@ -66,7 +66,7 @@ internal fun PokedexRoute(
 private fun PokedexScreen(
     modifier: Modifier = Modifier,
     pokemonList: LazyPagingItems<PokemonVO>,
-    onClick: (Long) -> Unit,
+    onClick: (PokemonVO) -> Unit,
 ) {
 
     AppScaffold(
@@ -92,7 +92,7 @@ private fun PokedexScreen(
 private fun ItemList(
     modifier: Modifier = Modifier,
     model: PokemonVO,
-    onClick: (Long) -> Unit,
+    onClick: (PokemonVO) -> Unit,
 ) {
 
     Card(
@@ -101,7 +101,7 @@ private fun ItemList(
     ) {
 
         Row(
-            modifier = Modifier.fillMaxSize().clickable { onClick(model.id) }
+            modifier = Modifier.fillMaxSize().clickable { onClick(model) }
         ) {
 
             Column(
@@ -173,17 +173,17 @@ private fun PokedexScreenPreview(
 
 private class PokedexScreenPreviewProvider : PreviewParameterProvider<List<PokemonVO>> {
     override val values = sequenceOf(
-        listOf(
-            PokemonVO(id = 1, name = "Bulbasaur", type1 = TypeVO(0L, "Grass"), type2 = TypeVO(0L, "Poison"), image = ""),
-            PokemonVO(id = 2, name = "Ivysaur", type1 = TypeVO(0L, "Grass"), type2 = TypeVO(0L, "Poison"), image = ""),
-            PokemonVO(id = 3, name = "Venusaur", type1 = TypeVO(0L, "Grass"), type2 = TypeVO(0L, "Poison"), image = ""),
-            PokemonVO(id = 4, name = "Charmander", type1 = TypeVO(0L, "Fire"), image = ""),
-            PokemonVO(id = 5, name = "Charmeleon", type1 = TypeVO(0L, "Fire"), image = ""),
-            PokemonVO(id = 6, name = "Charizard", type1 = TypeVO(0L, "Fire"), type2 = TypeVO(0L, "Flying"), image = ""),
-            PokemonVO(id = 7, name = "Squirtle", type1 = TypeVO(0L, "Water"), image = ""),
-            PokemonVO(id = 8, name = "Wartortle", type1 = TypeVO(0L, "Water"), image = ""),
-            PokemonVO(id = 9, name = "Blastoise", type1 = TypeVO(0L, "Water"), image = ""),
-            PokemonVO(id = 10, name = "Caterpie", type1 = TypeVO(0L, "Bug"), image = "")
+        listOf<PokemonVO>(
+//            PokemonVO(id = 1, name = "Bulbasaur", type1 = TypeVO(0L, "Grass"), type2 = TypeVO(0L, "Poison"), image = ""),
+//            PokemonVO(id = 2, name = "Ivysaur", type1 = TypeVO(0L, "Grass"), type2 = TypeVO(0L, "Poison"), image = ""),
+//            PokemonVO(id = 3, name = "Venusaur", type1 = TypeVO(0L, "Grass"), type2 = TypeVO(0L, "Poison"), image = ""),
+//            PokemonVO(id = 4, name = "Charmander", type1 = TypeVO(0L, "Fire"), image = ""),
+//            PokemonVO(id = 5, name = "Charmeleon", type1 = TypeVO(0L, "Fire"), image = ""),
+//            PokemonVO(id = 6, name = "Charizard", type1 = TypeVO(0L, "Fire"), type2 = TypeVO(0L, "Flying"), image = ""),
+//            PokemonVO(id = 7, name = "Squirtle", type1 = TypeVO(0L, "Water"), image = ""),
+//            PokemonVO(id = 8, name = "Wartortle", type1 = TypeVO(0L, "Water"), image = ""),
+//            PokemonVO(id = 9, name = "Blastoise", type1 = TypeVO(0L, "Water"), image = ""),
+//            PokemonVO(id = 10, name = "Caterpie", type1 = TypeVO(0L, "Bug"), image = "")
         )
     )
 }

@@ -1,5 +1,6 @@
 package com.example.pokedex.helpers
 
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.calculateEndPadding
 import androidx.compose.foundation.layout.calculateStartPadding
 import androidx.compose.foundation.layout.padding
@@ -12,6 +13,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalLayoutDirection
+import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -22,12 +24,7 @@ internal fun AppScaffold(
     content: @Composable (Modifier) -> Unit,
 ) {
 
-    MaterialTheme(
-        colorScheme = MaterialTheme.colorScheme.copy(
-            background = Color.White,
-            surface = Color.White
-        )
-    ) {
+    PokedexTheme {
 
         Scaffold(
             modifier = modifier,
@@ -45,12 +42,26 @@ internal fun AppScaffold(
                 }
             }
         ) { innerPadding ->
-            val modifier = Modifier.padding(
-                top = innerPadding.calculateTopPadding(),
-                start = innerPadding.calculateStartPadding(LocalLayoutDirection.current),
-                end = innerPadding.calculateEndPadding(LocalLayoutDirection.current),
-            )
-            content(modifier)
+            content(Modifier.edgeToEdgePadding(innerPadding, LocalLayoutDirection.current))
         }
     }
+}
+
+internal fun Modifier.edgeToEdgePadding(innerPadding: PaddingValues, current: LayoutDirection): Modifier = padding(
+    top = innerPadding.calculateTopPadding(),
+    start = innerPadding.calculateStartPadding(current),
+    end = innerPadding.calculateEndPadding(current),
+)
+
+
+@Composable
+internal fun PokedexTheme(content: @Composable () -> Unit) {
+
+    MaterialTheme(
+        colorScheme = MaterialTheme.colorScheme.copy(
+            background = Color.White,
+            surface = Color.White
+        ),
+        content = content
+    )
 }

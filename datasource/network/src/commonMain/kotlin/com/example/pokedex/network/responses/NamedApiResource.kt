@@ -6,7 +6,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 internal data class NamedApiResource(
     @SerialName("name")
-    val name: String,
+    val name: String? = null,
     @SerialName("url")
     val url: String,
 ) {

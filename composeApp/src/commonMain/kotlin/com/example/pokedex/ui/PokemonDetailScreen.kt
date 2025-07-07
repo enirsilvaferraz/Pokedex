@@ -1,4 +1,4 @@
-package com.example.pokedex
+package com.example.pokedex.ui
 
 //import androidx.compose.material.icons.filled.Scale
 //import androidx.compose.material.icons.filled.Height
@@ -33,10 +33,6 @@ import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -49,36 +45,13 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
+import com.example.pokedex.entity.PokemonVO
+import com.example.pokedex.entity.StatVO
 import com.example.pokedex.entity.TypeVO
 import com.example.pokedex.helpers.AppScaffold
+import com.example.pokedex.helpers.formatedId
 import com.example.pokedex.helpers.getColorForType
 import org.jetbrains.compose.ui.tooling.preview.Preview
-
-// --- Data Classes ---
-
-data class PokemonStatVo(
-    val name: String,
-    val value: Int,
-    val maxValue: Int = 100, // Assuming a max value for progress indication
-)
-
-data class PokemonDetailVo(
-    val id: Long,
-    val name: String,
-    val imageUrl: String,
-    val types: List<TypeVO>,
-    val description: String,
-    val weightInKg: Float,
-    val heightInMeters: Float,
-    val category: String,
-    val abilities: List<String>,
-    val genderRatioMale: Float, // e.g., 0.875 for 87.5% male
-    val baseStats: List<PokemonStatVo>,
-    val primaryColor: Color,
-    val isFavorite: Boolean,
-) {
-    fun getFormattedId(): String = formatId(id)
-}
 
 // --- Constants ---
 private object PokemonDetailDimens {
@@ -89,19 +62,17 @@ private object PokemonDetailDimens {
 
 // --- Main Composable ---
 @Composable
-internal fun PokemonDetailRoute(pokemonId: Long /* or pass full VO if fetched earlier */) {
-    // In a real app, you would fetch PokemonDetailVo using pokemonId via a ViewModel
-    val samplePokemon: PokemonDetailVo = createSamplePokemonDetailVo().copy(id = pokemonId) // Replace with actual data fetching
+internal fun PokemonDetailRoute(pokemonId: Long) {
 
     PokemonDetailScreen(
-        pokemonDetail = samplePokemon,
+        pokemonDetail = createSamplePokemonDetailVo(),
         onNavigateBack = { /* TODO: Implement navigation back */ },
     )
 }
 
 @Composable
 private fun PokemonDetailScreen(
-    pokemonDetail: PokemonDetailVo,
+    pokemonDetail: PokemonVO,
     onNavigateBack: () -> Unit,
 ) {
 
@@ -110,9 +81,9 @@ private fun PokemonDetailScreen(
         Column(modifier = Modifier.fillMaxSize().verticalScroll(rememberScrollState())) {
 
             TopSection(
-                pokemonImageUrl = pokemonDetail.imageUrl,
+                pokemonImageUrl = pokemonDetail.image,
                 pokemonName = pokemonDetail.name,
-                backgroundColor = pokemonDetail.primaryColor,
+                backgroundColor = pokemonDetail.type1.getColorForType(),
                 onNavigateBack = onNavigateBack
             )
 
@@ -120,18 +91,18 @@ private fun PokemonDetailScreen(
 
             NameAndIdSection(
                 name = pokemonDetail.name,
-                formattedId = pokemonDetail.getFormattedId()
+                formattedId = pokemonDetail.formatedId()
             )
             Spacer(modifier = Modifier.height(PokemonDetailDimens.screenPadding))
-            TypeTagsSection(types = pokemonDetail.types)
+            TypeTagsSection(types = pokemonDetail.types())
             Spacer(modifier = Modifier.height(PokemonDetailDimens.sectionSpacing))
             DescriptionSection(description = pokemonDetail.description)
             Spacer(modifier = Modifier.height(PokemonDetailDimens.sectionSpacing))
             StatsInfoGrid(
-                weight = pokemonDetail.weightInKg,
-                height = pokemonDetail.heightInMeters,
+                weight = pokemonDetail.weight,
+                height = pokemonDetail.height,
                 category = pokemonDetail.category,
-                abilities = pokemonDetail.abilities.joinToString(", ")
+                abilities = "" //pokemonDetail.abilities.joinToString(", ")
             )
             Spacer(modifier = Modifier.height(PokemonDetailDimens.sectionSpacing))
             if (pokemonDetail.genderRatioMale >= 0) { // Assuming -1 or similar for genderless
@@ -141,7 +112,7 @@ private fun PokemonDetailScreen(
                 )
                 Spacer(modifier = Modifier.height(PokemonDetailDimens.sectionSpacing))
             }
-            BaseStatsSection(stats = pokemonDetail.baseStats, primaryColor = pokemonDetail.primaryColor)
+//            BaseStatsSection(stats = pokemonDetail.baseStats, primaryColor = pokemonDetail.primaryColor)
             Spacer(modifier = Modifier.height(PokemonDetailDimens.screenPadding)) // Bottom padding
         }
     }
@@ -401,18 +372,18 @@ private fun GenderRatioSection(malePercentage: Float, femalePercentage: Float) {
 
 
 @Composable
-private fun BaseStatsSection(stats: List<PokemonStatVo>, primaryColor: Color) {
+private fun BaseStatsSection(stats: List<StatVO>, primaryColor: Color) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = PokemonDetailDimens.screenPadding)
     ) {
         SectionTitle(title = "Base Stats")
-        stats.forEach { stat: PokemonStatVo ->
+        stats.forEach { stat ->
             StatRow(
                 statName = stat.name,
                 statValue = stat.value,
-                maxValue = stat.maxValue,
+                maxValue = 100,
                 statColor = primaryColor
             )
             Spacer(modifier = Modifier.height(8.dp))
@@ -469,41 +440,33 @@ private fun SectionTitle(title: String) {
 @Preview()
 @Composable
 private fun PokemonDetailScreenPreview() {
-    val samplePokemon: PokemonDetailVo = createSamplePokemonDetailVo()
-    var isFavoriteState: Boolean by remember { mutableStateOf(samplePokemon.isFavorite) }
-
-    MaterialTheme { // Added MaterialTheme for proper preview rendering
+    MaterialTheme {
         PokemonDetailScreen(
-            pokemonDetail = samplePokemon.copy(isFavorite = isFavoriteState),
+            pokemonDetail = createSamplePokemonDetailVo(),
             onNavigateBack = {}
         )
     }
 }
 
 // --- Sample Data Provider ---
-private fun createSamplePokemonDetailVo(): PokemonDetailVo {
-    return PokemonDetailVo(
-        id = 25,
-        name = "Pikachu",
-        imageUrl = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/25.png", // Placeholder image
-        types = listOf(
-            TypeVO(1, "Electric")
-        ),
-        description = "Pikachu that can generate powerful electricity have cheek sacs that are extra soft and super stretchy.",
-        weightInKg = 6.0f,
-        heightInMeters = 0.4f,
-        category = "Mouse Pokémon",
-        abilities = listOf("Static", "Lightning Rod"),
-        genderRatioMale = 0.5f, // 50% Male, 50% Female
-        baseStats = listOf(
-            PokemonStatVo("HP", 35, 255),
-            PokemonStatVo("Attack", 55, 255),
-            PokemonStatVo("Defense", 40, 255),
-            PokemonStatVo("Sp. Atk", 50, 255),
-            PokemonStatVo("Sp. Def", 50, 255),
-            PokemonStatVo("Speed", 90, 255)
-        ),
-        primaryColor = Color(0xFFF8D030), // Electric type color
-        isFavorite = false
-    )
-}
+private fun createSamplePokemonDetailVo() = PokemonVO(
+    id = 25,
+    name = "Pikachu",
+    image = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/25.png", // Placeholder image
+    type1 = TypeVO(1, "Electric"),
+    description = "Pikachu that can generate powerful electricity have cheek sacs that are extra soft and super stretchy.",
+    weight = 6.0f,
+    height = 0.4f,
+    category = "Mouse Pokémon",
+//        abilities = listOf("Static", "Lightning Rod"),
+    genderRatioMale = 0.5f, // 50% Male, 50% Female
+//        baseStats = listOf(
+//            PokemonStatVo("HP", 35, 255),
+//            PokemonStatVo("Attack", 55, 255),
+//            PokemonStatVo("Defense", 40, 255),
+//            PokemonStatVo("Sp. Atk", 50, 255),
+//            PokemonStatVo("Sp. Def", 50, 255),
+//            PokemonStatVo("Speed", 90, 255)
+//        ),
+    primaryColor = "Yellow",//Color(0xFFF8D030), // Electric type color
+)
