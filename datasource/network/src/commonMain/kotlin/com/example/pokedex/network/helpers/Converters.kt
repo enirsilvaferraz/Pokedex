@@ -11,7 +11,7 @@ import com.example.pokedex.network.responses.TypeEntry
 internal fun toVO(pokemon: Pokemon, species: PokemonSpeciesDetail): PokemonVO = PokemonVO(
     id = pokemon.id,
     name = pokemon.name,
-    image = pokemon.sprites.frontDefault,
+    image = pokemon.sprites.other?.officialArtwork?.frontDefault ?: pokemon.sprites.frontDefault,
     type1 = pokemon.types.first { it.slot == 1 }.toVO(),
     type2 = pokemon.types.firstOrNull { it.slot == 2 }?.toVO(),
     weight = pokemon.weight.toFloat(),

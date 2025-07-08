@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.lazy.LazyColumn
@@ -37,10 +38,10 @@ import coil3.request.ImageRequest
 import coil3.request.crossfade
 import com.example.pokedex.entity.PokemonVO
 import com.example.pokedex.entity.TypeVO
+import com.example.pokedex.helpers.AppScaffold
 import com.example.pokedex.helpers.color
 import com.example.pokedex.helpers.formatedId
 import com.example.pokedex.helpers.formatedName
-import com.example.pokedex.helpers.AppScaffold
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.jetbrains.compose.ui.tooling.preview.PreviewParameter
 import org.jetbrains.compose.ui.tooling.preview.PreviewParameterProvider
@@ -124,16 +125,22 @@ private fun ItemList(
 
 @Composable
 private fun Image(url: String, contentDescription: String) {
-    AsyncImage(
-        model = ImageRequest.Builder(LocalPlatformContext.current).data(url).crossfade(true).build(),
-        contentDescription = contentDescription,
-        contentScale = ContentScale.Fit,
+    Box(
         modifier = Modifier
-            .height(95.dp)
-            .width(120.dp)
+            .size(120.dp)
             .clip(RoundedCornerShape(topStart = 50.dp, bottomStart = 50.dp))
-            .background(Color.White.copy(alpha = 0.5f))
-    )
+            .background(Color.White.copy(alpha = 0.5f)),
+        contentAlignment = Alignment.Center
+    ) {
+        AsyncImage(
+            model = ImageRequest.Builder(LocalPlatformContext.current).data(url).crossfade(true).build(),
+            contentDescription = contentDescription,
+            contentScale = ContentScale.Fit,
+            modifier = Modifier
+                .height(80.dp)
+                .width(80.dp)
+        )
+    }
 }
 
 @Composable

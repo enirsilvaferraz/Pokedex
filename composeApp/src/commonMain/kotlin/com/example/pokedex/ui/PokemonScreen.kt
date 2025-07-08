@@ -26,7 +26,6 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
@@ -118,13 +117,13 @@ private fun ColumnScope.Header(state: PokemonViewModel.State) {
 
         is PokemonViewModel.Loading -> {}
 
-        is PokemonViewModel.Success ->
+        is PokemonViewModel.Success -> state.model.let { pokemon ->
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
                     .align(Alignment.CenterHorizontally)
                     .zIndex(1f)
-                    .offset(y = 40.dp),
+                    .offset(y = 50.dp),
                 contentAlignment = Alignment.BottomCenter
             ) {
 
@@ -133,8 +132,9 @@ private fun ColumnScope.Header(state: PokemonViewModel.State) {
                         painter = painterResource(Res.drawable.pokeball),
                         contentDescription = "",
                         contentScale = ContentScale.Fit,
+                        alpha = 0.1f,
                         colorFilter = androidx.compose.ui.graphics.ColorFilter.tint(Color.White),
-                        modifier = Modifier.alpha(0.2f).rotate(30f).size(280.dp)
+                        modifier = Modifier.rotate(30f).size(240.dp)
                     )
                 }
 
@@ -143,10 +143,12 @@ private fun ColumnScope.Header(state: PokemonViewModel.State) {
                         model = pokemon.image,
                         contentDescription = pokemon.name,
                         contentScale = ContentScale.Fit,
-                        modifier = Modifier.size(220.dp)
+                        modifier = Modifier.size(240.dp),
+                        alignment = Alignment.BottomCenter
                     )
                 }
             }
+        }
 
         is PokemonViewModel.Error -> {}
     }

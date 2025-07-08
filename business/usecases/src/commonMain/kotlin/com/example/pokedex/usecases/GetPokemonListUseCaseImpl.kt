@@ -2,10 +2,10 @@ package com.example.pokedex.usecases
 
 import app.cash.paging.Pager
 import app.cash.paging.PagingConfig
-import com.example.repositories.PokemonRepository
+import com.example.repositories.PokemonListRepository
 
-internal class GetPokemonUseCaseImpl(
-    private val repository: PokemonRepository,
+internal class GetPokemonListUseCaseImpl(
+    private val repository: PokemonListRepository,
 ) : GetPokemonUseCase {
 
     override operator fun invoke() = Pager(
