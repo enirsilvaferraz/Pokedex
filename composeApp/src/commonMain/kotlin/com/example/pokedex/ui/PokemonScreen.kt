@@ -1,12 +1,14 @@
 package com.example.pokedex.ui
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement.spacedBy
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -17,7 +19,11 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.PrimaryTabRow
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.ScrollableTabRow
+import androidx.compose.material3.Tab
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
@@ -26,18 +32,27 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalLayoutDirection
+import androidx.compose.ui.text.capitalize
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.intl.Locale
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.zIndex
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.currentBackStackEntryAsState
+import androidx.navigation.compose.rememberNavController
 import coil3.compose.AsyncImage
 import com.example.pokedex.entity.PokemonVO
 import com.example.pokedex.entity.TypeVO
 import com.example.pokedex.helpers.PokedexTheme
 import com.example.pokedex.helpers.color
 import com.example.pokedex.helpers.edgeToEdgePadding
+import com.example.pokedex.ui.ScreenDetail.FieldValue
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
@@ -62,47 +77,141 @@ internal fun PokemonRoute(
     )
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun PokemonScreen(modifier: Modifier, state: PokemonViewModel.State, onNavigateBack: () -> Unit) {
 
     PokedexTheme {
 
-        Scaffold(
-            modifier = modifier,
-            topBar = {
+        when (state) {
+            PokemonViewModel.Error -> {} // TODO implementar tela de error
+            PokemonViewModel.Loading -> {} // TODO implementar tela de loading
+            is PokemonViewModel.Success -> SuccessScreen(modifier, state.model, onNavigateBack)
+        }
+    }
+}
 
-                @OptIn(ExperimentalMaterial3Api::class)
-                TopAppBar(
-                    title = { Text("Bulbasaur") },
-                    navigationIcon = {
-                        IconButton(onClick = onNavigateBack) {
-                            Icon(
-                                imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                                contentDescription = "Navigate Back",
-                                tint = Color.White
-                            )
-                        }
-                    },
-                    colors = TopAppBarDefaults.topAppBarColors(containerColor = Color.Transparent)
-                )
-            },
-            containerColor = (state as? PokemonViewModel.Success)?.model?.color() ?: Color.Transparent
-        ) {
+@Composable
+@OptIn(ExperimentalMaterial3Api::class)
+private fun SuccessScreen(
+    modifier: Modifier,
+    model: PokemonVO,
+    onNavigateBack: () -> Unit,
+) {
 
-            Column(modifier = Modifier.edgeToEdgePadding(it, LocalLayoutDirection.current)) {
+    Scaffold(
+        modifier = modifier,
+        topBar = {
+            TopAppBar(
+                title = {
+                    Text(model.name.capitalize(Locale.current), color = Color.White)
+                },
+                navigationIcon = {
+                    IconButton(onClick = onNavigateBack) {
+                        Icon(
+                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                            contentDescription = "Navigate Back",
+                            tint = Color.White
+                        )
+                    }
+                },
+                colors = TopAppBarDefaults.topAppBarColors(containerColor = Color.Transparent)
+            )
+        },
+        containerColor = model.color()
+    ) {
 
-                Header(state)
+        Column(modifier = Modifier.edgeToEdgePadding(it, LocalLayoutDirection.current)) {
 
-                Card(
-                    modifier = Modifier.padding(top = 0.dp).fillMaxSize(),
-                    shape = RoundedCornerShape(topStart = 20.dp, topEnd = 20.dp),
-                    colors = CardDefaults.cardColors(containerColor = Color.White)
+            Header(model)
+
+            val navController = rememberNavController()
+
+            Card(
+                modifier = Modifier.fillMaxSize(),
+                shape = RoundedCornerShape(topStart = 20.dp, topEnd = 20.dp),
+                colors = CardDefaults.cardColors(containerColor = Color.White)
+            ) {
+
+                val backStackEntry by navController.currentBackStackEntryAsState()
+
+                PrimaryTabRow(
+//                    modifier = Modifier.padding(top = 40.dp),
+//                    edgePadding = 24.dp,
+//                    containerColor = Color.Transparent,
+                    selectedTabIndex = backStackEntry?.destination?.route?.toInt() ?: 0,
+                    divider = {}
                 ) {
 
-                    when (state) {
-                        is PokemonViewModel.Loading -> {}
-                        is PokemonViewModel.Success -> SuccessScreen(state.model)
-                        is PokemonViewModel.Error -> {}
+                    Tab(
+                        selected = 0 == backStackEntry?.destination?.route?.toInt(),
+                        onClick = { navController.navigate(0.toString()) },
+                        text = { Text(text = "About") }
+                    )
+
+                    Tab(
+                        selected = 1 == backStackEntry?.destination?.route?.toInt(),
+                        onClick = { navController.navigate(1.toString()) },
+                        text = { Text(text = "Base Stats") }
+                    )
+
+                    Tab(
+                        selected = 2 == backStackEntry?.destination?.route?.toInt(),
+                        onClick = { navController.navigate(2.toString()) },
+                        text = { Text(text = "Evolution") }
+                    )
+
+                    Tab(
+                        selected = 3 == backStackEntry?.destination?.route?.toInt(),
+                        onClick = { navController.navigate(3.toString()) },
+                        text = { Text(text = "Moves") }
+                    )
+                }
+
+                NavHost(
+                    navController = navController,
+                    startDestination = 0.toString()
+                ) {
+
+                    composable(route = 0.toString()) {
+                        PokemonAboutScreen(
+                            modifier = Modifier, listOf(
+                                ScreenDetail(
+                                    fields = listOf(
+                                        FieldValue("Species", "Seed"),
+                                        FieldValue("Height", "0.70 cm"),
+                                        FieldValue("Weight", "6.9 kg"),
+                                        FieldValue("Abilities", "Chlorophyll")
+                                    )
+                                ),
+                                ScreenDetail(
+                                    title = "Breeding",
+                                    fields = listOf(
+                                        FieldValue("Gender", "87,5% Male, 12,5% Female"),
+                                        FieldValue("Egg Groups", "Monster"),
+                                        FieldValue("Egg Cycle", "Grass")
+                                    )
+                                )
+                            )
+                        )
+                    }
+
+                    composable(route = 1.toString()) {
+                        PokemonAboutScreen(
+                            modifier = Modifier, listOf(
+                                ScreenDetail(
+                                    fields = listOf(
+                                        ScreenDetail.Chart("HP", 45),
+                                        ScreenDetail.Chart("Attack", 49),
+                                        ScreenDetail.Chart("Defense", 49),
+                                        ScreenDetail.Chart("Sp. Atk", 65),
+                                        ScreenDetail.Chart("Sp. Def", 65),
+                                        ScreenDetail.Chart("Speed", 45),
+                                        ScreenDetail.Chart("Total", 318, 600),
+                                    )
+                                )
+                            )
+                        )
                     }
                 }
             }
@@ -111,52 +220,63 @@ private fun PokemonScreen(modifier: Modifier, state: PokemonViewModel.State, onN
 }
 
 @Composable
-private fun ColumnScope.Header(state: PokemonViewModel.State) {
+private fun ColumnScope.Header(model: PokemonVO) {
 
-    when (state) {
+    Row(horizontalArrangement = spacedBy(8.dp), modifier = Modifier.padding(horizontal = 24.dp)) {
+        TypeTag(model.type1.name, Color.White)
+        model.type2?.let {
+            TypeTag(it.name, Color.White)
+        }
+    }
 
-        is PokemonViewModel.Loading -> {}
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .align(Alignment.CenterHorizontally)
+//            .zIndex(1f)
+//            .offset(y = 50.dp)
+        ,
+        contentAlignment = Alignment.BottomCenter
+    ) {
 
-        is PokemonViewModel.Success -> state.model.let { pokemon ->
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .align(Alignment.CenterHorizontally)
-                    .zIndex(1f)
-                    .offset(y = 50.dp),
-                contentAlignment = Alignment.BottomCenter
-            ) {
-
-                Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.CenterEnd) {
-                    Image(
-                        painter = painterResource(Res.drawable.pokeball),
-                        contentDescription = "",
-                        contentScale = ContentScale.Fit,
-                        alpha = 0.1f,
-                        colorFilter = androidx.compose.ui.graphics.ColorFilter.tint(Color.White),
-                        modifier = Modifier.rotate(30f).size(240.dp)
-                    )
-                }
-
-                Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.BottomCenter) {
-                    AsyncImage(
-                        model = pokemon.image,
-                        contentDescription = pokemon.name,
-                        contentScale = ContentScale.Fit,
-                        modifier = Modifier.size(240.dp),
-                        alignment = Alignment.BottomCenter
-                    )
-                }
-            }
+        Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.CenterEnd) {
+            Image(
+                painter = painterResource(Res.drawable.pokeball),
+                contentDescription = "",
+                contentScale = ContentScale.Fit,
+                alpha = 0.1f,
+                colorFilter = ColorFilter.tint(Color.White),
+                modifier = Modifier.rotate(30f).size(240.dp)
+            )
         }
 
-        is PokemonViewModel.Error -> {}
+        Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.BottomCenter) {
+            AsyncImage(
+                model = model.image,
+                contentDescription = model.name,
+                contentScale = ContentScale.Fit,
+                modifier = Modifier.size(240.dp),
+                alignment = Alignment.BottomCenter
+            )
+        }
     }
 }
 
 @Composable
-private fun ColumnScope.SuccessScreen(model: PokemonVO) {
-
+private fun TypeTag(typeName: String, typeColor: Color) {
+    Box(
+        modifier = Modifier
+            .clip(RoundedCornerShape(16.dp))
+            .background(typeColor.copy(alpha = 0.3f))
+            .padding(horizontal = 12.dp, vertical = 6.dp)
+    ) {
+        Text(
+            text = typeName,
+            color = typeColor, // Or a contrasting color if typeColor is too light
+            style = MaterialTheme.typography.bodyMedium,
+            fontWeight = FontWeight.Bold
+        )
+    }
 }
 
 @Preview
