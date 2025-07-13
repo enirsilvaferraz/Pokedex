@@ -1,0 +1,12 @@
+package com.eferraz.pokedex.network.responses
+
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
+
+@Serializable
+internal data class PokemonSpeciesDexEntry(
+    @SerialName("entry_number")
+    val entryNumber: Int,
+    @SerialName("pokedex")
+    val pokedex: NamedApiResource
+)

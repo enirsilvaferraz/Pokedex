@@ -9,7 +9,7 @@ kotlin {
     explicitApi()
 
     androidLibrary {
-        namespace = "com.example.repositories"
+        namespace = "com.eferraz.repositories"
         compileSdk = libs.versions.android.targetSdk.get().toInt()
         minSdk = libs.versions.android.minSdk.get().toInt()
     }

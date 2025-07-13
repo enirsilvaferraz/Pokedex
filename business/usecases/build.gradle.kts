@@ -8,7 +8,7 @@ kotlin {
     explicitApi()
 
     androidLibrary {
-        namespace = "com.example.pokedex.usecases"
+        namespace = "com.eferraz.pokedex.usecases"
         compileSdk = libs.versions.android.targetSdk.get().toInt()
         minSdk = libs.versions.android.minSdk.get().toInt()
     }
