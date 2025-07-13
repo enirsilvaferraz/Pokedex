@@ -10,5 +10,5 @@ internal data class NamedApiResource(
     @SerialName("url")
     val url: String,
 ) {
-    fun getId() = url.removeSuffix("/").let { it.substring(it.lastIndexOf("/") + 1) }.toLong()
+    fun getId() = url.removeSuffix("/").substringAfterLast('/').toLong()
 }

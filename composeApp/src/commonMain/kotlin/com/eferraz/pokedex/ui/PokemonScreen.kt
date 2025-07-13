@@ -221,7 +221,20 @@ fun StatsScreen() {
 
 @Composable
 fun MovesScreen() {
-
+    PokemonAboutScreen(
+        modifier = Modifier.fillMaxSize(), listOf(
+            ScreenDetail(
+                fields = listOf(
+                    ScreenDetail.SortedValue(14, "Swords-Dance"),
+                    ScreenDetail.SortedValue(15, "Cut"),
+                    ScreenDetail.SortedValue(20, "Vine-Whip"),
+                    ScreenDetail.SortedValue(21, "Fly"),
+                    ScreenDetail.SortedValue(22, "Tackle"),
+                    ScreenDetail.SortedValue(25, "Body-Slam")
+                )
+            )
+        )
+    )
 }
 
 @Composable

@@ -28,8 +28,15 @@ internal data class ScreenDetail(
 ) {
 
     sealed interface FieldTypes
+
     data class FieldValue(val field: String, val value: String) : FieldTypes
-    data class Chart(val field: String, val value: Int, val maxValue: Int = 100) : FieldTypes
+
+    data class Chart(val field: String, val value: Int, val maxValue: Int = 100) : FieldTypes {
+        fun progress() = value.toFloat() / maxValue.toFloat()
+        fun color() = if (value > maxValue / 2) Color.Green else Color.Red
+    }
+
+    data class SortedValue(val number: Int, val text: String) : FieldTypes
 }
 
 @Composable
@@ -53,8 +60,9 @@ internal fun PokemonAboutScreen(modifier: Modifier = Modifier, screenDetail: Lis
                 Row(horizontalArrangement = spacedBy(8.dp), verticalAlignment = CenterVertically) {
 
                     when (it) {
-                        is ScreenDetail.Chart -> ChartComponent(field = it.field, value = it.value, maxValue = it.maxValue)
-                        is ScreenDetail.FieldValue -> FiledValueComponent(field = it.field, value = it.value)
+                        is ScreenDetail.FieldValue -> FieldValueComponent(field = it.field, value = it.value)
+                        is ScreenDetail.Chart -> ChartComponent(field = it)
+                        is ScreenDetail.SortedValue -> SortedValueComponent(field = it)
                     }
                 }
             }
@@ -63,45 +71,60 @@ internal fun PokemonAboutScreen(modifier: Modifier = Modifier, screenDetail: Lis
 }
 
 @Composable
-private fun RowScope.FiledValueComponent(field: String, value: String) {
+private fun RowScope.FieldValueComponent(field: String, value: String) {
 
     Text(
-        text = field,
         modifier = Modifier.width(120.dp),
+        text = field,
         style = MaterialTheme.typography.bodyMedium
     )
 
     Text(
-        text = value,
         modifier = Modifier.weight(1f),
+        text = value,
         style = MaterialTheme.typography.bodyMedium,
         fontWeight = FontWeight.Bold
     )
 }
 
 @Composable
-private fun RowScope.ChartComponent(field: String, value: Int, maxValue: Int) {
+private fun RowScope.ChartComponent(field: ScreenDetail.Chart) {
 
     Text(
-        text = field,
         modifier = Modifier.width(120.dp),
+        text = field.field,
         style = MaterialTheme.typography.bodyMedium
     )
 
     Text(
-        text = value.toString(),
         modifier = Modifier.width(40.dp),
+        text = field.value.toString(),
         style = MaterialTheme.typography.bodyMedium,
         fontWeight = FontWeight.Bold
     )
 
-    val statColor = if (value > 50) Color.Green else Color.Red
-
     LinearProgressIndicator(
-        progress = { value.toFloat() / maxValue.toFloat() },
         modifier = Modifier.weight(0.7f).height(4.dp),
-        color = statColor,
+        progress = { field.progress() },
+        color = field.color(),
         trackColor = Color.Gray.copy(alpha = 0.1f)
+    )
+}
+
+@Composable
+private fun RowScope.SortedValueComponent(field: ScreenDetail.SortedValue) {
+
+    Text(
+        modifier = Modifier.padding(end = 8.dp),
+        text = field.number.toString() + ".",
+        style = MaterialTheme.typography.bodyMedium
+    )
+
+    Text(
+        modifier = Modifier.weight(1f),
+        text = field.text,
+        style = MaterialTheme.typography.bodyMedium,
+        fontWeight = FontWeight.Bold
     )
 }
 
@@ -138,8 +161,8 @@ private fun PokemonAboutScreenPreview() {
 
 @Preview
 @Composable
-fun PokemonBaseStatsScreenPreview() {
-    MaterialTheme {
+private fun PokemonBaseStatsScreenPreview() {
+    PokedexTheme {
         Box(modifier = Modifier.background(Color.White)) {
             PokemonAboutScreen(
                 screenDetail = listOf(
@@ -152,6 +175,29 @@ fun PokemonBaseStatsScreenPreview() {
                             ScreenDetail.Chart("Sp. Def", 65),
                             ScreenDetail.Chart("Speed", 45),
                             ScreenDetail.Chart("Total", 318, 600),
+                        )
+                    )
+                )
+            )
+        }
+    }
+}
+
+@Preview
+@Composable
+private fun PokemonMovesScreenPreview() {
+    PokedexTheme {
+        Box(modifier = Modifier.background(Color.White)) {
+            PokemonAboutScreen(
+                screenDetail = listOf(
+                    ScreenDetail(
+                        fields = listOf(
+                            ScreenDetail.SortedValue(14, "Swords-Dance"),
+                            ScreenDetail.SortedValue(15, "Cut"),
+                            ScreenDetail.SortedValue(20, "Vine-Whip"),
+                            ScreenDetail.SortedValue(21, "Fly"),
+                            ScreenDetail.SortedValue(22, "Tackle"),
+                            ScreenDetail.SortedValue(25, "Body-Slam")
                         )
                     )
                 )
