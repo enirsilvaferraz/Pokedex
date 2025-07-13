@@ -11,6 +11,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
@@ -29,6 +31,7 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -41,10 +44,6 @@ import androidx.compose.ui.text.capitalize
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.intl.Locale
 import androidx.compose.ui.unit.dp
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
-import androidx.navigation.compose.currentBackStackEntryAsState
-import androidx.navigation.compose.rememberNavController
 import coil3.compose.AsyncImage
 import com.eferraz.pokedex.entity.PokemonVO
 import com.eferraz.pokedex.entity.TypeVO
@@ -52,6 +51,7 @@ import com.eferraz.pokedex.helpers.PokedexTheme
 import com.eferraz.pokedex.helpers.color
 import com.eferraz.pokedex.helpers.edgeToEdgePadding
 import com.eferraz.pokedex.ui.ScreenDetail.FieldValue
+import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
@@ -124,98 +124,109 @@ private fun SuccessScreen(
 
             Header(model)
 
-            val navController = rememberNavController()
-
             Card(
                 modifier = Modifier.fillMaxSize(),
                 shape = RoundedCornerShape(topStart = 20.dp, topEnd = 20.dp),
                 colors = CardDefaults.cardColors(containerColor = Color.White)
             ) {
 
-                val backStackEntry by navController.currentBackStackEntryAsState()
+                val scope = rememberCoroutineScope()
+                val state = rememberPagerState(initialPage = 0, pageCount = { 4 })
 
                 PrimaryTabRow(
-//                    modifier = Modifier.padding(top = 40.dp),
-//                    edgePadding = 24.dp,
-//                    containerColor = Color.Transparent,
-                    selectedTabIndex = backStackEntry?.destination?.route?.toInt() ?: 0,
+                    selectedTabIndex = state.currentPage,
                     divider = {}
                 ) {
 
                     Tab(
-                        selected = 0 == backStackEntry?.destination?.route?.toInt(),
-                        onClick = { navController.navigate(0.toString()) },
+                        selected = 0 == state.currentPage,
+                        onClick = { scope.launch { state.animateScrollToPage(0) } },
                         text = { Text(text = "About") }
                     )
 
                     Tab(
-                        selected = 1 == backStackEntry?.destination?.route?.toInt(),
-                        onClick = { navController.navigate(1.toString()) },
-                        text = { Text(text = "Base Stats") }
+                        selected = 1 == state.currentPage,
+                        onClick = { scope.launch { state.animateScrollToPage(1) } },
+                        text = { Text(text = "Stats") }
                     )
 
                     Tab(
-                        selected = 2 == backStackEntry?.destination?.route?.toInt(),
-                        onClick = { navController.navigate(2.toString()) },
+                        selected = 2 == state.currentPage,
+                        onClick = { scope.launch { state.animateScrollToPage(2) } },
                         text = { Text(text = "Evolution") }
                     )
 
                     Tab(
-                        selected = 3 == backStackEntry?.destination?.route?.toInt(),
-                        onClick = { navController.navigate(3.toString()) },
+                        selected = 3 == state.currentPage,
+                        onClick = { scope.launch { state.animateScrollToPage(3) } },
                         text = { Text(text = "Moves") }
                     )
                 }
 
-                NavHost(
-                    navController = navController,
-                    startDestination = 0.toString()
-                ) {
-
-                    composable(route = 0.toString()) {
-                        PokemonAboutScreen(
-                            modifier = Modifier, listOf(
-                                ScreenDetail(
-                                    fields = listOf(
-                                        FieldValue("Species", "Seed"),
-                                        FieldValue("Height", "0.70 cm"),
-                                        FieldValue("Weight", "6.9 kg"),
-                                        FieldValue("Abilities", "Chlorophyll")
-                                    )
-                                ),
-                                ScreenDetail(
-                                    title = "Breeding",
-                                    fields = listOf(
-                                        FieldValue("Gender", "87,5% Male, 12,5% Female"),
-                                        FieldValue("Egg Groups", "Monster"),
-                                        FieldValue("Egg Cycle", "Grass")
-                                    )
-                                )
-                            )
-                        )
-                    }
-
-                    composable(route = 1.toString()) {
-                        PokemonAboutScreen(
-                            modifier = Modifier, listOf(
-                                ScreenDetail(
-                                    fields = listOf(
-                                        ScreenDetail.Chart("HP", 45),
-                                        ScreenDetail.Chart("Attack", 49),
-                                        ScreenDetail.Chart("Defense", 49),
-                                        ScreenDetail.Chart("Sp. Atk", 65),
-                                        ScreenDetail.Chart("Sp. Def", 65),
-                                        ScreenDetail.Chart("Speed", 45),
-                                        ScreenDetail.Chart("Total", 318, 600),
-                                    )
-                                )
-                            )
-                        )
+                HorizontalPager(state = state) {
+                    when (it) {
+                        0 -> AboutScreen()
+                        1 -> StatsScreen()
+                        2 -> EvolutionScreen()
+                        3 -> MovesScreen()
                     }
                 }
             }
         }
     }
+}
+
+@Composable
+private fun AboutScreen() {
+    PokemonAboutScreen(
+        modifier = Modifier.fillMaxSize(), listOf(
+            ScreenDetail(
+                fields = listOf(
+                    FieldValue("Species", "Seed"),
+                    FieldValue("Height", "0.70 cm"),
+                    FieldValue("Weight", "6.9 kg"),
+                    FieldValue("Abilities", "Chlorophyll")
+                )
+            ),
+            ScreenDetail(
+                title = "Breeding",
+                fields = listOf(
+                    FieldValue("Gender", "87,5% Male, 12,5% Female"),
+                    FieldValue("Egg Groups", "Monster"),
+                    FieldValue("Egg Cycle", "Grass")
+                )
+            )
+        )
+    )
+}
+
+@Composable
+fun StatsScreen() {
+    PokemonAboutScreen(
+        modifier = Modifier.fillMaxSize(), listOf(
+            ScreenDetail(
+                fields = listOf(
+                    ScreenDetail.Chart("HP", 45),
+                    ScreenDetail.Chart("Attack", 49),
+                    ScreenDetail.Chart("Defense", 49),
+                    ScreenDetail.Chart("Sp. Atk", 65),
+                    ScreenDetail.Chart("Sp. Def", 65),
+                    ScreenDetail.Chart("Speed", 45),
+                    ScreenDetail.Chart("Total", 318, 600),
+                )
+            )
+        )
+    )
+}
+
+@Composable
+fun MovesScreen() {
+
+}
+
+@Composable
+fun EvolutionScreen() {
+
 }
 
 @Composable
@@ -231,10 +242,7 @@ private fun ColumnScope.Header(model: PokemonVO) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .align(Alignment.CenterHorizontally)
-//            .zIndex(1f)
-//            .offset(y = 50.dp)
-        ,
+            .align(Alignment.CenterHorizontally),
         contentAlignment = Alignment.BottomCenter
     ) {
 

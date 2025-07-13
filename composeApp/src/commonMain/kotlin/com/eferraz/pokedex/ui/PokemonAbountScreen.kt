@@ -19,6 +19,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import com.eferraz.pokedex.helpers.PokedexTheme
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 internal data class ScreenDetail(
@@ -34,7 +35,7 @@ internal data class ScreenDetail(
 @Composable
 internal fun PokemonAboutScreen(modifier: Modifier = Modifier, screenDetail: List<ScreenDetail>) {
 
-    Column(modifier = modifier.fillMaxWidth().padding(24.dp), verticalArrangement = spacedBy(8.dp)) {
+    Column(modifier = modifier.background(MaterialTheme.colorScheme.background).fillMaxWidth().padding(24.dp), verticalArrangement = spacedBy(8.dp)) {
 
         screenDetail.forEach { detail ->
 
@@ -62,7 +63,7 @@ internal fun PokemonAboutScreen(modifier: Modifier = Modifier, screenDetail: Lis
 }
 
 @Composable
-fun RowScope.FiledValueComponent(field: String, value: String) {
+private fun RowScope.FiledValueComponent(field: String, value: String) {
 
     Text(
         text = field,
@@ -79,7 +80,7 @@ fun RowScope.FiledValueComponent(field: String, value: String) {
 }
 
 @Composable
-fun RowScope.ChartComponent(field: String, value: Int, maxValue: Int) {
+private fun RowScope.ChartComponent(field: String, value: Int, maxValue: Int) {
 
     Text(
         text = field,
@@ -106,8 +107,8 @@ fun RowScope.ChartComponent(field: String, value: Int, maxValue: Int) {
 
 @Preview
 @Composable
-fun PokemonAboutScreenPreview() {
-    MaterialTheme {
+private fun PokemonAboutScreenPreview() {
+    PokedexTheme {
         Box(modifier = Modifier.background(Color.White)) {
             PokemonAboutScreen(
                 screenDetail = listOf(
