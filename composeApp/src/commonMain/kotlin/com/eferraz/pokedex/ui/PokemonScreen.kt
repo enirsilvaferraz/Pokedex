@@ -6,9 +6,11 @@ import androidx.compose.foundation.layout.Arrangement.spacedBy
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.pager.HorizontalPager
@@ -22,16 +24,13 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.PrimaryTabRow
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Tab
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -51,7 +50,6 @@ import com.eferraz.pokedex.helpers.PokedexTheme
 import com.eferraz.pokedex.helpers.color
 import com.eferraz.pokedex.helpers.edgeToEdgePadding
 import com.eferraz.pokedex.ui.ScreenDetail.FieldValue
-import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
@@ -120,55 +118,42 @@ private fun SuccessScreen(
         containerColor = model.color()
     ) {
 
-        Column(modifier = Modifier.edgeToEdgePadding(it, LocalLayoutDirection.current)) {
+        Column(
+            modifier = Modifier.edgeToEdgePadding(it, LocalLayoutDirection.current)
+        ) {
 
-            Header(model)
+            Header(Modifier.weight(1f), model)
 
             Card(
-                modifier = Modifier.fillMaxSize(),
-                shape = RoundedCornerShape(topStart = 20.dp, topEnd = 20.dp),
+                modifier = Modifier.padding(horizontal = 24.dp),
+                shape = RoundedCornerShape(20.dp),
                 colors = CardDefaults.cardColors(containerColor = Color.White)
             ) {
+                Text(
+                    modifier = Modifier.padding(24.dp).fillMaxWidth(),
+                    text = model.description,
+                    style = MaterialTheme.typography.bodyMedium
+                )
+            }
 
-                val scope = rememberCoroutineScope()
-                val state = rememberPagerState(initialPage = 0, pageCount = { 4 })
+            val state = rememberPagerState(initialPage = 0, pageCount = { 3 })
 
-                PrimaryTabRow(
-                    selectedTabIndex = state.currentPage,
-                    divider = {}
+            HorizontalPager(
+                modifier = Modifier.padding(bottom = 24.dp).height(333.dp),
+                state = state,
+                contentPadding = PaddingValues(24.dp),
+                pageSpacing = 24.dp
+            ) {
+
+                Card(
+                    shape = RoundedCornerShape(20.dp),
+                    colors = CardDefaults.cardColors(containerColor = Color.White)
                 ) {
 
-                    Tab(
-                        selected = 0 == state.currentPage,
-                        onClick = { scope.launch { state.animateScrollToPage(0) } },
-                        text = { Text(text = "About") }
-                    )
-
-                    Tab(
-                        selected = 1 == state.currentPage,
-                        onClick = { scope.launch { state.animateScrollToPage(1) } },
-                        text = { Text(text = "Stats") }
-                    )
-
-                    Tab(
-                        selected = 2 == state.currentPage,
-                        onClick = { scope.launch { state.animateScrollToPage(2) } },
-                        text = { Text(text = "Evolution") }
-                    )
-
-                    Tab(
-                        selected = 3 == state.currentPage,
-                        onClick = { scope.launch { state.animateScrollToPage(3) } },
-                        text = { Text(text = "Moves") }
-                    )
-                }
-
-                HorizontalPager(state = state) {
                     when (it) {
-                        0 -> AboutScreen()
-                        1 -> StatsScreen()
-                        2 -> EvolutionScreen()
-                        3 -> MovesScreen()
+                        0 -> AboutScreen(Modifier.padding(24.dp).fillMaxSize())
+                        1 -> StatsScreen(Modifier.padding(24.dp).fillMaxSize())
+                        2 -> MovesScreen(Modifier.padding(24.dp).fillMaxSize())
                     }
                 }
             }
@@ -177,15 +162,18 @@ private fun SuccessScreen(
 }
 
 @Composable
-private fun AboutScreen() {
+private fun AboutScreen(
+    modifier: Modifier = Modifier,
+) {
     PokemonAboutScreen(
-        modifier = Modifier.fillMaxSize(), listOf(
+        modifier = modifier.fillMaxWidth(), listOf(
             ScreenDetail(
+                title = "About",
                 fields = listOf(
                     FieldValue("Species", "Seed"),
                     FieldValue("Height", "0.70 cm"),
                     FieldValue("Weight", "6.9 kg"),
-                    FieldValue("Abilities", "Chlorophyll")
+//                    FieldValue("Abilities", "Chlorophyll")
                 )
             ),
             ScreenDetail(
@@ -201,10 +189,13 @@ private fun AboutScreen() {
 }
 
 @Composable
-fun StatsScreen() {
+fun StatsScreen(
+    modifier: Modifier = Modifier,
+) {
     PokemonAboutScreen(
-        modifier = Modifier.fillMaxSize(), listOf(
+        modifier = modifier.fillMaxWidth(), listOf(
             ScreenDetail(
+                title = "Stats",
                 fields = listOf(
                     ScreenDetail.Chart("HP", 45),
                     ScreenDetail.Chart("Attack", 49),
@@ -220,10 +211,13 @@ fun StatsScreen() {
 }
 
 @Composable
-fun MovesScreen() {
+fun MovesScreen(
+    modifier: Modifier = Modifier,
+) {
     PokemonAboutScreen(
-        modifier = Modifier.fillMaxSize(), listOf(
+        modifier = modifier.fillMaxSize(), listOf(
             ScreenDetail(
+                title = "Abilities",
                 fields = listOf(
                     ScreenDetail.SortedValue(14, "Swords-Dance"),
                     ScreenDetail.SortedValue(15, "Cut"),
@@ -238,14 +232,12 @@ fun MovesScreen() {
 }
 
 @Composable
-fun EvolutionScreen() {
+private fun ColumnScope.Header(
+    modifier: Modifier = Modifier,
+    model: PokemonVO,
+) {
 
-}
-
-@Composable
-private fun ColumnScope.Header(model: PokemonVO) {
-
-    Row(horizontalArrangement = spacedBy(8.dp), modifier = Modifier.padding(horizontal = 24.dp)) {
+    Row(horizontalArrangement = spacedBy(8.dp), modifier = modifier.padding(horizontal = 24.dp)) {
         TypeTag(model.type1.name, Color.White)
         model.type2?.let {
             TypeTag(it.name, Color.White)

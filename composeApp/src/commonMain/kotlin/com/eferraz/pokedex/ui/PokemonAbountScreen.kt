@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment.Companion.CenterVertically
@@ -42,27 +43,33 @@ internal data class ScreenDetail(
 @Composable
 internal fun PokemonAboutScreen(modifier: Modifier = Modifier, screenDetail: List<ScreenDetail>) {
 
-    Column(modifier = modifier.background(MaterialTheme.colorScheme.background).fillMaxWidth().padding(24.dp), verticalArrangement = spacedBy(8.dp)) {
+    Column(
+        modifier = modifier.fillMaxWidth(),
+        verticalArrangement = spacedBy(24.dp)
+    ) {
 
         screenDetail.forEach { detail ->
 
-            detail.title?.let { title ->
-                Text(
-                    title,
-                    style = MaterialTheme.typography.titleMedium,
-                    modifier = Modifier.padding(top = 24.dp, bottom = 4.dp),
-                    fontWeight = FontWeight.Bold
-                )
-            }
+            Column(verticalArrangement = spacedBy(6.dp)) {
 
-            detail.fields.forEach {
+                detail.title?.let { title ->
+                    Text(
+                        title,
+                        style = MaterialTheme.typography.titleMedium,
+                        modifier = Modifier.padding(bottom = 4.dp),
+                        fontWeight = FontWeight.Bold
+                    )
+                }
 
-                Row(horizontalArrangement = spacedBy(8.dp), verticalAlignment = CenterVertically) {
+                detail.fields.forEach {
 
-                    when (it) {
-                        is ScreenDetail.FieldValue -> FieldValueComponent(field = it.field, value = it.value)
-                        is ScreenDetail.Chart -> ChartComponent(field = it)
-                        is ScreenDetail.SortedValue -> SortedValueComponent(field = it)
+                    Row(verticalAlignment = CenterVertically) {
+
+                        when (it) {
+                            is ScreenDetail.FieldValue -> FieldValueComponent(field = it.field, value = it.value)
+                            is ScreenDetail.Chart -> ChartComponent(field = it)
+                            is ScreenDetail.SortedValue -> SortedValueComponent(field = it)
+                        }
                     }
                 }
             }
@@ -132,10 +139,12 @@ private fun RowScope.SortedValueComponent(field: ScreenDetail.SortedValue) {
 @Composable
 private fun PokemonAboutScreenPreview() {
     PokedexTheme {
-        Box(modifier = Modifier.background(Color.White)) {
+        Surface {
             PokemonAboutScreen(
+                modifier = Modifier.padding(24.dp),
                 screenDetail = listOf(
                     ScreenDetail(
+                        title = "About",
                         fields = listOf(
                             ScreenDetail.FieldValue("Species", "Seed"),
                             ScreenDetail.FieldValue("Height", "0.70 cm"),
@@ -155,6 +164,7 @@ private fun PokemonAboutScreenPreview() {
                 )
             )
         }
+
     }
 }
 
@@ -163,10 +173,12 @@ private fun PokemonAboutScreenPreview() {
 @Composable
 private fun PokemonBaseStatsScreenPreview() {
     PokedexTheme {
-        Box(modifier = Modifier.background(Color.White)) {
+        Surface {
             PokemonAboutScreen(
+                modifier = Modifier.padding(24.dp),
                 screenDetail = listOf(
                     ScreenDetail(
+                        title = "Stats",
                         fields = listOf(
                             ScreenDetail.Chart("HP", 45),
                             ScreenDetail.Chart("Attack", 49),
@@ -187,10 +199,12 @@ private fun PokemonBaseStatsScreenPreview() {
 @Composable
 private fun PokemonMovesScreenPreview() {
     PokedexTheme {
-        Box(modifier = Modifier.background(Color.White)) {
+        Surface {
             PokemonAboutScreen(
+                modifier = Modifier.padding(24.dp),
                 screenDetail = listOf(
                     ScreenDetail(
+                        title = "Abilities",
                         fields = listOf(
                             ScreenDetail.SortedValue(14, "Swords-Dance"),
                             ScreenDetail.SortedValue(15, "Cut"),

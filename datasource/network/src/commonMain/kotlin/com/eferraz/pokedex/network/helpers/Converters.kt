@@ -16,7 +16,7 @@ internal fun toVO(pokemon: Pokemon, species: PokemonSpeciesDetail): PokemonVO = 
     type2 = pokemon.types.firstOrNull { it.slot == 2 }?.toVO(),
     weight = pokemon.weight.toFloat(),
     height = pokemon.height.toFloat(),
-    description = species.flavorTextEntries.first { it.language.name == "en" }.flavorText,
+    description = species.flavorTextEntries.first { it.language.name == "en" }.flavorText.replace("\n", " ").replace(Regex("\\f"), " "),
     category = species.shape?.name.orEmpty(),
 //    abilities = pokemon.abilities.map { it.ability.name },
     genderRatioMale = species.genderRate.toFloat(),
