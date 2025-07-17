@@ -4,17 +4,14 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement.spacedBy
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.pager.HorizontalPager
-import androidx.compose.foundation.pager.rememberPagerState
+import androidx.compose.foundation.layout.widthIn
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
@@ -23,11 +20,13 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.LargeTopAppBar
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.MediumTopAppBar
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -37,18 +36,21 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
-import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.text.capitalize
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.intl.Locale
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.min
 import coil3.compose.AsyncImage
 import com.eferraz.pokedex.entity.PokemonVO
 import com.eferraz.pokedex.entity.TypeVO
 import com.eferraz.pokedex.helpers.PokedexTheme
 import com.eferraz.pokedex.helpers.color
 import com.eferraz.pokedex.helpers.edgeToEdgePadding
+import com.eferraz.pokedex.helpers.formatedId
 import com.eferraz.pokedex.ui.ScreenDetail.FieldValue
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
@@ -96,12 +98,17 @@ private fun SuccessScreen(
     onNavigateBack: () -> Unit,
 ) {
 
+    val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior(rememberTopAppBarState())
+
     Scaffold(
-        modifier = modifier,
+        modifier = modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
         topBar = {
-            TopAppBar(
+            MediumTopAppBar(
                 title = {
-                    Text(model.name.capitalize(Locale.current), color = Color.White)
+                    Row {
+                        Text(model.name.capitalize(Locale.current), color = Color.White, modifier = Modifier.weight(1f))
+                        Text(model.formatedId(), color = Color.White, modifier = Modifier.padding(end = 24.dp))
+                    }
                 },
                 navigationIcon = {
                     IconButton(onClick = onNavigateBack) {
@@ -112,49 +119,91 @@ private fun SuccessScreen(
                         )
                     }
                 },
-                colors = TopAppBarDefaults.topAppBarColors(containerColor = Color.Transparent)
+                colors = TopAppBarDefaults.topAppBarColors(
+                    containerColor = Color.Transparent,
+                    scrolledContainerColor = Color.Transparent,
+                ),
+                scrollBehavior = scrollBehavior
             )
         },
-        containerColor = model.color()
+        containerColor = model.color()//.copy(alpha = 0.8f)
     ) {
 
-        Column(
-            modifier = Modifier.edgeToEdgePadding(it, LocalLayoutDirection.current)
+        LazyColumn(
+            modifier = Modifier.edgeToEdgePadding(it, LocalLayoutDirection.current),
+            verticalArrangement = spacedBy(16.dp),
+            contentPadding = PaddingValues(start = 24.dp, end = 24.dp, top = 0.dp, bottom = 32.dp)
         ) {
 
-            Header(Modifier.weight(1f), model)
-
-            Card(
-                modifier = Modifier.padding(horizontal = 24.dp),
-                shape = RoundedCornerShape(20.dp),
-                colors = CardDefaults.cardColors(containerColor = Color.White)
-            ) {
-                Text(
-                    modifier = Modifier.padding(24.dp).fillMaxWidth(),
-                    text = model.description,
-                    style = MaterialTheme.typography.bodyMedium
-                )
+            item {
+                Row(
+                    horizontalArrangement = spacedBy(space = 8.dp, alignment = Alignment.End),
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    model.types().forEach {
+                        TypeTag(it.name, Color.White)
+                    }
+                }
             }
 
-            val state = rememberPagerState(initialPage = 0, pageCount = { 3 })
+            item {
+                Card(
+                    modifier = Modifier,
+                    shape = RoundedCornerShape(20.dp),
+                    colors = CardDefaults.cardColors(containerColor = Color.White.copy(alpha = 0.7f))
+                ) {
+                    Box(modifier = Modifier.padding(8.dp).fillMaxWidth(), contentAlignment = Alignment.Center) {
+                        AsyncImage(
+                            model = model.image,
+                            contentDescription = model.name,
+                            modifier = Modifier.size(240.dp),
+                            alignment = Alignment.BottomCenter
+                        )
+                    }
+                }
+            }
 
-            HorizontalPager(
-                modifier = Modifier.padding(bottom = 24.dp).height(333.dp),
-                state = state,
-                contentPadding = PaddingValues(24.dp),
-                pageSpacing = 24.dp
-            ) {
+            item {
+                Card(
+                    modifier = Modifier,
+                    shape = RoundedCornerShape(20.dp),
+                    colors = CardDefaults.cardColors(containerColor = Color.White.copy(alpha = 0.7f))
+                ) {
+                    Text(
+                        modifier = Modifier.padding(24.dp).fillMaxWidth(),
+                        text = model.description,
+                        style = MaterialTheme.typography.bodyMedium
+                    )
+                }
+            }
 
+            item {
                 Card(
                     shape = RoundedCornerShape(20.dp),
-                    colors = CardDefaults.cardColors(containerColor = Color.White)
+                    colors = CardDefaults.cardColors(containerColor = Color.White.copy(alpha = 0.7f))
                 ) {
 
-                    when (it) {
-                        0 -> AboutScreen(Modifier.padding(24.dp).fillMaxSize())
-                        1 -> StatsScreen(Modifier.padding(24.dp).fillMaxSize())
-                        2 -> MovesScreen(Modifier.padding(24.dp).fillMaxSize())
-                    }
+                    AboutScreen(Modifier.padding(24.dp).fillMaxSize())
+                }
+            }
+
+            item {
+                Card(
+                    shape = RoundedCornerShape(20.dp),
+                    colors = CardDefaults.cardColors(containerColor = Color.White.copy(alpha = 0.7f))
+                ) {
+
+                    StatsScreen(Modifier.padding(24.dp).fillMaxSize())
+                }
+            }
+
+            item {
+                Card(
+                    shape = RoundedCornerShape(20.dp),
+                    colors = CardDefaults.cardColors(containerColor = Color.White.copy(alpha = 0.7f))
+                ) {
+
+                    MovesScreen(Modifier.padding(24.dp).fillMaxSize())
                 }
             }
         }
@@ -173,7 +222,7 @@ private fun AboutScreen(
                     FieldValue("Species", "Seed"),
                     FieldValue("Height", "0.70 cm"),
                     FieldValue("Weight", "6.9 kg"),
-//                    FieldValue("Abilities", "Chlorophyll")
+                    FieldValue("Abilities", "Chlorophyll")
                 )
             ),
             ScreenDetail(
@@ -232,49 +281,6 @@ fun MovesScreen(
 }
 
 @Composable
-private fun ColumnScope.Header(
-    modifier: Modifier = Modifier,
-    model: PokemonVO,
-) {
-
-    Row(horizontalArrangement = spacedBy(8.dp), modifier = modifier.padding(horizontal = 24.dp)) {
-        TypeTag(model.type1.name, Color.White)
-        model.type2?.let {
-            TypeTag(it.name, Color.White)
-        }
-    }
-
-    Box(
-        modifier = Modifier
-            .fillMaxWidth()
-            .align(Alignment.CenterHorizontally),
-        contentAlignment = Alignment.BottomCenter
-    ) {
-
-        Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.CenterEnd) {
-            Image(
-                painter = painterResource(Res.drawable.pokeball),
-                contentDescription = "",
-                contentScale = ContentScale.Fit,
-                alpha = 0.1f,
-                colorFilter = ColorFilter.tint(Color.White),
-                modifier = Modifier.rotate(30f).size(240.dp)
-            )
-        }
-
-        Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.BottomCenter) {
-            AsyncImage(
-                model = model.image,
-                contentDescription = model.name,
-                contentScale = ContentScale.Fit,
-                modifier = Modifier.size(240.dp),
-                alignment = Alignment.BottomCenter
-            )
-        }
-    }
-}
-
-@Composable
 private fun TypeTag(typeName: String, typeColor: Color) {
     Box(
         modifier = Modifier
@@ -283,10 +289,12 @@ private fun TypeTag(typeName: String, typeColor: Color) {
             .padding(horizontal = 12.dp, vertical = 6.dp)
     ) {
         Text(
-            text = typeName,
+            modifier = Modifier.widthIn(min = 60.dp),
+            text = typeName.capitalize(Locale.current),
             color = typeColor, // Or a contrasting color if typeColor is too light
             style = MaterialTheme.typography.bodyMedium,
-            fontWeight = FontWeight.Bold
+            fontWeight = FontWeight.Bold,
+            textAlign = TextAlign.Center
         )
     }
 }

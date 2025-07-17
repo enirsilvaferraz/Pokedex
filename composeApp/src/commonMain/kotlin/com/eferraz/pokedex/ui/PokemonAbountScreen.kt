@@ -1,8 +1,6 @@
 package com.eferraz.pokedex.ui
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement.spacedBy
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
@@ -81,7 +79,7 @@ internal fun PokemonAboutScreen(modifier: Modifier = Modifier, screenDetail: Lis
 private fun RowScope.FieldValueComponent(field: String, value: String) {
 
     Text(
-        modifier = Modifier.width(120.dp),
+        modifier = Modifier.width(110.dp),
         text = field,
         style = MaterialTheme.typography.bodyMedium
     )
@@ -98,7 +96,7 @@ private fun RowScope.FieldValueComponent(field: String, value: String) {
 private fun RowScope.ChartComponent(field: ScreenDetail.Chart) {
 
     Text(
-        modifier = Modifier.width(120.dp),
+        modifier = Modifier.width(110.dp),
         text = field.field,
         style = MaterialTheme.typography.bodyMedium
     )
