@@ -93,7 +93,7 @@ private fun SuccessScreen(
 
     Scaffold(
         modifier = modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
-        topBar = { TopBarScreen(vo, onNavigateBack, scrollBehavior) },
+        topBar = { TopBar(title = vo.name, id = vo.id, onNavigateBack = onNavigateBack, scrollBehavior = scrollBehavior) },
         containerColor = vo.color
     ) {
 
@@ -103,33 +103,34 @@ private fun SuccessScreen(
             contentPadding = PaddingValues(start = 24.dp, end = 24.dp, top = 0.dp, bottom = 32.dp)
         ) {
 
-            item { TypeTagsComponent(vo = vo) }
+            item { TypeTagsWidget(types = vo.types) }
 
-            item { ImageComponent(vo = vo) }
+            item { ImageWidget(image = vo.image, contentDescription = vo.name) }
 
-            item { DescriptionComponent(vo = vo) }
+            item { DescriptionWidget(description = vo.description) }
 
-            item { AboutComponent(vo = vo) }
+            item { AboutWidget(about = vo.about, breeding = vo.breeding) }
 
-            item { StatsComponent(vo = vo.stats) }
+            item { StatsWidget(stats = vo.stats) }
 
-            item { MovesComponent(vo = vo) }
+            item { MovesWidget(vo = vo) }
         }
     }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-private fun TopBarScreen(
-    vo: PokemonView,
+private fun TopBar(
+    title: String,
+    id: String,
     onNavigateBack: () -> Unit,
     scrollBehavior: TopAppBarScrollBehavior,
 ) {
     MediumTopAppBar(
         title = {
             Row {
-                Text(vo.name, color = Color.White, modifier = Modifier.weight(1f))
-                Text(vo.id, color = Color.White, modifier = Modifier.padding(end = 24.dp))
+                Text(title, color = Color.White, modifier = Modifier.weight(1f))
+                Text(id, color = Color.White, modifier = Modifier.padding(end = 24.dp))
             }
         },
         navigationIcon = {
@@ -149,8 +150,155 @@ private fun TopBarScreen(
     )
 }
 
+/**
+ * Widget Area
+ */
+
 @Composable
-private fun CardSlot(
+private fun TypeTagsWidget(
+    modifier: Modifier = Modifier,
+    types: List<String>,
+) {
+    Row(
+        modifier = modifier.fillMaxWidth(),
+        horizontalArrangement = spacedBy(space = 8.dp, alignment = Alignment.End)
+    ) {
+
+        types.forEach { name ->
+
+            Box(
+                modifier = Modifier
+                    .clip(RoundedCornerShape(16.dp))
+                    .background(Color.White.copy(alpha = 0.3f))
+                    .padding(horizontal = 12.dp, vertical = 6.dp)
+            ) {
+                Text(
+                    modifier = Modifier.widthIn(min = 60.dp),
+                    text = name,
+                    color = Color.White,
+                    style = MaterialTheme.typography.bodyMedium,
+                    fontWeight = FontWeight.Bold,
+                    textAlign = TextAlign.Center
+                )
+            }
+        }
+    }
+}
+
+@Composable
+private fun ImageWidget(
+    modifier: Modifier = Modifier,
+    image: String,
+    contentDescription: String,
+) {
+    CardComponent(modifier = modifier) { modifier ->
+        AsyncImage(
+            modifier = modifier.fillMaxWidth().height(200.dp),
+            model = image,
+            contentDescription = contentDescription,
+            alignment = Alignment.Center
+        )
+    }
+}
+
+@Composable
+private fun DescriptionWidget(
+    modifier: Modifier = Modifier,
+    description: String,
+) {
+    CardComponent(modifier = modifier) { modifier ->
+        Text(modifier = modifier, text = description, style = MaterialTheme.typography.bodyMedium)
+    }
+}
+
+@Composable
+private fun AboutWidget(
+    modifier: Modifier = Modifier,
+    about: PokemonView.About,
+    breeding: PokemonView.Breeding,
+) {
+    CardComponent(modifier = modifier) { modifier ->
+        PokemonAboutScreen(
+            modifier = modifier, listOf(
+                ScreenDetail(
+                    title = "About",
+                    fields = listOf(
+                        FieldValue("Species", about.species),
+                        FieldValue("Category", about.category),
+                        FieldValue("Height", about.height),
+                        FieldValue("Weight", about.weight),
+                        FieldValue("Abilities", about.abilities)
+                    )
+                ),
+                ScreenDetail(
+                    title = "Breeding",
+                    fields = listOf(
+                        FieldValue("Gender", breeding.gender),
+                        FieldValue("Egg Groups", breeding.eggGroups),
+                        FieldValue("Egg Cycle", breeding.eggCycle)
+                    )
+                )
+            )
+        )
+    }
+}
+
+@Composable
+private fun StatsWidget(
+    modifier: Modifier = Modifier,
+    stats: PokemonView.Stats,
+) {
+    CardComponent(modifier = modifier) { modifier ->
+
+        Column(modifier = modifier, verticalArrangement = spacedBy(6.dp)) {
+
+            CardTitleComponent("Stats")
+
+            listOf(
+                "HP" to stats.hp,
+                "Attack" to stats.attack,
+                "Defense" to stats.defense,
+                "Sp. Atk" to stats.spAtk,
+                "Sp. Def" to stats.spDef,
+                "Speed" to stats.speed,
+                "Total" to stats.total
+            ).forEach { (field, value) ->
+                ChartItemComponent(field = field, value = value.text(), color = value.color(), progress = value.progress())
+            }
+        }
+    }
+}
+
+@Composable
+private fun MovesWidget(
+    modifier: Modifier = Modifier,
+    vo: PokemonView,
+) {
+    CardComponent(modifier = modifier) { modifier ->
+        PokemonAboutScreen(
+            modifier = modifier, listOf(
+                ScreenDetail(
+                    title = "Abilities",
+                    fields = listOf(
+                        ScreenDetail.SortedValue(14, "Swords-Dance"),
+                        ScreenDetail.SortedValue(15, "Cut"),
+                        ScreenDetail.SortedValue(20, "Vine-Whip"),
+                        ScreenDetail.SortedValue(21, "Fly"),
+                        ScreenDetail.SortedValue(22, "Tackle"),
+                        ScreenDetail.SortedValue(25, "Body-Slam")
+                    )
+                )
+            )
+        )
+    }
+}
+
+/**
+ * Components Area
+ */
+
+@Composable
+private fun CardComponent(
     modifier: Modifier = Modifier,
     content: @Composable ColumnScope.(Modifier) -> Unit,
 ) {
@@ -162,63 +310,6 @@ private fun CardSlot(
         content(Modifier.padding(24.dp))
     }
 }
-
-@Composable
-private fun TypeTagsComponent(
-    modifier: Modifier = Modifier,
-    vo: PokemonView,
-) {
-    Row(
-        modifier = modifier.fillMaxWidth(),
-        horizontalArrangement = spacedBy(space = 8.dp, alignment = Alignment.End)
-    ) {
-
-        vo.types.forEach { name ->
-
-            Box(
-                modifier = Modifier
-                    .clip(RoundedCornerShape(16.dp))
-                    .background(Color.White.copy(alpha = 0.3f))
-                    .padding(horizontal = 12.dp, vertical = 6.dp)
-            ) {
-                Text(
-                    modifier = Modifier.widthIn(min = 60.dp),
-                    text = name,
-                    color = Color.White, // Or a contrasting color if typeColor is too light
-                    style = MaterialTheme.typography.bodyMedium,
-                    fontWeight = FontWeight.Bold,
-                    textAlign = TextAlign.Center
-                )
-            }
-        }
-    }
-}
-
-@Composable
-private fun ImageComponent(
-    modifier: Modifier = Modifier,
-    vo: PokemonView,
-) {
-    CardSlot(modifier = modifier) { modifier ->
-        AsyncImage(
-            model = vo.image,
-            contentDescription = vo.name,
-            modifier = modifier.fillMaxWidth().height(200.dp),
-            alignment = Alignment.Center
-        )
-    }
-}
-
-@Composable
-private fun DescriptionComponent(
-    modifier: Modifier = Modifier,
-    vo: PokemonView,
-) {
-    CardSlot(modifier = modifier) { modifier ->
-        Text(modifier = modifier, text = vo.description, style = MaterialTheme.typography.bodyMedium)
-    }
-}
-
 
 @Composable
 private fun CardTitleComponent(title: String) {
@@ -249,7 +340,7 @@ private fun RowScope.FieldValueComponent(field: String, value: String) {
 }
 
 @Composable
-private fun ChartComponent(field: String, value: String, color: Color, progress: Float) {
+private fun ChartItemComponent(field: String, value: String, color: Color, progress: Float) {
 
     Row(verticalAlignment = CenterVertically) {
 
@@ -291,113 +382,6 @@ private fun RowScope.SortedValueComponent(field: ScreenDetail.SortedValue) {
     )
 }
 
-
-@Composable
-private fun AboutComponent(
-    modifier: Modifier = Modifier,
-    vo: PokemonView,
-) {
-    CardSlot(modifier = modifier) { modifier ->
-        PokemonAboutScreen(
-            modifier = modifier, listOf(
-                ScreenDetail(
-                    title = "About",
-                    fields = listOf(
-                        FieldValue("Species", vo.about.species),
-                        FieldValue("Category", vo.about.category),
-                        FieldValue("Height", vo.about.height),
-                        FieldValue("Weight", vo.about.weight),
-                        FieldValue("Abilities", vo.about.abilities)
-                    )
-                ),
-                ScreenDetail(
-                    title = "Breeding",
-                    fields = listOf(
-                        FieldValue("Gender", vo.breeding.gender),
-                        FieldValue("Egg Groups", vo.breeding.eggGroups),
-                        FieldValue("Egg Cycle", vo.breeding.eggCycle)
-                    )
-                )
-            )
-        )
-    }
-}
-
-@Composable
-private fun StatsComponent(
-    modifier: Modifier = Modifier,
-    vo: PokemonView.Stats,
-) {
-    CardSlot(modifier = modifier) { modifier ->
-
-        Column(
-            modifier = modifier.fillMaxWidth(),
-            verticalArrangement = spacedBy(6.dp)
-        ) {
-
-            CardTitleComponent("Stats")
-
-            listOf(
-                "HP" to vo.hp,
-                "Attack" to vo.attack,
-                "Defense" to vo.defense,
-                "Sp. Atk" to vo.spAtk,
-                "Sp. Def" to vo.spDef,
-                "Speed" to vo.speed,
-                "Total" to vo.total
-            ).forEach { (field, value) ->
-
-                Row(verticalAlignment = CenterVertically) {
-
-                    Text(
-                        modifier = Modifier.width(110.dp),
-                        text = field,
-                        style = MaterialTheme.typography.bodyMedium
-                    )
-
-                    Text(
-                        modifier = Modifier.width(40.dp),
-                        text = value.text(),
-                        style = MaterialTheme.typography.bodyMedium,
-                        fontWeight = FontWeight.Bold
-                    )
-
-                    LinearProgressIndicator(
-                        modifier = Modifier.weight(0.7f).height(4.dp),
-                        progress = { value.progress() },
-                        color = value.color(),
-                        trackColor = Color.Gray.copy(alpha = 0.1f)
-                    )
-                }
-            }
-        }
-    }
-}
-
-@Composable
-private fun MovesComponent(
-    modifier: Modifier = Modifier,
-    vo: PokemonView,
-) {
-    CardSlot(modifier = modifier) { modifier ->
-        PokemonAboutScreen(
-            modifier = modifier, listOf(
-                ScreenDetail(
-                    title = "Abilities",
-                    fields = listOf(
-                        ScreenDetail.SortedValue(14, "Swords-Dance"),
-                        ScreenDetail.SortedValue(15, "Cut"),
-                        ScreenDetail.SortedValue(20, "Vine-Whip"),
-                        ScreenDetail.SortedValue(21, "Fly"),
-                        ScreenDetail.SortedValue(22, "Tackle"),
-                        ScreenDetail.SortedValue(25, "Body-Slam")
-                    )
-                )
-            )
-        )
-    }
-}
-
 /**
  * Preview Area
  */
@@ -418,7 +402,7 @@ private fun PokemonScreenTagsPreview() {
     PokedexTheme {
         Surface(color = pokemon.color) {
             Box(modifier = Modifier.padding(24.dp)) {
-                TypeTagsComponent(modifier = Modifier, vo = pokemon)
+                TypeTagsWidget(modifier = Modifier, types = pokemon.types)
             }
         }
     }
@@ -430,7 +414,7 @@ private fun PokemonScreenAboutPreview() {
     PokedexTheme {
         Surface(color = pokemon.color) {
             Box(modifier = Modifier.padding(24.dp)) {
-                AboutComponent(modifier = Modifier, vo = pokemon)
+                AboutWidget(modifier = Modifier, about = pokemon.about, breeding = pokemon.breeding)
             }
         }
     }
@@ -442,7 +426,7 @@ private fun PokemonScreenStatsPreview() {
     PokedexTheme {
         Surface(color = pokemon.color) {
             Box(modifier = Modifier.padding(24.dp)) {
-                StatsComponent(modifier = Modifier, vo = pokemon.stats)
+                StatsWidget(modifier = Modifier, stats = pokemon.stats)
             }
         }
     }
@@ -454,7 +438,7 @@ private fun PokemonScreenMovesPreview() {
     PokedexTheme {
         Surface(color = pokemon.color) {
             Box(modifier = Modifier.padding(24.dp)) {
-                MovesComponent(modifier = Modifier, vo = pokemon)
+                MovesWidget(modifier = Modifier, vo = pokemon)
             }
         }
     }
