@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "3190de48c85342158fe66f8752b0c433",
+    "identityHash": "d80fc64956d733e59fe9c047f270bb7e",
     "entities": [
       {
         "tableName": "pokemon",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`pokemon_id` INTEGER NOT NULL, `name` TEXT NOT NULL, `image` TEXT NOT NULL, `type1` INTEGER NOT NULL, `type2` INTEGER, `description` TEXT NOT NULL, `weight` REAL NOT NULL, `height` REAL NOT NULL, `category` TEXT NOT NULL, `gender_ratio` REAL NOT NULL, `primary_color` TEXT NOT NULL, PRIMARY KEY(`pokemon_id`), FOREIGN KEY(`type1`) REFERENCES `type`(`type_id`) ON UPDATE CASCADE ON DELETE CASCADE , FOREIGN KEY(`type2`) REFERENCES `type`(`type_id`) ON UPDATE CASCADE ON DELETE CASCADE )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`pokemon_id` INTEGER NOT NULL, `name` TEXT NOT NULL, `image` TEXT NOT NULL, `type1` INTEGER NOT NULL, `type2` INTEGER, `description` TEXT NOT NULL, `weight` REAL NOT NULL, `height` REAL NOT NULL, `category` TEXT NOT NULL, `gender_ratio` REAL NOT NULL, `primary_color` TEXT NOT NULL, `genera` TEXT NOT NULL, PRIMARY KEY(`pokemon_id`), FOREIGN KEY(`type1`) REFERENCES `type`(`type_id`) ON UPDATE CASCADE ON DELETE CASCADE , FOREIGN KEY(`type2`) REFERENCES `type`(`type_id`) ON UPDATE CASCADE ON DELETE CASCADE )",
         "fields": [
           {
             "fieldPath": "id",
@@ -72,6 +72,12 @@
             "columnName": "primary_color",
             "affinity": "TEXT",
             "notNull": true
+          },
+          {
+            "fieldPath": "genera",
+            "columnName": "genera",
+            "affinity": "TEXT",
+            "notNull": true
           }
         ],
         "primaryKey": {
@@ -132,7 +138,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '3190de48c85342158fe66f8752b0c433')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'd80fc64956d733e59fe9c047f270bb7e')"
     ]
   }
 }

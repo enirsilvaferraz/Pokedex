@@ -24,7 +24,8 @@ internal fun PokemonAndType.toVO() = PokemonVO(
 //    abilities = pokemon.abilities,
     genderRatioMale = pokemon.genderRatio,
 //    baseStats = pokemon.stats.map { it.toVO() },
-    primaryColor = pokemon.primaryColor
+    primaryColor = pokemon.primaryColor,
+    genera = pokemon.genera
 )
 
 internal fun PokemonVO.toTable() = PokemonTable(
@@ -40,7 +41,8 @@ internal fun PokemonVO.toTable() = PokemonTable(
 //    abilities = abilities,
     genderRatio = genderRatioMale,
 //    stats = baseStats.map { it.toTable() },
-    primaryColor = primaryColor
+    primaryColor = primaryColor,
+    genera = genera
 )
 
 internal fun TypeVO.toTable() = TypeTable(

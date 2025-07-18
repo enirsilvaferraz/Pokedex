@@ -65,5 +65,8 @@ internal data class PokemonTable(
 
     @ColumnInfo(name = "primary_color")
     val primaryColor: String,
+
+    @ColumnInfo(name = "genera")
+    val genera: String,
 )
 

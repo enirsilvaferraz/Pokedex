@@ -22,6 +22,7 @@ internal fun toVO(pokemon: Pokemon, species: PokemonSpeciesDetail): PokemonVO = 
     genderRatioMale = species.genderRate.toFloat(),
 //    baseStats = pokemon.stats.map { toVO(it) },
     primaryColor = species.color.name.orEmpty(),
+    genera = species.genera.first { it.language.name == "en" }.genus,
 )
 
 private fun TypeEntry.toVO(): TypeVO = TypeVO(

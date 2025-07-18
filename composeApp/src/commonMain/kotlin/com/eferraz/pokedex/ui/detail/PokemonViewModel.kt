@@ -1,8 +1,7 @@
-package com.eferraz.pokedex.ui
+package com.eferraz.pokedex.ui.detail
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.eferraz.pokedex.entity.PokemonVO
 import com.eferraz.repositories.PokemonRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -20,7 +19,7 @@ internal class PokemonViewModel(
     init {
         viewModelScope.launch {
             runCatching {
-                _state.update { Success(useCase.get(id)) }
+                _state.update { Success(PokemonView(useCase.get(id))) }
             }.getOrElse {
                 _state.update { Error }
             }
@@ -29,6 +28,6 @@ internal class PokemonViewModel(
 
     internal sealed interface State
     internal object Loading : State
-    internal data class Success(val model: PokemonVO) : State
+    internal data class Success(val vo: PokemonView) : State
     internal object Error : State
 }

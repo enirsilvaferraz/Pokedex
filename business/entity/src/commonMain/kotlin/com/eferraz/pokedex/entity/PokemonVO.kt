@@ -15,6 +15,7 @@ data class PokemonVO(
     val genderRatioMale: Float, // e.g., 0.875 for 87.5% male
 //    val baseStats: List<StatVO>,
     val primaryColor: String,
+    val genera: String
 ) {
 
     fun types() = listOfNotNull(type1, type2)

@@ -1,4 +1,4 @@
-package com.eferraz.pokedex.ui
+package com.eferraz.pokedex.ui.detail
 
 import androidx.compose.foundation.layout.Arrangement.spacedBy
 import androidx.compose.foundation.layout.Column

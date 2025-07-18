@@ -7,7 +7,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
 import com.eferraz.pokedex.di.AppDI
 import com.eferraz.pokedex.ui.PokedexRoute
-import com.eferraz.pokedex.ui.PokemonRoute
+import com.eferraz.pokedex.ui.detail.PokemonRoute
 import org.koin.compose.KoinMultiplatformApplication
 import org.koin.core.annotation.KoinExperimentalAPI
 
