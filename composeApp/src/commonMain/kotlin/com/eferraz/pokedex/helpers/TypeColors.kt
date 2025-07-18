@@ -10,7 +10,7 @@ import com.eferraz.pokedex.entity.TypeVO
  * @param typeName The name of the Pokemon type (e.g., "grass", "fire").
  * @return The Color associated with the type. Defaults to a neutral Gray if the type is not recognized.
  */
-fun TypeVO?.getColorForType(): Color {
+internal fun TypeVO?.getColorForType(): Color {
     return when (this?.name?.lowercase()) {
         "normal" -> Color(0xFFA8A77A)    // Normal - Grayish Beige
         "fire" -> Color(0xFFEE8130)      // Fire - Orange-Red

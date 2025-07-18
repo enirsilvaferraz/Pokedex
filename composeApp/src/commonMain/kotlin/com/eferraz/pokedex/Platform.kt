@@ -1,3 +1,3 @@
 package com.eferraz.pokedex
 
-expect fun formatId(id: Long): String
+internal expect fun formatId(id: Long): String

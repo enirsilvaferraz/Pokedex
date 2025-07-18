@@ -200,7 +200,7 @@ private fun AboutScreen(
 }
 
 @Composable
-fun StatsScreen(
+private fun StatsScreen(
     modifier: Modifier = Modifier,
 ) {
     PokemonAboutScreen(
@@ -222,7 +222,7 @@ fun StatsScreen(
 }
 
 @Composable
-fun MovesScreen(
+private fun MovesScreen(
     modifier: Modifier = Modifier,
 ) {
     PokemonAboutScreen(
