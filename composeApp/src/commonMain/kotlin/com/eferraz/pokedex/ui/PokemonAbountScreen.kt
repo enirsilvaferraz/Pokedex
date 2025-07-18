@@ -129,7 +129,6 @@ private fun RowScope.SortedValueComponent(field: ScreenDetail.SortedValue) {
         modifier = Modifier.weight(1f),
         text = field.text,
         style = MaterialTheme.typography.bodyMedium,
-        fontWeight = FontWeight.Bold
     )
 }
 
@@ -153,8 +152,8 @@ private fun PokemonAboutScreenPreview() {
                     ScreenDetail(
                         title = "Breeding",
                         fields = listOf(
-                            ScreenDetail.FieldValue("Gender Male", "87,5%"),
-                            ScreenDetail.FieldValue("Gender Female", "12,5%"),
+                            ScreenDetail.FieldValue("Gender ♂\uFE0F", "87,5%"),
+                            ScreenDetail.FieldValue("Gender ♀\uFE0F", "12,5%"),
                             ScreenDetail.FieldValue("Egg Groups", "Monster"),
                             ScreenDetail.FieldValue("Egg Cycle", "Grass")
                         ),
