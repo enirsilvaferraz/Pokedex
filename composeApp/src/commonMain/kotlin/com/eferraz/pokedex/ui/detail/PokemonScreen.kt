@@ -109,7 +109,7 @@ private fun SuccessScreen(
 
             item { DescriptionWidget(description = vo.description) }
 
-            item { AboutWidget(about = vo.about, breeding = vo.breeding) }
+            item { AboutWidget(about = vo.aboutItems()) }
 
             item { StatsWidget(stats = vo.stats) }
 
@@ -214,38 +214,36 @@ private fun DescriptionWidget(
 @Composable
 private fun AboutWidget(
     modifier: Modifier = Modifier,
-    about: PokemonView.About,
-    breeding: PokemonView.Breeding,
+    about: Map<String, Map<String, String>>,
 ) {
 
     CardComponent(modifier = modifier) { modifier ->
 
-        Column(modifier = modifier, verticalArrangement = spacedBy(6.dp)) {
+        Column(modifier = modifier, verticalArrangement = spacedBy(24.dp)) {
 
-            mapOf(
-                "About" to about.items(),
-                "Breeding" to breeding.items()
-            ).onEachIndexed { index, it ->
+            about.onEach { (title, items) ->
 
-                // TODO mover regra para o PokemonView
-                CardTitleComponent(title = it.key, modifier = Modifier.padding(top = if (index != 0) 16.dp else 0.dp))
+                Column(verticalArrangement = spacedBy(6.dp)) {
 
-                it.value.forEach { (field, value) ->
+                    CardTitleComponent(title = title)
 
-                    Row(verticalAlignment = CenterVertically) {
+                    items.forEach { (field, value) ->
 
-                        Text(
-                            modifier = Modifier.width(110.dp),
-                            text = field,
-                            style = MaterialTheme.typography.bodyMedium
-                        )
+                        Row(verticalAlignment = CenterVertically) {
 
-                        Text(
-                            modifier = Modifier.weight(1f),
-                            text = value,
-                            style = MaterialTheme.typography.bodyMedium,
-                            fontWeight = FontWeight.Bold
-                        )
+                            Text(
+                                modifier = Modifier.width(110.dp),
+                                text = field,
+                                style = MaterialTheme.typography.bodyMedium
+                            )
+
+                            Text(
+                                modifier = Modifier.weight(1f),
+                                text = value,
+                                style = MaterialTheme.typography.bodyMedium,
+                                fontWeight = FontWeight.Bold
+                            )
+                        }
                     }
                 }
             }
@@ -401,7 +399,7 @@ private fun PokemonScreenAboutPreview(
     PokedexTheme {
         Surface(color = pokemon.color) {
             Box(modifier = Modifier.padding(24.dp)) {
-                AboutWidget(modifier = Modifier, about = pokemon.about, breeding = pokemon.breeding)
+                AboutWidget(modifier = Modifier, about = pokemon.aboutItems())
             }
         }
     }
