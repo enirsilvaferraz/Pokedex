@@ -11,7 +11,7 @@ data class PokemonVO(
     val weight: Float,
     val height: Float,
     val category: String,
-//    val abilities: List<String>,
+    val abilities: List<Ability>,
     val genderRatioMale: Float, // e.g., 0.875 for 87.5% male
 //    val baseStats: List<StatVO>,
     val primaryColor: String,
@@ -20,3 +20,8 @@ data class PokemonVO(
 
     fun types() = listOfNotNull(type1, type2)
 }
+
+data class Ability(
+    val id: Long,
+    val name: String
+)

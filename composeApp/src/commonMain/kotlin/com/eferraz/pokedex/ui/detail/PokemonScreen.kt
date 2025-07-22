@@ -5,9 +5,9 @@ import androidx.compose.foundation.layout.Arrangement.spacedBy
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -49,6 +49,8 @@ import com.eferraz.pokedex.helpers.PokedexTheme
 import com.eferraz.pokedex.helpers.edgeToEdgePadding
 import com.eferraz.pokedex.ui.detail.ScreenDetail.FieldValue
 import org.jetbrains.compose.ui.tooling.preview.Preview
+import org.jetbrains.compose.ui.tooling.preview.PreviewParameter
+import org.jetbrains.compose.ui.tooling.preview.PreviewParameterProvider
 import org.koin.compose.viewmodel.koinViewModel
 import org.koin.core.parameter.parametersOf
 
@@ -113,7 +115,7 @@ private fun SuccessScreen(
 
             item { StatsWidget(stats = vo.stats) }
 
-            item { MovesWidget(vo = vo) }
+            item { MovesWidget(abilities = vo.abilities) }
         }
     }
 }
@@ -254,16 +256,30 @@ private fun StatsWidget(
 
             CardTitleComponent("Stats")
 
-            listOf(
-                "HP" to stats.hp,
-                "Attack" to stats.attack,
-                "Defense" to stats.defense,
-                "Sp. Atk" to stats.spAtk,
-                "Sp. Def" to stats.spDef,
-                "Speed" to stats.speed,
-                "Total" to stats.total
-            ).forEach { (field, value) ->
-                ChartItemComponent(field = field, value = value.text(), color = value.color(), progress = value.progress())
+            stats.items().forEach { (field, value) ->
+
+                Row(verticalAlignment = CenterVertically) {
+
+                    Text(
+                        modifier = Modifier.width(110.dp),
+                        text = field,
+                        style = MaterialTheme.typography.bodyMedium
+                    )
+
+                    Text(
+                        modifier = Modifier.width(40.dp),
+                        text = value.text(),
+                        style = MaterialTheme.typography.bodyMedium,
+                        fontWeight = FontWeight.Bold
+                    )
+
+                    LinearProgressIndicator(
+                        modifier = Modifier.weight(0.7f).height(4.dp),
+                        progress = { value.progress() },
+                        color = value.color(),
+                        trackColor = Color.Gray.copy(alpha = 0.1f)
+                    )
+                }
             }
         }
     }
@@ -272,24 +288,39 @@ private fun StatsWidget(
 @Composable
 private fun MovesWidget(
     modifier: Modifier = Modifier,
-    vo: PokemonView,
+    abilities: List<PokemonView.Ability>,
 ) {
     CardComponent(modifier = modifier) { modifier ->
-        PokemonAboutScreen(
-            modifier = modifier, listOf(
-                ScreenDetail(
-                    title = "Abilities",
-                    fields = listOf(
-                        ScreenDetail.SortedValue(14, "Swords-Dance"),
-                        ScreenDetail.SortedValue(15, "Cut"),
-                        ScreenDetail.SortedValue(20, "Vine-Whip"),
-                        ScreenDetail.SortedValue(21, "Fly"),
-                        ScreenDetail.SortedValue(22, "Tackle"),
-                        ScreenDetail.SortedValue(25, "Body-Slam")
-                    )
-                )
-            )
-        )
+
+        Column(modifier = modifier, verticalArrangement = spacedBy(6.dp)) {
+
+            CardTitleComponent("Abilities")
+
+            FlowRow(
+                maxItemsInEachRow = 2,
+                horizontalArrangement = spacedBy(8.dp),
+                verticalArrangement = spacedBy(8.dp),
+            ) {
+
+                abilities.forEach { (key, value) ->
+
+                    Row(modifier = Modifier.weight(0.5f)) {
+
+                        Text(
+                            modifier = Modifier.padding(end = 8.dp),
+                            text = "$key.",
+                            style = MaterialTheme.typography.bodyMedium
+                        )
+
+                        Text(
+                            modifier = Modifier.weight(1f),
+                            text = value,
+                            style = MaterialTheme.typography.bodyMedium,
+                        )
+                    }
+                }
+            }
+        }
     }
 }
 
@@ -321,74 +352,13 @@ private fun CardTitleComponent(title: String) {
     )
 }
 
-
-@Composable
-private fun RowScope.FieldValueComponent(field: String, value: String) {
-
-    Text(
-        modifier = Modifier.width(110.dp),
-        text = field,
-        style = MaterialTheme.typography.bodyMedium
-    )
-
-    Text(
-        modifier = Modifier.weight(1f),
-        text = value,
-        style = MaterialTheme.typography.bodyMedium,
-        fontWeight = FontWeight.Bold
-    )
-}
-
-@Composable
-private fun ChartItemComponent(field: String, value: String, color: Color, progress: Float) {
-
-    Row(verticalAlignment = CenterVertically) {
-
-        Text(
-            modifier = Modifier.width(110.dp),
-            text = field,
-            style = MaterialTheme.typography.bodyMedium
-        )
-
-        Text(
-            modifier = Modifier.width(40.dp),
-            text = value,
-            style = MaterialTheme.typography.bodyMedium,
-            fontWeight = FontWeight.Bold
-        )
-
-        LinearProgressIndicator(
-            modifier = Modifier.weight(0.7f).height(4.dp),
-            progress = { progress },
-            color = color,
-            trackColor = Color.Gray.copy(alpha = 0.1f)
-        )
-    }
-}
-
-@Composable
-private fun RowScope.SortedValueComponent(field: ScreenDetail.SortedValue) {
-
-    Text(
-        modifier = Modifier.padding(end = 8.dp),
-        text = field.number.toString() + ".",
-        style = MaterialTheme.typography.bodyMedium
-    )
-
-    Text(
-        modifier = Modifier.weight(1f),
-        text = field.text,
-        style = MaterialTheme.typography.bodyMedium,
-    )
-}
-
 /**
  * Preview Area
  */
 
 @Preview
 @Composable
-private fun PokemonScreenPreview() {
+private fun PokemonScreenPreview(@PreviewParameter(PokemonParamProvider::class) pokemon: PokemonView) {
     PokemonScreen(
         modifier = Modifier,
         state = PokemonViewModel.Success(pokemon),
@@ -398,7 +368,7 @@ private fun PokemonScreenPreview() {
 
 @Preview
 @Composable
-private fun PokemonScreenTagsPreview() {
+private fun PokemonScreenTagsPreview(@PreviewParameter(PokemonParamProvider::class) pokemon: PokemonView) {
     PokedexTheme {
         Surface(color = pokemon.color) {
             Box(modifier = Modifier.padding(24.dp)) {
@@ -410,7 +380,7 @@ private fun PokemonScreenTagsPreview() {
 
 @Preview
 @Composable
-private fun PokemonScreenAboutPreview() {
+private fun PokemonScreenAboutPreview(@PreviewParameter(PokemonParamProvider::class) pokemon: PokemonView) {
     PokedexTheme {
         Surface(color = pokemon.color) {
             Box(modifier = Modifier.padding(24.dp)) {
@@ -422,7 +392,7 @@ private fun PokemonScreenAboutPreview() {
 
 @Preview
 @Composable
-private fun PokemonScreenStatsPreview() {
+private fun PokemonScreenStatsPreview(@PreviewParameter(PokemonParamProvider::class) pokemon: PokemonView) {
     PokedexTheme {
         Surface(color = pokemon.color) {
             Box(modifier = Modifier.padding(24.dp)) {
@@ -434,41 +404,54 @@ private fun PokemonScreenStatsPreview() {
 
 @Preview
 @Composable
-private fun PokemonScreenMovesPreview() {
+private fun PokemonScreenMovesPreview(@PreviewParameter(PokemonParamProvider::class) pokemon: PokemonView) {
     PokedexTheme {
         Surface(color = pokemon.color) {
             Box(modifier = Modifier.padding(24.dp)) {
-                MovesWidget(modifier = Modifier, vo = pokemon)
+                MovesWidget(modifier = Modifier, abilities = pokemon.abilities)
             }
         }
     }
 }
 
-private val pokemon = PokemonView(
-    id = "#001",
-    name = "Bulbasaur",
-    types = listOf("Grass", "Poison"),
-    image = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/1.png",
-    description = "Bulbasaur can be seen napping in bright sunlight. There is a seed on its back. By soaking up the sun's rays, the seed grows progressively larger.",
-    color = Color(0xFF7AC74C),
-    about = PokemonView.About(
-        species = "Seed Pokemon",
-        category = "Quadruped",
-        height = "0.70 cm",
-        weight = "6.9 kg",
-        abilities = "Chlorophyll, Overgrow"
-    ),
-    breeding = PokemonView.Breeding(
-        gender = "87,5% Male, 12,5% Female",
-        eggGroups = "Monster",
-        eggCycle = "Grass"
-    ),
-    stats = PokemonView.Stats(
-        hp = PokemonView.Stats.Item(45),
-        attack = PokemonView.Stats.Item(49),
-        defense = PokemonView.Stats.Item(4),
-        spAtk = PokemonView.Stats.Item(65),
-        spDef = PokemonView.Stats.Item(65),
-        speed = PokemonView.Stats.Item(45)
+internal class PokemonParamProvider() : PreviewParameterProvider<PokemonView> {
+
+    private val pokemon = PokemonView(
+        id = "#001",
+        name = "Bulbasaur",
+        types = listOf("Grass", "Poison"),
+        image = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/1.png",
+        description = "Bulbasaur can be seen napping in bright sunlight. There is a seed on its back. By soaking up the sun's rays, the seed grows progressively larger.",
+        color = Color(0xFF7AC74C),
+        about = PokemonView.About(
+            species = "Seed Pokemon",
+            category = "Quadruped",
+            height = "0.70 cm",
+            weight = "6.9 kg",
+            abilities = "Chlorophyll, Overgrow"
+        ),
+        breeding = PokemonView.Breeding(
+            gender = "87,5% Male, 12,5% Female",
+            eggGroups = "Monster",
+            eggCycle = "Grass"
+        ),
+        stats = PokemonView.Stats(
+            hp = PokemonView.Stats.Item(45),
+            attack = PokemonView.Stats.Item(49),
+            defense = PokemonView.Stats.Item(4),
+            spAtk = PokemonView.Stats.Item(65),
+            spDef = PokemonView.Stats.Item(65),
+            speed = PokemonView.Stats.Item(45)
+        ),
+        abilities = listOf(
+            PokemonView.Ability(14L, "Swords-Dance"),
+            PokemonView.Ability(15L, "Cut"),
+            PokemonView.Ability(20L, "Vine-Whip"),
+            PokemonView.Ability(21L, "Fly"),
+            PokemonView.Ability(22L, "Tackle"),
+            PokemonView.Ability(25L, "Body-Slam")
+        )
     )
-)
+
+    override val values: Sequence<PokemonView> = sequenceOf(pokemon)
+}

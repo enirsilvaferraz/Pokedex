@@ -48,10 +48,10 @@ kotlin {
             implementation(libs.androidx.lifecycle.viewmodel)
             implementation(libs.androidx.lifecycle.runtimeCompose)
 
-            implementation("io.coil-kt.coil3:coil-compose:3.2.0")
-            implementation("io.coil-kt.coil3:coil-network-ktor3:3.2.0")
+            implementation(libs.coil.compose)
+            implementation(libs.coil.network.ktor3)
 
-            implementation("org.jetbrains.compose.material:material-icons-core:1.7.3")
+            implementation(libs.material.icons.core)
 
             implementation(project.dependencies.platform(libs.koin.bom))
             implementation(libs.koin.core)
@@ -59,7 +59,7 @@ kotlin {
             implementation(libs.koin.compose.viewmodel)
             implementation(libs.koin.compose.viewmodel.navigation)
 
-            implementation("org.jetbrains.androidx.navigation:navigation-compose:2.9.0-beta03")
+            implementation(libs.navigation.compose)
 
             implementation(libs.paging.common)
             implementation(libs.paging.compose.common)

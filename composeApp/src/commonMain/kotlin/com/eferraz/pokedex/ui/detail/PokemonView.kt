@@ -16,6 +16,7 @@ internal data class PokemonView(
     val about: About,
     val breeding: Breeding,
     val stats: Stats,
+    val abilities: List<Ability>,
 ) {
 
     constructor(model: PokemonVO) : this(
@@ -27,7 +28,8 @@ internal data class PokemonView(
         color = model.type1.getColorForType(),
         about = About(model),
         breeding = Breeding(model),
-        stats = Stats(model)
+        stats = Stats(model),
+        abilities = model.abilities.map { Ability(it.id, it.name) }
     )
 
     data class About(
@@ -65,12 +67,12 @@ internal data class PokemonView(
     }
 
     data class Stats(
-        val hp: Item,
-        val attack: Item,
-        val defense: Item,
-        val spAtk: Item,
-        val spDef: Item,
-        val speed: Item,
+        private val hp: Item,
+        private val attack: Item,
+        private val defense: Item,
+        private val spAtk: Item,
+        private val spDef: Item,
+        private val speed: Item,
     ) {
 
         constructor(model: PokemonVO) : this(
@@ -82,11 +84,21 @@ internal data class PokemonView(
             speed = Item(45)
         )
 
-        val total = Item(listOf(hp, attack, defense, spAtk, spDef, speed).sumOf { it.value }, max = 600)
+        private val total = Item(listOf(hp, attack, defense, spAtk, spDef, speed).sumOf { it.value }, max = 600)
+
+        fun items() = mapOf(
+            "HP" to hp,
+            "Attack" to attack,
+            "Defense" to defense,
+            "Sp. Atk" to spAtk,
+            "Sp. Def" to spDef,
+            "Speed" to speed,
+            "Total" to total
+        )
 
         data class Item(
             val value: Int,
-            val max: Int = 100,
+            private val max: Int = 100,
         ) {
 
             fun text() = value.toString()
@@ -96,4 +108,9 @@ internal data class PokemonView(
             fun color() = if (value > max / 2) Color.Green else Color.Red
         }
     }
+
+    data class Ability(
+        val id: Long,
+        val name: String,
+    )
 }

@@ -1,5 +1,6 @@
 package com.eferraz.pokedex.network.helpers
 
+import com.eferraz.pokedex.entity.Ability
 import com.eferraz.pokedex.entity.PokemonVO
 import com.eferraz.pokedex.entity.StatVO
 import com.eferraz.pokedex.entity.TypeVO
@@ -18,7 +19,7 @@ internal fun toVO(pokemon: Pokemon, species: PokemonSpeciesDetail): PokemonVO = 
     height = pokemon.height.toFloat(),
     description = species.flavorTextEntries.first { it.language.name == "en" }.flavorText.replace("\n", " ").replace(Regex("\\f"), " "),
     category = species.shape?.name.orEmpty(),
-//    abilities = pokemon.abilities.map { it.ability.name },
+    abilities = pokemon.abilities.map { Ability(it.ability.getId(), it.ability.name.orEmpty()) },
     genderRatioMale = species.genderRate.toFloat(),
 //    baseStats = pokemon.stats.map { toVO(it) },
     primaryColor = species.color.name.orEmpty(),
