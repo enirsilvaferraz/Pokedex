@@ -32,6 +32,11 @@ internal data class PokemonView(
         abilities = model.abilities.map { Ability(it.id, it.name) }
     )
 
+    internal fun aboutItems() = mapOf(
+        "About" to about.items(),
+        "Breeding" to breeding.items()
+    )
+
     data class About(
         val species: String,
         val category: String,
@@ -46,6 +51,14 @@ internal data class PokemonView(
             height = "0.70 cm",
             weight = "6.9 kg",
             abilities = listOf("Chlorophyll").joinToString(", ") { it.capitalize(Locale.current) }
+        )
+
+        fun items() = mapOf(
+            "Species" to species,
+            "Category" to category,
+            "Height" to height,
+            "Weight" to weight,
+            "Abilities" to abilities
         )
     }
 
@@ -64,6 +77,12 @@ internal data class PokemonView(
         companion object {
             fun formatGender(male: Double) = "87,5% Male, 12,5% Female"
         }
+
+        fun items() = mapOf(
+            "Gender" to gender,
+            "Egg Groups" to eggGroups,
+            "Egg Cycle" to eggCycle
+        )
     }
 
     data class Stats(

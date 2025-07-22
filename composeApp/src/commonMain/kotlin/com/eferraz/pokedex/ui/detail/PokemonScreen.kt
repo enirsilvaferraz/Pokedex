@@ -47,9 +47,8 @@ import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
 import com.eferraz.pokedex.helpers.PokedexTheme
 import com.eferraz.pokedex.helpers.edgeToEdgePadding
-import com.eferraz.pokedex.ui.detail.ScreenDetail.FieldValue
+import com.eferraz.pokedex.ui.preview.pokemon
 import org.jetbrains.compose.ui.tooling.preview.Preview
-import org.jetbrains.compose.ui.tooling.preview.PreviewParameterProvider
 import org.koin.compose.viewmodel.koinViewModel
 import org.koin.core.parameter.parametersOf
 
@@ -218,29 +217,39 @@ private fun AboutWidget(
     about: PokemonView.About,
     breeding: PokemonView.Breeding,
 ) {
+
     CardComponent(modifier = modifier) { modifier ->
-        PokemonAboutScreen(
-            modifier = modifier, listOf(
-                ScreenDetail(
-                    title = "About",
-                    fields = listOf(
-                        FieldValue("Species", about.species),
-                        FieldValue("Category", about.category),
-                        FieldValue("Height", about.height),
-                        FieldValue("Weight", about.weight),
-                        FieldValue("Abilities", about.abilities)
-                    )
-                ),
-                ScreenDetail(
-                    title = "Breeding",
-                    fields = listOf(
-                        FieldValue("Gender", breeding.gender),
-                        FieldValue("Egg Groups", breeding.eggGroups),
-                        FieldValue("Egg Cycle", breeding.eggCycle)
-                    )
-                )
-            )
-        )
+
+        Column(modifier = modifier, verticalArrangement = spacedBy(6.dp)) {
+
+            mapOf(
+                "About" to about.items(),
+                "Breeding" to breeding.items()
+            ).onEachIndexed { index, it ->
+
+                // TODO mover regra para o PokemonView
+                CardTitleComponent(title = it.key, modifier = Modifier.padding(top = if (index != 0) 16.dp else 0.dp))
+
+                it.value.forEach { (field, value) ->
+
+                    Row(verticalAlignment = CenterVertically) {
+
+                        Text(
+                            modifier = Modifier.width(110.dp),
+                            text = field,
+                            style = MaterialTheme.typography.bodyMedium
+                        )
+
+                        Text(
+                            modifier = Modifier.weight(1f),
+                            text = value,
+                            style = MaterialTheme.typography.bodyMedium,
+                            fontWeight = FontWeight.Bold
+                        )
+                    }
+                }
+            }
+        }
     }
 }
 
@@ -253,7 +262,7 @@ private fun StatsWidget(
 
         Column(modifier = modifier, verticalArrangement = spacedBy(6.dp)) {
 
-            CardTitleComponent("Stats")
+            CardTitleComponent(title = "Stats")
 
             stats.items().forEach { (field, value) ->
 
@@ -293,7 +302,7 @@ private fun MovesWidget(
 
         Column(modifier = modifier, verticalArrangement = spacedBy(6.dp)) {
 
-            CardTitleComponent("Abilities")
+            CardTitleComponent(title = "Abilities")
 
             FlowRow(
                 maxItemsInEachRow = 2,
@@ -342,11 +351,14 @@ private fun CardComponent(
 }
 
 @Composable
-private fun CardTitleComponent(title: String) {
+private fun CardTitleComponent(
+    modifier: Modifier = Modifier,
+    title: String,
+) {
     Text(
         title,
         style = MaterialTheme.typography.titleMedium,
-        modifier = Modifier.padding(bottom = 4.dp),
+        modifier = modifier.padding(bottom = 4.dp),
         fontWeight = FontWeight.Bold
     )
 }
@@ -422,44 +434,3 @@ private fun PokemonScreenMovesPreview(
         }
     }
 }
-
-internal class PokemonParamProvider() : PreviewParameterProvider<PokemonView> {
-    override val values: Sequence<PokemonView> = sequenceOf(pokemon)
-}
-
-private val pokemon = PokemonView(
-    id = "#001",
-    name = "Bulbasaur",
-    types = listOf("Grass", "Poison"),
-    image = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/1.png",
-    description = "Bulbasaur can be seen napping in bright sunlight. There is a seed on its back. By soaking up the sun's rays, the seed grows progressively larger.",
-    color = Color(0xFF7AC74C),
-    about = PokemonView.About(
-        species = "Seed Pokemon",
-        category = "Quadruped",
-        height = "0.70 cm",
-        weight = "6.9 kg",
-        abilities = "Chlorophyll, Overgrow"
-    ),
-    breeding = PokemonView.Breeding(
-        gender = "87,5% Male, 12,5% Female",
-        eggGroups = "Monster",
-        eggCycle = "Grass"
-    ),
-    stats = PokemonView.Stats(
-        hp = PokemonView.Stats.Item(45),
-        attack = PokemonView.Stats.Item(49),
-        defense = PokemonView.Stats.Item(4),
-        spAtk = PokemonView.Stats.Item(65),
-        spDef = PokemonView.Stats.Item(65),
-        speed = PokemonView.Stats.Item(45)
-    ),
-    abilities = listOf(
-        PokemonView.Ability(14L, "Swords-Dance"),
-        PokemonView.Ability(15L, "Cut"),
-        PokemonView.Ability(20L, "Vine-Whip"),
-        PokemonView.Ability(21L, "Fly"),
-        PokemonView.Ability(22L, "Tackle"),
-        PokemonView.Ability(25L, "Body-Slam")
-    )
-)
