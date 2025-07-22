@@ -49,7 +49,6 @@ import com.eferraz.pokedex.helpers.PokedexTheme
 import com.eferraz.pokedex.helpers.edgeToEdgePadding
 import com.eferraz.pokedex.ui.detail.ScreenDetail.FieldValue
 import org.jetbrains.compose.ui.tooling.preview.Preview
-import org.jetbrains.compose.ui.tooling.preview.PreviewParameter
 import org.jetbrains.compose.ui.tooling.preview.PreviewParameterProvider
 import org.koin.compose.viewmodel.koinViewModel
 import org.koin.core.parameter.parametersOf
@@ -358,7 +357,9 @@ private fun CardTitleComponent(title: String) {
 
 @Preview
 @Composable
-private fun PokemonScreenPreview(@PreviewParameter(PokemonParamProvider::class) pokemon: PokemonView) {
+private fun PokemonScreenPreview(
+//    @PreviewParameter(PokemonParamProvider::class) pokemon: PokemonView
+) {
     PokemonScreen(
         modifier = Modifier,
         state = PokemonViewModel.Success(pokemon),
@@ -368,7 +369,9 @@ private fun PokemonScreenPreview(@PreviewParameter(PokemonParamProvider::class) 
 
 @Preview
 @Composable
-private fun PokemonScreenTagsPreview(@PreviewParameter(PokemonParamProvider::class) pokemon: PokemonView) {
+private fun PokemonScreenTagsPreview(
+//    @PreviewParameter(PokemonParamProvider::class) pokemon: PokemonView
+) {
     PokedexTheme {
         Surface(color = pokemon.color) {
             Box(modifier = Modifier.padding(24.dp)) {
@@ -380,7 +383,9 @@ private fun PokemonScreenTagsPreview(@PreviewParameter(PokemonParamProvider::cla
 
 @Preview
 @Composable
-private fun PokemonScreenAboutPreview(@PreviewParameter(PokemonParamProvider::class) pokemon: PokemonView) {
+private fun PokemonScreenAboutPreview(
+//    @PreviewParameter(PokemonParamProvider::class) pokemon: PokemonView
+) {
     PokedexTheme {
         Surface(color = pokemon.color) {
             Box(modifier = Modifier.padding(24.dp)) {
@@ -392,7 +397,9 @@ private fun PokemonScreenAboutPreview(@PreviewParameter(PokemonParamProvider::cl
 
 @Preview
 @Composable
-private fun PokemonScreenStatsPreview(@PreviewParameter(PokemonParamProvider::class) pokemon: PokemonView) {
+private fun PokemonScreenStatsPreview(
+//    @PreviewParameter(PokemonParamProvider::class) pokemon: PokemonView
+) {
     PokedexTheme {
         Surface(color = pokemon.color) {
             Box(modifier = Modifier.padding(24.dp)) {
@@ -404,7 +411,9 @@ private fun PokemonScreenStatsPreview(@PreviewParameter(PokemonParamProvider::cl
 
 @Preview
 @Composable
-private fun PokemonScreenMovesPreview(@PreviewParameter(PokemonParamProvider::class) pokemon: PokemonView) {
+private fun PokemonScreenMovesPreview(
+//    @PreviewParameter(PokemonParamProvider::class) pokemon: PokemonView
+) {
     PokedexTheme {
         Surface(color = pokemon.color) {
             Box(modifier = Modifier.padding(24.dp)) {
@@ -415,43 +424,42 @@ private fun PokemonScreenMovesPreview(@PreviewParameter(PokemonParamProvider::cl
 }
 
 internal class PokemonParamProvider() : PreviewParameterProvider<PokemonView> {
-
-    private val pokemon = PokemonView(
-        id = "#001",
-        name = "Bulbasaur",
-        types = listOf("Grass", "Poison"),
-        image = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/1.png",
-        description = "Bulbasaur can be seen napping in bright sunlight. There is a seed on its back. By soaking up the sun's rays, the seed grows progressively larger.",
-        color = Color(0xFF7AC74C),
-        about = PokemonView.About(
-            species = "Seed Pokemon",
-            category = "Quadruped",
-            height = "0.70 cm",
-            weight = "6.9 kg",
-            abilities = "Chlorophyll, Overgrow"
-        ),
-        breeding = PokemonView.Breeding(
-            gender = "87,5% Male, 12,5% Female",
-            eggGroups = "Monster",
-            eggCycle = "Grass"
-        ),
-        stats = PokemonView.Stats(
-            hp = PokemonView.Stats.Item(45),
-            attack = PokemonView.Stats.Item(49),
-            defense = PokemonView.Stats.Item(4),
-            spAtk = PokemonView.Stats.Item(65),
-            spDef = PokemonView.Stats.Item(65),
-            speed = PokemonView.Stats.Item(45)
-        ),
-        abilities = listOf(
-            PokemonView.Ability(14L, "Swords-Dance"),
-            PokemonView.Ability(15L, "Cut"),
-            PokemonView.Ability(20L, "Vine-Whip"),
-            PokemonView.Ability(21L, "Fly"),
-            PokemonView.Ability(22L, "Tackle"),
-            PokemonView.Ability(25L, "Body-Slam")
-        )
-    )
-
     override val values: Sequence<PokemonView> = sequenceOf(pokemon)
 }
+
+private val pokemon = PokemonView(
+    id = "#001",
+    name = "Bulbasaur",
+    types = listOf("Grass", "Poison"),
+    image = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/1.png",
+    description = "Bulbasaur can be seen napping in bright sunlight. There is a seed on its back. By soaking up the sun's rays, the seed grows progressively larger.",
+    color = Color(0xFF7AC74C),
+    about = PokemonView.About(
+        species = "Seed Pokemon",
+        category = "Quadruped",
+        height = "0.70 cm",
+        weight = "6.9 kg",
+        abilities = "Chlorophyll, Overgrow"
+    ),
+    breeding = PokemonView.Breeding(
+        gender = "87,5% Male, 12,5% Female",
+        eggGroups = "Monster",
+        eggCycle = "Grass"
+    ),
+    stats = PokemonView.Stats(
+        hp = PokemonView.Stats.Item(45),
+        attack = PokemonView.Stats.Item(49),
+        defense = PokemonView.Stats.Item(4),
+        spAtk = PokemonView.Stats.Item(65),
+        spDef = PokemonView.Stats.Item(65),
+        speed = PokemonView.Stats.Item(45)
+    ),
+    abilities = listOf(
+        PokemonView.Ability(14L, "Swords-Dance"),
+        PokemonView.Ability(15L, "Cut"),
+        PokemonView.Ability(20L, "Vine-Whip"),
+        PokemonView.Ability(21L, "Fly"),
+        PokemonView.Ability(22L, "Tackle"),
+        PokemonView.Ability(25L, "Body-Slam")
+    )
+)
