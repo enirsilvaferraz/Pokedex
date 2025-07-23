@@ -6,10 +6,13 @@ import com.eferraz.repositories.datasources.PokemonDataSource
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 import kotlinx.coroutines.withContext
+import org.koin.core.annotation.Factory
+import org.koin.core.annotation.Provided
 
+@Factory(binds = [PokemonListRepository::class])
 internal class PokemonListRepositoryImpl(
-    private val api: PokemonDataSource.Network,
-    private val database: PokemonDataSource.Database,
+    @Provided private val api: PokemonDataSource.Network,
+    @Provided private val database: PokemonDataSource.Database,
 ) : PokemonListRepository() {
 
     override fun getRefreshKey(state: PagingState<Int, PokemonVO>) = state.anchorPosition
