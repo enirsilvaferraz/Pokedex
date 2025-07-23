@@ -10,8 +10,8 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 internal class PokemonViewModel(
-    id: Long,
-    useCase: PokemonRepository,
+    private val id: Long,
+    private val useCase: PokemonRepository,
 ) : ViewModel() {
 
     private val _state = MutableStateFlow<State>(Loading)

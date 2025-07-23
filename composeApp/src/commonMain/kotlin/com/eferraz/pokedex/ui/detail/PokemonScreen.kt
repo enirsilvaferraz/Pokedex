@@ -99,7 +99,7 @@ private fun SuccessScreen(
         LazyColumn(
             modifier = Modifier.edgeToEdgePadding(it, LocalLayoutDirection.current),
             verticalArrangement = spacedBy(16.dp),
-            contentPadding = PaddingValues(start = 24.dp, end = 24.dp, top = 0.dp, bottom = 32.dp)
+            contentPadding = PaddingValues(start = 24.dp, end = 24.dp, bottom = 32.dp)
         ) {
 
             item { TypeTagsWidget(types = vo.types) }
@@ -157,12 +157,30 @@ private fun TopBar(
 
 @Preview
 @Composable
-private fun PokemonScreenPreview(
-//    @PreviewParameter(PokemonParamProvider::class) pokemon: PokemonView
-) {
+private fun SuccessScreenPreview() {
     PokemonScreen(
         modifier = Modifier,
         state = PokemonViewModel.Success(pokemon),
+        onNavigateBack = {}
+    )
+}
+
+@Preview
+@Composable
+private fun LoadingScreenPreview() {
+    PokemonScreen(
+        modifier = Modifier,
+        state = PokemonViewModel.Loading,
+        onNavigateBack = {}
+    )
+}
+
+@Preview
+@Composable
+private fun FailureScreenPreview() {
+    PokemonScreen(
+        modifier = Modifier,
+        state = PokemonViewModel.Error,
         onNavigateBack = {}
     )
 }
