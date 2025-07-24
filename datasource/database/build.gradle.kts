@@ -4,7 +4,7 @@ plugins {
     alias(libs.plugins.android.lint)
     alias(libs.plugins.ksp)
     alias(libs.plugins.room)
-//    alias(libs.plugins.pokedex.koin.annotations)
+//    alias(libs.plugins.pokedex.koin.annotations) // Aguardando resolução do problema https://github.com/InsertKoinIO/koin/issues/2174
 }
 
 kotlin {
@@ -33,8 +33,6 @@ kotlin {
     sourceSets {
 
         commonMain {
-
-//            kotlin.srcDir("build/generated/ksp/metadata")
 
             dependencies {
 

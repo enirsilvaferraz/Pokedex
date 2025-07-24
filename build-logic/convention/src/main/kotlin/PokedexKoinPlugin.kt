@@ -1,7 +1,9 @@
+import com.eferraz.pokedex.isComposeModule
 import com.eferraz.pokedex.libs
 import com.google.devtools.ksp.gradle.KspExtension
 import org.gradle.api.Plugin
 import org.gradle.api.Project
+import org.gradle.kotlin.dsl.apply
 import org.gradle.kotlin.dsl.configure
 import org.gradle.kotlin.dsl.dependencies
 import org.gradle.kotlin.dsl.invoke
@@ -14,7 +16,7 @@ class PokedexKoinPlugin : Plugin<Project> {
 
         with(target) {
 
-            plugins.apply("com.google.devtools.ksp")
+            apply(plugin = libs.findPlugin("ksp").get().get().pluginId)
 
             extensions.configure<KspExtension> {
                 arg("KOIN_CONFIG_CHECK", "true")
@@ -34,7 +36,7 @@ class PokedexKoinPlugin : Plugin<Project> {
                             implementation(project.dependencies.platform(libs.findLibrary("koin-bom").get()))
                             implementation(libs.findLibrary("koin-core").get())
 
-                            if (false) {
+                            if (isComposeModule()) {
                                 implementation(libs.findLibrary("koin-compose").get())
                                 implementation(libs.findLibrary("koin-compose-viewmodel").get())
                                 implementation(libs.findLibrary("koin-compose-viewmodel-navigation").get())
