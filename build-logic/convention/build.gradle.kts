@@ -42,9 +42,15 @@ dependencies {
 
 gradlePlugin {
     plugins {
+
         register("pokedex-koin-annotations") {
             id = libs.plugins.pokedex.koin.annotations.get().pluginId
             implementationClass = "PokedexKoinPlugin"
+        }
+
+        register("pokedex-kmp-project") {
+            id = libs.plugins.pokedex.kmp.project.get().pluginId
+            implementationClass = "KmpProjectPlugin"
         }
     }
 //        register("androidApplicationCompose") {
