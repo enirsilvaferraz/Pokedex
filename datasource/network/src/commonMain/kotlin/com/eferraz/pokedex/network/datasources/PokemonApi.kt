@@ -11,7 +11,9 @@ import io.ktor.client.request.get
 import io.ktor.client.request.url
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
+import org.koin.core.annotation.Factory
 
+@Factory
 internal class PokemonApi(
     private val config: ClientConfig,
 ) : PokemonDataSource.Network {

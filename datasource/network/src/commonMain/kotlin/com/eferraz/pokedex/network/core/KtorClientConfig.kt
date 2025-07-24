@@ -12,7 +12,9 @@ import io.ktor.client.plugins.logging.Logging
 import io.ktor.client.request.header
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
+import org.koin.core.annotation.Single
 
+@Single
 internal class KtorClientConfig : ClientConfig {
 
     override val client: HttpClient by lazy { configure() }

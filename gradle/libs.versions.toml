@@ -97,5 +97,5 @@ ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 modulegraph = { id = "dev.iurysouza.modulegraph", version.ref = "modulegraph" }
 room = { id = "androidx.room", version.ref = "room" }
 
-# Dependencies for this project
+# Internal Plugins
 pokedex-koin-annotations = { id = "pokedex.koin.annotations"}
