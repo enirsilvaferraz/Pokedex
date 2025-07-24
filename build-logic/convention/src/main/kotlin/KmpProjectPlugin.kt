@@ -1,4 +1,3 @@
-import com.eferraz.pokedex.isRoomModule
 import com.eferraz.pokedex.libs
 import org.gradle.api.Plugin
 import org.gradle.api.Project
@@ -32,7 +31,6 @@ internal abstract class KmpProjectPlugin : Plugin<Project> {
                     iosTarget.binaries.framework {
                         baseName = "${project.name}Kit"
                         isStatic = true
-                        if (isRoomModule()) linkerOpts.add("-lsqlite3")
                     }
                 }
 

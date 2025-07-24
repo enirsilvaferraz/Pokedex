@@ -1,27 +1,13 @@
-import org.jetbrains.compose.ExperimentalComposeLibrary
-
 plugins {
-    alias(libs.plugins.compose.multiplatform)
-    alias(libs.plugins.compose.compiler)
     alias(libs.plugins.kotlin.serialization)
+    alias(libs.plugins.pokedex.cmp.library)
     alias(libs.plugins.pokedex.kmp.application)
     alias(libs.plugins.pokedex.koin.annotations)
-//    alias(libs.plugins.modulegraph)
 }
 
 kotlin {
-
     sourceSets {
         commonMain.dependencies {
-
-            implementation(compose.runtime)
-            implementation(compose.foundation)
-            implementation(compose.material3)
-            implementation(compose.materialIconsExtended)
-            implementation(compose.ui)
-            implementation(compose.uiUtil)
-            implementation(compose.components.resources)
-            implementation(compose.components.uiToolingPreview)
 
             implementation(libs.androidx.lifecycle.viewmodel)
             implementation(libs.androidx.lifecycle.runtimeCompose)
@@ -35,21 +21,11 @@ kotlin {
             implementation(libs.paging.common)
             implementation(libs.paging.compose.common)
 
-//            implementation(project(path = ":business:entity"))
+            implementation(project(path = ":business:entity"))
             implementation(project(path = ":business:usecases"))
             implementation(project(path = ":adapters::repositories"))
             implementation(project(path = ":datasource:network"))
             implementation(project(path = ":datasource:database"))
-        }
-
-        commonTest.dependencies {
-
-            @OptIn(ExperimentalComposeLibrary::class)
-            implementation(compose.uiTest)
-        }
-
-        androidMain.dependencies {
-            implementation(libs.androidx.activity.compose)
         }
     }
 }
@@ -57,54 +33,3 @@ kotlin {
 dependencies {
     debugImplementation(compose.uiTooling)
 }
-
-/*
-moduleGraphConfig {
-
-    heading.set("# Primary Graph - Compose 1")
-    readmePath.set("${rootDir}/MERMAID.md")
-
-    showFullPath.set(true)
-    orientation.set(Orientation.TOP_TO_BOTTOM)
-    linkText.set(LinkText.NONE)
-    setStyleByModuleType.set(true)
-    nestingEnabled.set(true)
-
-//    graph(
-//        readmePath = "${rootDir}/MERMAID.md",
-//        heading = "### Module Graph - Compose",
-//    ) {
-//        nestingEnabled = true
-//        setStyleByModuleType = true
-//    }
-//
-//    graph(
-//        readmePath = "${rootDir}/MERMAID.md",
-//        heading = "### Module Graph - Entity",
-//    ) {
-//        nestingEnabled = true
-//    }
-//
-//    graph(
-//        readmePath = "${rootDir}/MERMAID.md",
-//        heading = "### Module Graph - Repository",
-//    ) {
-//        nestingEnabled = true
-//    }
-//
-//    graph(
-//        readmePath = "${rootDir}/MERMAID.md",
-//        heading = "### Module Graph - Network",
-//    ) {
-//        nestingEnabled = true
-//    }
-//
-//    graph(
-//        readmePath = "${rootDir}/MERMAID.md",
-//        heading = "### Module Graph - Database",
-//    ) {
-//        nestingEnabled = true
-//        focusedModulesRegex = ".*(database).*"
-//    }
-}
- */
