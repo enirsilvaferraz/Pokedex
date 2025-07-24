@@ -103,5 +103,5 @@ room = { id = "androidx.room", version.ref = "room" }
 
 # Internal Plugins
 pokedex-koin-annotations = { id = "pokedex.koin.annotations"}
-pokedex-kmp-project = { id = "pokedex.kmp.project"}
 pokedex-kmp-library = { id = "pokedex.kmp.library"}
+pokedex-kmp-application = { id = "pokedex.kmp.application"}

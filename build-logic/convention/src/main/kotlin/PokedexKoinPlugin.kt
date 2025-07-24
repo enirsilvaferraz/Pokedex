@@ -10,7 +10,7 @@ import org.gradle.kotlin.dsl.invoke
 import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompilationTask
 
-class PokedexKoinPlugin : Plugin<Project> {
+internal class PokedexKoinPlugin : Plugin<Project> {
 
     override fun apply(target: Project) {
 

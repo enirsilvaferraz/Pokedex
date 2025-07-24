@@ -1,5 +1,4 @@
 plugins {
-    alias(libs.plugins.pokedex.kmp.project)
     alias(libs.plugins.pokedex.kmp.library)
     alias(libs.plugins.ksp)
     alias(libs.plugins.room)

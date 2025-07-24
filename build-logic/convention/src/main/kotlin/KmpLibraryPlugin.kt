@@ -1,14 +1,15 @@
 import com.android.build.api.dsl.androidLibrary
+import com.eferraz.pokedex.ProjectConstants.NAMESPACE
 import com.eferraz.pokedex.libs
-import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.apply
 import org.gradle.kotlin.dsl.configure
 import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
 
-internal class KmpLibraryPlugin : Plugin<Project> {
+internal class KmpLibraryPlugin : KmpProjectPlugin() {
 
     override fun apply(target: Project) {
+        super.apply(target)
 
         with(target) {
 
@@ -23,9 +24,5 @@ internal class KmpLibraryPlugin : Plugin<Project> {
                 }
             }
         }
-    }
-
-    companion object {
-        private const val NAMESPACE = "com.eferraz.pokedex"
     }
 }

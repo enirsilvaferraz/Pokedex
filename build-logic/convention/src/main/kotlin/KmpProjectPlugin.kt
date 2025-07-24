@@ -7,7 +7,7 @@ import org.gradle.kotlin.dsl.configure
 import org.gradle.kotlin.dsl.invoke
 import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
 
-internal class KmpProjectPlugin : Plugin<Project> {
+internal abstract class KmpProjectPlugin : Plugin<Project> {
 
     override fun apply(target: Project) {
 
