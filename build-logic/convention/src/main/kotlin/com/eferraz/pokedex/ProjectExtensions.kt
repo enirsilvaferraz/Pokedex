@@ -8,6 +8,5 @@ import org.gradle.kotlin.dsl.getByType
 val Project.libs
     get(): VersionCatalog = extensions.getByType<VersionCatalogsExtension>().named("libs")
 
-
 internal fun Project.isComposeModule(): Boolean =
-    plugins.findPlugin(libs.findPlugin("compose-multiplatform").get().get().pluginId) != null
+    pluginManager.hasPlugin(libs.findPlugin("compose-multiplatform").get().get().pluginId)
