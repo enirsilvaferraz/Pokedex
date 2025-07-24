@@ -1,4 +1,4 @@
-package com.eferraz.repositories
+package com.eferraz.pokedex.repositories
 
 import com.eferraz.pokedex.entity.PokemonVO
 

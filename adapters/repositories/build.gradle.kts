@@ -10,7 +10,7 @@ kotlin {
     explicitApi()
 
     androidLibrary {
-        namespace = "com.eferraz.repositories"
+        namespace = "com.eferraz.pokedex.repositories"
         compileSdk = libs.versions.android.targetSdk.get().toInt()
         minSdk = libs.versions.android.minSdk.get().toInt()
     }

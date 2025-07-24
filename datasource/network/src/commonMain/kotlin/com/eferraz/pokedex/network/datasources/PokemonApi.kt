@@ -5,7 +5,7 @@ import com.eferraz.pokedex.network.core.ClientConfig
 import com.eferraz.pokedex.network.helpers.toVO
 import com.eferraz.pokedex.network.responses.Pokemon
 import com.eferraz.pokedex.network.responses.PokemonSpeciesDetail
-import com.eferraz.repositories.datasources.PokemonDataSource
+import com.eferraz.pokedex.repositories.datasources.PokemonDataSource
 import io.ktor.client.call.body
 import io.ktor.client.request.get
 import io.ktor.client.request.url

@@ -5,7 +5,7 @@ import com.eferraz.pokedex.database.daos.TypeDao
 import com.eferraz.pokedex.database.helpers.toTable
 import com.eferraz.pokedex.database.helpers.toVO
 import com.eferraz.pokedex.entity.PokemonVO
-import com.eferraz.repositories.datasources.PokemonDataSource
+import com.eferraz.pokedex.repositories.datasources.PokemonDataSource
 
 internal class PokemonDataSourceDB(
     private val pokemonDao: PokemonDao,

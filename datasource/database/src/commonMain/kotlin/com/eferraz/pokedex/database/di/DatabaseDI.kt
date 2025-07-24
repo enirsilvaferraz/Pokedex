@@ -3,7 +3,7 @@ package com.eferraz.pokedex.database.di
 import com.eferraz.pokedex.database.datasources.PokemonDataSourceDB
 import com.eferraz.pokedex.database.core.AppDatabase
 import com.eferraz.pokedex.database.core.PlatformDataBaseBuilder
-import com.eferraz.repositories.datasources.PokemonDataSource
+import com.eferraz.pokedex.repositories.datasources.PokemonDataSource
 import org.koin.core.module.Module
 import org.koin.core.module.dsl.factoryOf
 import org.koin.dsl.bind
