@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.android.lint)
     alias(libs.plugins.ksp)
     alias(libs.plugins.room)
+//    alias(libs.plugins.pokedex.koin.annotations)
 }
 
 kotlin {
@@ -33,7 +34,7 @@ kotlin {
 
         commonMain {
 
-            kotlin.srcDir("build/generated/ksp/metadata")
+//            kotlin.srcDir("build/generated/ksp/metadata")
 
             dependencies {
 
