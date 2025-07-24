@@ -8,6 +8,7 @@ androidx-lifecycle = "2.9.1"
 coil = "3.2.0"
 cmp = "1.9.0-alpha03"
 coroutines = "1.10.2"
+kermit = "2.0.6"
 koin-bom = "4.1.0"
 koin-annotations = "2.1.1-RC1"
 kotlin = "2.2.20-Beta1"
@@ -79,6 +80,9 @@ room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "
 room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
 sqlite-bundled = { group = "androidx.sqlite", name = "sqlite-bundled", version.ref = "sqlite" }
 
+# Logging
+kermit = { module = "co.touchlab:kermit", version.ref = "kermit" }
+
 # Dependencies of the included build-logic
 android-gradlePlugin = { group = "com.android.tools.build", name = "gradle", version.ref = "agp" }
 ksp-gradlePlugin = { group = "com.google.devtools.ksp", name = "com.google.devtools.ksp.gradle.plugin", version.ref = "ksp" }
@@ -100,3 +104,4 @@ room = { id = "androidx.room", version.ref = "room" }
 # Internal Plugins
 pokedex-koin-annotations = { id = "pokedex.koin.annotations"}
 pokedex-kmp-project = { id = "pokedex.kmp.project"}
+pokedex-kmp-library = { id = "pokedex.kmp.library"}

@@ -1,21 +1,18 @@
-import dev.iurysouza.modulegraph.LinkText
-import dev.iurysouza.modulegraph.Orientation
+import org.jetbrains.compose.ExperimentalComposeLibrary
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
-    alias(libs.plugins.kotlin.multiplatform)
     alias(libs.plugins.android.application)
     alias(libs.plugins.compose.multiplatform)
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.kotlin.serialization)
-    alias(libs.plugins.modulegraph)
+    alias(libs.plugins.pokedex.kmp.project)
     alias(libs.plugins.pokedex.koin.annotations)
+//    alias(libs.plugins.modulegraph)
 }
 
 kotlin {
-
-    explicitApi()
 
     androidTarget {
         @OptIn(ExperimentalKotlinGradlePluginApi::class)
@@ -24,46 +21,29 @@ kotlin {
         }
     }
 
-    val xcfName = "ComposeApp"
-
-    listOf(
-        iosX64(),
-        iosArm64(),
-        iosSimulatorArm64()
-    ).forEach { iosTarget ->
-        iosTarget.binaries.framework {
-            baseName = xcfName
-            isStatic = true
-        }
-    }
-
-    compilerOptions {
-        // Common compiler options applied to all Kotlin source sets
-        freeCompilerArgs.add("-Xexpect-actual-classes")
-    }
-
     sourceSets {
         commonMain.dependencies {
+
             implementation(compose.runtime)
             implementation(compose.foundation)
             implementation(compose.material3)
+            implementation(compose.materialIconsExtended)
             implementation(compose.ui)
+            implementation(compose.uiUtil)
             implementation(compose.components.resources)
             implementation(compose.components.uiToolingPreview)
+
             implementation(libs.androidx.lifecycle.viewmodel)
             implementation(libs.androidx.lifecycle.runtimeCompose)
 
             implementation(libs.coil.compose)
             implementation(libs.coil.network.ktor3)
 
-            implementation(libs.material.icons.core)
-
             implementation(libs.navigation.compose)
+            implementation(libs.kotlinx.serialization.json)
 
             implementation(libs.paging.common)
             implementation(libs.paging.compose.common)
-
-            implementation(libs.kotlinx.serialization.json)
 
 //            implementation(project(path = ":business:entity"))
             implementation(project(path = ":business:usecases"))
@@ -73,11 +53,12 @@ kotlin {
         }
 
         commonTest.dependencies {
-            implementation(libs.kotlin.test)
+
+            @OptIn(ExperimentalComposeLibrary::class)
+            implementation(compose.uiTest)
         }
 
         androidMain.dependencies {
-            implementation(compose.preview)
             implementation(libs.androidx.activity.compose)
         }
     }
@@ -118,6 +99,7 @@ dependencies {
     debugImplementation(compose.uiTooling)
 }
 
+/*
 moduleGraphConfig {
 
     heading.set("# Primary Graph - Compose 1")
@@ -166,3 +148,4 @@ moduleGraphConfig {
 //        focusedModulesRegex = ".*(database).*"
 //    }
 }
+ */

@@ -1,6 +1,6 @@
 package com.eferraz.pokedex.entity
 
-data class StatVO(
+public data class StatVO(
     val name: String,
     val value: Int,
 )

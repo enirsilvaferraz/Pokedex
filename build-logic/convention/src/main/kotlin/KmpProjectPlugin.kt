@@ -1,4 +1,4 @@
-import com.android.build.api.dsl.androidLibrary
+import com.eferraz.pokedex.isRoomModule
 import com.eferraz.pokedex.libs
 import org.gradle.api.Plugin
 import org.gradle.api.Project
@@ -14,16 +14,14 @@ internal class KmpProjectPlugin : Plugin<Project> {
         with(target) {
 
             apply(plugin = libs.findPlugin("kotlin-multiplatform").get().get().pluginId)
-            apply(plugin = libs.findPlugin("android-kotlin-multiplatform-library").get().get().pluginId)
 
             extensions.configure<KotlinMultiplatformExtension> {
 
                 explicitApi()
 
-                androidLibrary {
-                    namespace = "$NAMESPACE.${project.name}"
-                    compileSdk = libs.findVersion("android.targetSdk").get().requiredVersion.toInt()
-                    minSdk = libs.findVersion("android.minSdk").get().requiredVersion.toInt()
+                compilerOptions {
+                    // Common compiler options applied to all Kotlin source sets
+                    freeCompilerArgs.add("-Xexpect-actual-classes")
                 }
 
                 listOf(
@@ -33,6 +31,8 @@ internal class KmpProjectPlugin : Plugin<Project> {
                 ).forEach { iosTarget ->
                     iosTarget.binaries.framework {
                         baseName = "${project.name}Kit"
+                        isStatic = true
+                        if (isRoomModule()) linkerOpts.add("-lsqlite3")
                     }
                 }
 
@@ -44,7 +44,7 @@ internal class KmpProjectPlugin : Plugin<Project> {
                         }
                     }
 
-                    commonTest  {
+                    commonTest {
                         dependencies {
                             implementation(libs.findLibrary("kotlin-test").get())
                         }
@@ -52,9 +52,5 @@ internal class KmpProjectPlugin : Plugin<Project> {
                 }
             }
         }
-    }
-
-    companion object {
-        private const val NAMESPACE = "com.eferraz.pokedex"
     }
 }

@@ -1,6 +1,6 @@
 package com.eferraz.pokedex.entity
 
-data class PokemonVO(
+public data class PokemonVO(
     val id: Long,
     val name: String,
     val image: String,
@@ -18,10 +18,10 @@ data class PokemonVO(
     val genera: String
 ) {
 
-    fun types() = listOfNotNull(type1, type2)
+    public fun types(): List<TypeVO> = listOfNotNull(type1, type2)
 }
 
-data class Ability(
+public data class Ability(
     val id: Long,
     val name: String
 )

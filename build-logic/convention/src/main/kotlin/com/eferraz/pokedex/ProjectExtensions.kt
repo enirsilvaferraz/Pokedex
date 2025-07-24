@@ -10,3 +10,6 @@ val Project.libs
 
 internal fun Project.isComposeModule(): Boolean =
     pluginManager.hasPlugin(libs.findPlugin("compose-multiplatform").get().get().pluginId)
+
+internal fun Project.isRoomModule(): Boolean =
+    pluginManager.hasPlugin(libs.findPlugin("room").get().get().pluginId)
