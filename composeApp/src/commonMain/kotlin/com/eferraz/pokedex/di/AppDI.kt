@@ -9,7 +9,7 @@ import org.koin.ksp.generated.module
 
 internal object AppDI {
 
-    val koinConfiguration = KoinConfiguration {
+    operator fun invoke() = KoinConfiguration {
         modules(
             UseCasesDI(),
             NetworkDI(),

@@ -15,7 +15,7 @@ import org.koin.core.annotation.KoinExperimentalAPI
 public fun App() {
 
     @OptIn(KoinExperimentalAPI::class)
-    KoinMultiplatformApplication(config = AppDI.koinConfiguration) {
+    KoinMultiplatformApplication(config = AppDI()) {
 
         val navController = rememberNavController()
 
