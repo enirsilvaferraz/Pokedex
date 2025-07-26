@@ -1,4 +1,5 @@
 import com.eferraz.pokedex.libs
+import com.eferraz.pokedex.plugins
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.apply
@@ -15,9 +16,9 @@ internal class CmpLibraryPlugin : Plugin<Project> {
 
         with(target) {
 
-            apply(plugin = libs.findPlugin("kotlin-multiplatform").get().get().pluginId)
-            apply(plugin = libs.findPlugin("compose-multiplatform").get().get().pluginId)
-            apply(plugin = libs.findPlugin("compose-compiler").get().get().pluginId)
+            apply(plugin = libs.plugins.kotlin_multiplatform)
+            apply(plugin = libs.plugins.compose_multiplatform)
+            apply(plugin = libs.plugins.compose_compiler)
 
             val compose = extensions.getByType<ComposeExtension>().dependencies
 

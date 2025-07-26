@@ -1,6 +1,8 @@
 import com.android.build.api.dsl.ApplicationExtension
 import com.eferraz.pokedex.ProjectConstants.NAMESPACE
 import com.eferraz.pokedex.libs
+import com.eferraz.pokedex.plugins
+import com.eferraz.pokedex.versions
 import org.gradle.api.JavaVersion
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.apply
@@ -16,7 +18,7 @@ internal class KmpApplicationPlugin : KmpProjectPlugin() {
 
         with(target) {
 
-            apply(plugin = libs.findPlugin("android.application").get().get().pluginId)
+            apply(plugin = libs.plugins.android_application)
 
             extensions.configure<KotlinMultiplatformExtension> {
                 androidTarget {
@@ -30,12 +32,12 @@ internal class KmpApplicationPlugin : KmpProjectPlugin() {
             extensions.configure<ApplicationExtension> {
 
                 namespace = NAMESPACE
-                compileSdk = libs.findVersion("android.compileSdk").get().requiredVersion.toInt()
+                compileSdk = libs.versions.compileSdk
 
                 defaultConfig {
                     applicationId = NAMESPACE
-                    minSdk = libs.findVersion("android.minSdk").get().requiredVersion.toInt()
-                    targetSdk = libs.findVersion("android.targetSdk").get().requiredVersion.toInt()
+                    minSdk = libs.versions.minSdk
+                    targetSdk = libs.versions.targetSdk
                     versionCode = 1
                     versionName = "1.0"
                 }

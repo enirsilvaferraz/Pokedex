@@ -1,5 +1,7 @@
 import androidx.room.gradle.RoomExtension
+import com.eferraz.pokedex.libraries
 import com.eferraz.pokedex.libs
+import com.eferraz.pokedex.plugins
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.apply
@@ -14,15 +16,15 @@ internal class PokedexRoomPlugin : Plugin<Project> {
 
         with(target) {
 
-            apply(plugin = libs.findPlugin("ksp").get().get().pluginId)
-            apply(plugin = libs.findPlugin("room").get().get().pluginId)
+            apply(plugin = libs.plugins.ksp)
+            apply(plugin = libs.plugins.room)
 
             extensions.configure<KotlinMultiplatformExtension> {
                 sourceSets {
                     commonMain {
                         dependencies {
-                            implementation(libs.findLibrary("room-runtime").get())
-                            implementation(libs.findLibrary("sqlite-bundled").get())
+                            implementation(libs.libraries.room_runtime)
+                            implementation(libs.libraries.sqlite_bundled)
                         }
                     }
                 }
@@ -30,7 +32,7 @@ internal class PokedexRoomPlugin : Plugin<Project> {
 
             dependencies {
                 listOf("kspAndroid", "kspIosSimulatorArm64", "kspIosX64", "kspIosArm64").forEach {
-                    add(it, libs.findLibrary("room-compiler").get())
+                    add(it, libs.libraries.room_compiler)
                 }
             }
 

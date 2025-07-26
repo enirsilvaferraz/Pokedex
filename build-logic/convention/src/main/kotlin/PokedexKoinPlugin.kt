@@ -1,5 +1,7 @@
 import com.android.build.gradle.internal.utils.isComposeCompilerPluginApplied
+import com.eferraz.pokedex.libraries
 import com.eferraz.pokedex.libs
+import com.eferraz.pokedex.plugins
 import com.google.devtools.ksp.gradle.KspExtension
 import org.gradle.api.Plugin
 import org.gradle.api.Project
@@ -16,7 +18,7 @@ internal class PokedexKoinPlugin : Plugin<Project> {
 
         with(target) {
 
-            apply(plugin = libs.findPlugin("ksp").get().get().pluginId)
+            apply(plugin = libs.plugins.ksp)
 
             extensions.configure<KspExtension> {
                 arg("KOIN_CONFIG_CHECK", "true")
@@ -34,23 +36,23 @@ internal class PokedexKoinPlugin : Plugin<Project> {
 
                         dependencies {
 
-                            implementation(project.dependencies.platform(libs.findLibrary("koin-bom").get()))
-                            implementation(libs.findLibrary("koin-core").get())
+                            implementation(project.dependencies.platform(libs.libraries.koin_bom))
+                            implementation(libs.libraries.koin_core)
 
                             if (isComposeCompilerPluginApplied(project)) {
-                                implementation(libs.findLibrary("koin-compose").get())
-                                implementation(libs.findLibrary("koin-compose-viewmodel").get())
-                                implementation(libs.findLibrary("koin-compose-viewmodel-navigation").get())
+                                implementation(libs.libraries.koin_compose)
+                                implementation(libs.libraries.koin_compose_viewmodel)
+                                implementation(libs.libraries.koin_compose_viewmodel_navigation)
                             }
 
-                            api(libs.findLibrary("koin-annotations").get())
+                            api(libs.libraries.koin_annotations)
                         }
                     }
                 }
             }
 
             dependencies {
-                add("kspCommonMainMetadata", libs.findLibrary("koin-ksp-compiler").get())
+                add("kspCommonMainMetadata", libs.libraries.koin_ksp_compiler)
             }
 
             tasks.withType(KotlinCompilationTask::class.java).configureEach {

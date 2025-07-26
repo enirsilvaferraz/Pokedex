@@ -1,6 +1,8 @@
 import com.android.build.api.dsl.androidLibrary
 import com.eferraz.pokedex.ProjectConstants.NAMESPACE
 import com.eferraz.pokedex.libs
+import com.eferraz.pokedex.plugins
+import com.eferraz.pokedex.versions
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.apply
 import org.gradle.kotlin.dsl.configure
@@ -13,14 +15,14 @@ internal class KmpLibraryPlugin : KmpProjectPlugin() {
 
         with(target) {
 
-            apply(plugin = libs.findPlugin("android-kotlin-multiplatform-library").get().get().pluginId)
+            apply(plugin = libs.plugins.kotlin_multiplatform_library)
 
             extensions.configure<KotlinMultiplatformExtension> {
 
                 androidLibrary {
                     namespace = "$NAMESPACE.${project.name}"
-                    compileSdk = libs.findVersion("android.targetSdk").get().requiredVersion.toInt()
-                    minSdk = libs.findVersion("android.minSdk").get().requiredVersion.toInt()
+                    compileSdk = libs.versions.targetSdk
+                    minSdk = libs.versions.minSdk
                 }
             }
         }

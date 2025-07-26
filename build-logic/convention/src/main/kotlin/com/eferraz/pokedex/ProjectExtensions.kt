@@ -7,3 +7,12 @@ import org.gradle.kotlin.dsl.getByType
 
 internal val Project.libs
     get(): VersionCatalog = extensions.getByType<VersionCatalogsExtension>().named("libs")
+
+internal val VersionCatalog.plugins: CatalogDefinitions.Plugins
+    get() = CatalogDefinitions.Plugins(this)
+
+internal val VersionCatalog.libraries: CatalogDefinitions.Libraries
+    get() = CatalogDefinitions.Libraries(this)
+
+internal val VersionCatalog.versions: CatalogDefinitions.Versions
+    get() = CatalogDefinitions.Versions(this)
