@@ -150,11 +150,6 @@ private fun TopBar(
     )
 }
 
-/**
- * Widget Area
- */
-
-
 @Preview
 @Composable
 private fun SuccessScreenPreview() {
