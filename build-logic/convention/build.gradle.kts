@@ -14,6 +14,7 @@ dependencies {
 }
 
 gradlePlugin {
+
     plugins {
 
         register("pokedex-kmp-application") {
@@ -34,6 +35,11 @@ gradlePlugin {
         register("pokedex-koin-annotations") {
             id = libs.plugins.pokedex.koin.annotations.get().pluginId
             implementationClass = "PokedexKoinPlugin"
+        }
+
+        register("pokedex-room") {
+            id = libs.plugins.pokedex.room.get().pluginId
+            implementationClass = "PokedexRoomPlugin"
         }
     }
 }

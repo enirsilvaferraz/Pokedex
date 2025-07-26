@@ -21,7 +21,7 @@ internal class PokedexKoinPlugin : Plugin<Project> {
             extensions.configure<KspExtension> {
                 arg("KOIN_CONFIG_CHECK", "true")
                 arg("KOIN_LOG_TIMES", "true")
-                arg("KOIN_DEFAULT_MODULE","false")
+                arg("KOIN_DEFAULT_MODULE", "false")
             }
 
             extensions.configure<KotlinMultiplatformExtension> {
