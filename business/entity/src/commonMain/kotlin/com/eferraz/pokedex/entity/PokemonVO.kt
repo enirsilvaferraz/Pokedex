@@ -1,27 +1,12 @@
 package com.eferraz.pokedex.entity
 
-public data class PokemonVO(
-    val id: Long,
-    val name: String,
-    val image: String,
-    val type1: TypeVO,
-    val type2: TypeVO? = null,
+public interface PokemonVO {
 
-    val description: String,
-    val weight: Float,
-    val height: Float,
-    val category: String,
-    val abilities: List<Ability>,
-    val genderRatioMale: Float, // e.g., 0.875 for 87.5% male
-//    val baseStats: List<StatVO>,
-    val primaryColor: String,
-    val genera: String
-) {
+    public val id: Long
+    public val name: String
+    public val image: String
+    public val type1: TypeVO
+    public val type2: TypeVO?
 
     public fun types(): List<TypeVO> = listOfNotNull(type1, type2)
 }
-
-public data class Ability(
-    val id: Long,
-    val name: String
-)

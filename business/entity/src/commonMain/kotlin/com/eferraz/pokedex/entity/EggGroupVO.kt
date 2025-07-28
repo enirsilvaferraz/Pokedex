@@ -1,6 +1,6 @@
 package com.eferraz.pokedex.entity
 
-public data class StatVO(
+public data class EggGroupVO(
+    val id: Long,
     val name: String,
-    val value: Int,
 )
