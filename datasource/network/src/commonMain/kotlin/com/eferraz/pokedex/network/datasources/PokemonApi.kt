@@ -1,8 +1,9 @@
 package com.eferraz.pokedex.network.datasources
 
+import com.eferraz.pokedex.entity.PokemonCompleteVO
 import com.eferraz.pokedex.entity.PokemonVO
 import com.eferraz.pokedex.network.core.ClientConfig
-import com.eferraz.pokedex.network.helpers.toVO
+import com.eferraz.pokedex.network.relationship.PokemonAndSpecie
 import com.eferraz.pokedex.network.responses.Pokemon
 import com.eferraz.pokedex.network.responses.PokemonSpeciesDetail
 import com.eferraz.pokedex.repositories.datasources.PokemonDataSource
@@ -18,12 +19,15 @@ internal class PokemonApi(
     private val config: ClientConfig,
 ) : PokemonDataSource.Network {
 
-    override suspend fun get(id: Int): PokemonVO = coroutineScope {
+    override suspend fun get(id: Int): PokemonCompleteVO = coroutineScope {
 
         val pokemon = async { pokemon(id) }
         val species = async { species(id) }
 
-        toVO(pokemon.await(), species.await())
+        PokemonAndSpecie(
+            pokemon = pokemon.await(),
+            species = species.await()
+        ).toModel()
     }
 
     private suspend fun pokemon(id: Int) = config.client.get {
