@@ -9,5 +9,5 @@ internal class PokemonRepositoryImpl(
     @Provided private val dataSource: PokemonDataSource.Database,
 ) : PokemonRepository {
 
-    override suspend fun get(id: Long) = dataSource.get(id.toInt()) ?: throw Exception("Pokemon not found")
+    override suspend fun get(id: Long) = dataSource.getComplete(id.toInt()) ?: throw Exception("Pokemon not found")
 }

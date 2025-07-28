@@ -1,6 +1,7 @@
 package com.eferraz.pokedex.repositories
 
 import app.cash.paging.PagingState
+import com.eferraz.pokedex.entity.PokemonLightVO
 import com.eferraz.pokedex.entity.PokemonVO
 import com.eferraz.pokedex.repositories.datasources.PokemonDataSource
 import kotlinx.coroutines.Dispatchers
@@ -15,9 +16,9 @@ internal class PokemonListRepositoryImpl(
     @Provided private val database: PokemonDataSource.Database,
 ) : PokemonListRepository() {
 
-    override fun getRefreshKey(state: PagingState<Int, PokemonVO>) = state.anchorPosition
+    override fun getRefreshKey(state: PagingState<Int, PokemonLightVO>) = state.anchorPosition
 
-    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, PokemonVO> {
+    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, PokemonLightVO> {
 
         val currentPage = params.key ?: 1
         val limit = params.loadSize
@@ -30,12 +31,12 @@ internal class PokemonListRepositoryImpl(
         return LoadResult.Page(data = pokemonList, prevKey = prevKey, nextKey = nextKey)
     }
 
-    private suspend fun fetchData(currentPage: Int, limit: Int): List<PokemonVO> = withContext(Dispatchers.IO) {
+    private suspend fun fetchData(currentPage: Int, limit: Int): List<PokemonLightVO> = withContext(Dispatchers.IO) {
 
         val offset = (currentPage - 1) * limit
 
         iterateOffset(limit, offset) { id ->
-            database.get(id) ?: api.get(id).also { database.insert(it) }
+            database.getLight(id) ?: api.get(id).also { database.insert(it) }.toLight()
         }
     }
 
