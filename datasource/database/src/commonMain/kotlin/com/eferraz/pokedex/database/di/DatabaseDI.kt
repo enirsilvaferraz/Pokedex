@@ -23,7 +23,16 @@ public object DatabaseDI {
          * DAOs
          */
 
+        single { get<AppDatabase>().abilityDao() }
+        single { get<AppDatabase>().aboutDao() }
+        single { get<AppDatabase>().aboutWithAbilitiesDao() }
+        single { get<AppDatabase>().breedingDao() }
+        single { get<AppDatabase>().breedingWithEggGroupsDao() }
+        single { get<AppDatabase>().eggGroupDao() }
+        single { get<AppDatabase>().moveDao() }
         single { get<AppDatabase>().pokemonDao() }
+        single { get<AppDatabase>().pokemonWithMovesDao() }
+        single { get<AppDatabase>().statsDao() }
         single { get<AppDatabase>().typeDao() }
 
         /**

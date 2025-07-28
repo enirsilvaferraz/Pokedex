@@ -4,6 +4,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
+import com.eferraz.pokedex.entity.PokemonCompleteVO
 
 @Entity(
     tableName = "pokemon",
@@ -19,6 +20,27 @@ import androidx.room.PrimaryKey
             entity = TypeTable::class,
             parentColumns = ["type_id"],
             childColumns = ["type2"],
+            onDelete = ForeignKey.CASCADE,
+            onUpdate = ForeignKey.CASCADE
+        ),
+        ForeignKey(
+            entity = AboutTable::class,
+            parentColumns = ["about_id"],
+            childColumns = ["about"],
+            onDelete = ForeignKey.CASCADE,
+            onUpdate = ForeignKey.CASCADE
+        ),
+        ForeignKey(
+            entity = BreedingTable::class,
+            parentColumns = ["breeding_id"],
+            childColumns = ["breeding"],
+            onDelete = ForeignKey.CASCADE,
+            onUpdate = ForeignKey.CASCADE
+        ),
+        ForeignKey(
+            entity = StatsTable::class,
+            parentColumns = ["stats_id"],
+            childColumns = ["stats"],
             onDelete = ForeignKey.CASCADE,
             onUpdate = ForeignKey.CASCADE
         ),
@@ -42,31 +64,26 @@ internal data class PokemonTable(
     @ColumnInfo(name = "type2")
     val typeID2: Long? = null,
 
-    @ColumnInfo(name = "description")
-    val description: String,
+    @ColumnInfo(name = "about")
+    val aboutID: Long,
 
-    @ColumnInfo(name = "weight")
-    val weight: Float,
+    @ColumnInfo(name = "breeding")
+    val breedingID: Long,
 
-    @ColumnInfo(name = "height")
-    val height: Float,
+    @ColumnInfo(name = "stats")
+    val statsID: Long,
+) {
 
-    @ColumnInfo(name = "category")
-    val category: String,
-
-//    @ColumnInfo(name = "abilities")
-//    val abilities: List<String>,
-
-    @ColumnInfo(name = "gender_ratio")
-    val genderRatio: Float, // e.g., 0.875 for 87.5% male
-
-//    @ColumnInfo(name = "stats")
-//    val stats: List<StatTable>,
-
-    @ColumnInfo(name = "primary_color")
-    val primaryColor: String,
-
-    @ColumnInfo(name = "genera")
-    val genera: String,
-)
-
+    companion object {
+        internal fun PokemonCompleteVO.toTable() = PokemonTable(
+            id = id,
+            name = name,
+            image = image,
+            typeID1 = type1.id,
+            typeID2 = type2?.id,
+            aboutID = about.id,
+            breedingID = breeding.id,
+            statsID = stats.id,
+        )
+    }
+}
