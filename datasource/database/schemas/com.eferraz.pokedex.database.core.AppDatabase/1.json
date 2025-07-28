@@ -2,11 +2,322 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "d80fc64956d733e59fe9c047f270bb7e",
+    "identityHash": "8b0eac0909367f12802f077759288157",
     "entities": [
       {
+        "tableName": "ability",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`ability_id` INTEGER NOT NULL, `name` TEXT NOT NULL, PRIMARY KEY(`ability_id`))",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "ability_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "name",
+            "columnName": "name",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "ability_id"
+          ]
+        }
+      },
+      {
+        "tableName": "about_abilities",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`about_id` INTEGER NOT NULL, `ability_id` INTEGER NOT NULL, PRIMARY KEY(`about_id`, `ability_id`), FOREIGN KEY(`about_id`) REFERENCES `about`(`about_id`) ON UPDATE CASCADE ON DELETE CASCADE , FOREIGN KEY(`ability_id`) REFERENCES `ability`(`ability_id`) ON UPDATE CASCADE ON DELETE CASCADE )",
+        "fields": [
+          {
+            "fieldPath": "aboutId",
+            "columnName": "about_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "abilityId",
+            "columnName": "ability_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "about_id",
+            "ability_id"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_about_abilities_about_id",
+            "unique": false,
+            "columnNames": [
+              "about_id"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_about_abilities_about_id` ON `${TABLE_NAME}` (`about_id`)"
+          },
+          {
+            "name": "index_about_abilities_ability_id",
+            "unique": false,
+            "columnNames": [
+              "ability_id"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_about_abilities_ability_id` ON `${TABLE_NAME}` (`ability_id`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "about",
+            "onDelete": "CASCADE",
+            "onUpdate": "CASCADE",
+            "columns": [
+              "about_id"
+            ],
+            "referencedColumns": [
+              "about_id"
+            ]
+          },
+          {
+            "table": "ability",
+            "onDelete": "CASCADE",
+            "onUpdate": "CASCADE",
+            "columns": [
+              "ability_id"
+            ],
+            "referencedColumns": [
+              "ability_id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "about",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`about_id` INTEGER NOT NULL, `description` TEXT NOT NULL, `genera` TEXT NOT NULL, `category` TEXT NOT NULL, `weight` REAL NOT NULL, `height` REAL NOT NULL, PRIMARY KEY(`about_id`))",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "about_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "description",
+            "columnName": "description",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "species",
+            "columnName": "genera",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "category",
+            "columnName": "category",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "weight",
+            "columnName": "weight",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "height",
+            "columnName": "height",
+            "affinity": "REAL",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "about_id"
+          ]
+        }
+      },
+      {
+        "tableName": "breeding_egg_groups",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`breeding_id` INTEGER NOT NULL, `egg_group_id` INTEGER NOT NULL, PRIMARY KEY(`breeding_id`, `egg_group_id`), FOREIGN KEY(`breeding_id`) REFERENCES `breeding`(`breeding_id`) ON UPDATE CASCADE ON DELETE CASCADE , FOREIGN KEY(`egg_group_id`) REFERENCES `egg_group`(`egg_group_id`) ON UPDATE CASCADE ON DELETE CASCADE )",
+        "fields": [
+          {
+            "fieldPath": "breedingId",
+            "columnName": "breeding_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "eggGroupId",
+            "columnName": "egg_group_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "breeding_id",
+            "egg_group_id"
+          ]
+        },
+        "foreignKeys": [
+          {
+            "table": "breeding",
+            "onDelete": "CASCADE",
+            "onUpdate": "CASCADE",
+            "columns": [
+              "breeding_id"
+            ],
+            "referencedColumns": [
+              "breeding_id"
+            ]
+          },
+          {
+            "table": "egg_group",
+            "onDelete": "CASCADE",
+            "onUpdate": "CASCADE",
+            "columns": [
+              "egg_group_id"
+            ],
+            "referencedColumns": [
+              "egg_group_id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "breeding",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`breeding_id` INTEGER NOT NULL, `male_ratio` REAL NOT NULL, PRIMARY KEY(`breeding_id`))",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "breeding_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "maleRatio",
+            "columnName": "male_ratio",
+            "affinity": "REAL",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "breeding_id"
+          ]
+        }
+      },
+      {
+        "tableName": "egg_group",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`egg_group_id` INTEGER NOT NULL, `name` TEXT NOT NULL, PRIMARY KEY(`egg_group_id`))",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "egg_group_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "name",
+            "columnName": "name",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "egg_group_id"
+          ]
+        }
+      },
+      {
+        "tableName": "moves",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`move_id` INTEGER NOT NULL, `name` TEXT NOT NULL, PRIMARY KEY(`move_id`))",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "move_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "name",
+            "columnName": "name",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "move_id"
+          ]
+        }
+      },
+      {
+        "tableName": "pokemon_moves",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`pokemon_id` INTEGER NOT NULL, `move_id` INTEGER NOT NULL, PRIMARY KEY(`pokemon_id`, `move_id`), FOREIGN KEY(`pokemon_id`) REFERENCES `pokemon`(`pokemon_id`) ON UPDATE CASCADE ON DELETE CASCADE , FOREIGN KEY(`move_id`) REFERENCES `moves`(`move_id`) ON UPDATE CASCADE ON DELETE CASCADE )",
+        "fields": [
+          {
+            "fieldPath": "pokemonId",
+            "columnName": "pokemon_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "moveId",
+            "columnName": "move_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "pokemon_id",
+            "move_id"
+          ]
+        },
+        "foreignKeys": [
+          {
+            "table": "pokemon",
+            "onDelete": "CASCADE",
+            "onUpdate": "CASCADE",
+            "columns": [
+              "pokemon_id"
+            ],
+            "referencedColumns": [
+              "pokemon_id"
+            ]
+          },
+          {
+            "table": "moves",
+            "onDelete": "CASCADE",
+            "onUpdate": "CASCADE",
+            "columns": [
+              "move_id"
+            ],
+            "referencedColumns": [
+              "move_id"
+            ]
+          }
+        ]
+      },
+      {
         "tableName": "pokemon",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`pokemon_id` INTEGER NOT NULL, `name` TEXT NOT NULL, `image` TEXT NOT NULL, `type1` INTEGER NOT NULL, `type2` INTEGER, `description` TEXT NOT NULL, `weight` REAL NOT NULL, `height` REAL NOT NULL, `category` TEXT NOT NULL, `gender_ratio` REAL NOT NULL, `primary_color` TEXT NOT NULL, `genera` TEXT NOT NULL, PRIMARY KEY(`pokemon_id`), FOREIGN KEY(`type1`) REFERENCES `type`(`type_id`) ON UPDATE CASCADE ON DELETE CASCADE , FOREIGN KEY(`type2`) REFERENCES `type`(`type_id`) ON UPDATE CASCADE ON DELETE CASCADE )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`pokemon_id` INTEGER NOT NULL, `name` TEXT NOT NULL, `image` TEXT NOT NULL, `type1` INTEGER NOT NULL, `type2` INTEGER, `about` INTEGER NOT NULL, `breeding` INTEGER NOT NULL, `stats` INTEGER NOT NULL, PRIMARY KEY(`pokemon_id`), FOREIGN KEY(`type1`) REFERENCES `type`(`type_id`) ON UPDATE CASCADE ON DELETE CASCADE , FOREIGN KEY(`type2`) REFERENCES `type`(`type_id`) ON UPDATE CASCADE ON DELETE CASCADE , FOREIGN KEY(`about`) REFERENCES `about`(`about_id`) ON UPDATE CASCADE ON DELETE CASCADE , FOREIGN KEY(`breeding`) REFERENCES `breeding`(`breeding_id`) ON UPDATE CASCADE ON DELETE CASCADE , FOREIGN KEY(`stats`) REFERENCES `stats`(`stats_id`) ON UPDATE CASCADE ON DELETE CASCADE )",
         "fields": [
           {
             "fieldPath": "id",
@@ -38,45 +349,21 @@
             "affinity": "INTEGER"
           },
           {
-            "fieldPath": "description",
-            "columnName": "description",
-            "affinity": "TEXT",
+            "fieldPath": "aboutID",
+            "columnName": "about",
+            "affinity": "INTEGER",
             "notNull": true
           },
           {
-            "fieldPath": "weight",
-            "columnName": "weight",
-            "affinity": "REAL",
+            "fieldPath": "breedingID",
+            "columnName": "breeding",
+            "affinity": "INTEGER",
             "notNull": true
           },
           {
-            "fieldPath": "height",
-            "columnName": "height",
-            "affinity": "REAL",
-            "notNull": true
-          },
-          {
-            "fieldPath": "category",
-            "columnName": "category",
-            "affinity": "TEXT",
-            "notNull": true
-          },
-          {
-            "fieldPath": "genderRatio",
-            "columnName": "gender_ratio",
-            "affinity": "REAL",
-            "notNull": true
-          },
-          {
-            "fieldPath": "primaryColor",
-            "columnName": "primary_color",
-            "affinity": "TEXT",
-            "notNull": true
-          },
-          {
-            "fieldPath": "genera",
-            "columnName": "genera",
-            "affinity": "TEXT",
+            "fieldPath": "statsID",
+            "columnName": "stats",
+            "affinity": "INTEGER",
             "notNull": true
           }
         ],
@@ -108,8 +395,95 @@
             "referencedColumns": [
               "type_id"
             ]
+          },
+          {
+            "table": "about",
+            "onDelete": "CASCADE",
+            "onUpdate": "CASCADE",
+            "columns": [
+              "about"
+            ],
+            "referencedColumns": [
+              "about_id"
+            ]
+          },
+          {
+            "table": "breeding",
+            "onDelete": "CASCADE",
+            "onUpdate": "CASCADE",
+            "columns": [
+              "breeding"
+            ],
+            "referencedColumns": [
+              "breeding_id"
+            ]
+          },
+          {
+            "table": "stats",
+            "onDelete": "CASCADE",
+            "onUpdate": "CASCADE",
+            "columns": [
+              "stats"
+            ],
+            "referencedColumns": [
+              "stats_id"
+            ]
           }
         ]
+      },
+      {
+        "tableName": "stats",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`stats_id` INTEGER NOT NULL, `hp` INTEGER NOT NULL, `attack` INTEGER NOT NULL, `defense` INTEGER NOT NULL, `special_attack` INTEGER NOT NULL, `special_defense` INTEGER NOT NULL, `speed` INTEGER NOT NULL, PRIMARY KEY(`stats_id`))",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "stats_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "hp",
+            "columnName": "hp",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "attack",
+            "columnName": "attack",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "defense",
+            "columnName": "defense",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "specialAttack",
+            "columnName": "special_attack",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "specialDefense",
+            "columnName": "special_defense",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "speed",
+            "columnName": "speed",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "stats_id"
+          ]
+        }
       },
       {
         "tableName": "type",
@@ -138,7 +512,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'd80fc64956d733e59fe9c047f270bb7e')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '8b0eac0909367f12802f077759288157')"
     ]
   }
 }
