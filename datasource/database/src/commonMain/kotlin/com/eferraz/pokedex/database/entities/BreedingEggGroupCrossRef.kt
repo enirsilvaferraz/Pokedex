@@ -38,8 +38,8 @@ internal data class BreedingEggGroupCrossRef(
     companion object {
         internal fun BreedingVO.toCrossRef() = this.eggGroups.map {
             BreedingEggGroupCrossRef(
-                breedingId = this@toCrossRef.id,
-                eggGroupId = id
+                breedingId = this.id,
+                eggGroupId = it.id
             )
         }
     }

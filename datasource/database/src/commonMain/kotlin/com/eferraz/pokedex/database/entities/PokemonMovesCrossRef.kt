@@ -37,8 +37,8 @@ internal data class PokemonMovesCrossRef(
     companion object {
         internal fun PokemonCompleteVO.toCrossRef() = this.moves.map {
             PokemonMovesCrossRef(
-                pokemonId = this@toCrossRef.id,
-                moveId = id
+                pokemonId = this.id,
+                moveId = it.id
             )
         }
     }

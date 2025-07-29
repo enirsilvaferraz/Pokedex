@@ -37,8 +37,8 @@ internal data class AboutAbilitiesCrossRef(
     companion object {
         internal fun AboutVO.toCrossRef() = this.abilities.map {
             AboutAbilitiesCrossRef(
-                aboutId = this@toCrossRef.id,
-                abilityId = id
+                aboutId = this.id,
+                abilityId = it.id
             )
         }
     }
