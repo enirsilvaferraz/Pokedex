@@ -24,6 +24,8 @@ internal interface CatalogDefinitions {
         val koin_annotations = libs.find("koin-annotations")
         val koin_bom = libs.find("koin-bom")
         val koin_compose = libs.find("koin-compose")
+        val koin_test = libs.find("koin-test")
+        val koin_test_junit4 = libs.find("koin-test-junit4")
         val koin_compose_viewmodel = libs.find("koin-compose-viewmodel")
         val koin_compose_viewmodel_navigation = libs.find("koin-compose-viewmodel-navigation")
         val koin_core = libs.find("koin-core")

@@ -1,5 +1,7 @@
 package com.eferraz.pokedex.database.datasources
 
+import androidx.room.immediateTransaction
+import androidx.room.useWriterConnection
 import com.eferraz.pokedex.database.core.AppDatabase
 import com.eferraz.pokedex.database.daos.AbilityDao
 import com.eferraz.pokedex.database.daos.AboutDao
@@ -27,6 +29,7 @@ import com.eferraz.pokedex.entity.PokemonCompleteVO
 import com.eferraz.pokedex.repositories.datasources.PokemonDataSource
 
 internal class PokemonDataSourceDB(
+    private val room: AppDatabase,
     private val pokemonDao: PokemonDao,
     private val typeDao: TypeDao,
     private val aboutDao: AboutDao,
@@ -48,50 +51,55 @@ internal class PokemonDataSourceDB(
 
     override suspend fun insert(entity: PokemonCompleteVO) {
 
-        pokemonDao.insert(entity)
+        room.useWriterConnection { transactor ->
 
-//        entity.about.abilities
-//            .map { it.toTable() }
-//            .let { abilityDao.insert(*it.toTypedArray()) }
-//
-//        entity.about
-//            .toTable()
-//            .let { aboutDao.insert(it) }
-//
-//        entity.about
-//            .toCrossRef()
-//            .let { aboutWithAbilitiesDao.insert(*it.toTypedArray()) }
-//
-//        entity.breeding.eggGroups
-//            .map { it.toTable() }
-//            .let { eggGroupDao.insert(*it.toTypedArray()) }
-//
-//        entity.breeding
-//            .toTable()
-//            .let { breedingDao.insert(it) }
-//
-//        entity.breeding
-//            .toCrossRef()
-//            .let { breedingEggGroupDao.insert(*it.toTypedArray()) }
-//
-//        entity.types()
-//            .map { it.toTable() }
-//            .let { typeDao.insert(*it.toTypedArray()) }
-//
-//        entity.stats
-//            .toTable()
-//            .let { statsDao.insert(it) }
-//
-//        entity.moves
-//            .map { it.toTable() }
-//            .let { moveDao.insert(*it.toTypedArray()) }
-//
-//        entity
-//            .toTable()
-//            .let { pokemonDao.insert(it) }
-//
-//        entity
-//            .toCrossRef()
-//            .let { pokemonWithMovesDao.insert(*it.toTypedArray()) }
+            transactor.immediateTransaction {
+
+                entity.about.abilities
+                    .map { it.toTable() }
+                    .let { abilityDao.insert(*it.toTypedArray()) }
+
+                entity.about
+                    .toTable()
+                    .let { aboutDao.insert(it) }
+
+                entity.about
+                    .toCrossRef()
+                    .let { aboutWithAbilitiesDao.insert(*it.toTypedArray()) }
+
+                entity.breeding.eggGroups
+                    .map { it.toTable() }
+                    .let { eggGroupDao.insert(*it.toTypedArray()) }
+
+                entity.breeding
+                    .toTable()
+                    .let { breedingDao.insert(it) }
+
+                entity.breeding
+                    .toCrossRef()
+                    .let { breedingEggGroupDao.insert(*it.toTypedArray()) }
+
+                entity.types()
+                    .map { it.toTable() }
+                    .let { typeDao.insert(*it.toTypedArray()) }
+
+                entity.stats
+                    .toTable()
+                    .let { statsDao.insert(it) }
+
+                entity.moves
+                    .map { it.toTable() }
+                    .let { moveDao.insert(*it.toTypedArray()) }
+
+                entity
+                    .toTable()
+                    .let { pokemonDao.insert(it) }
+
+                entity
+                    .toCrossRef()
+                    .let { pokemonWithMovesDao.insert(*it.toTypedArray()) }
+
+            }
+        }
     }
 }

@@ -48,6 +48,13 @@ internal class PokedexKoinPlugin : Plugin<Project> {
                             api(libs.libraries.koin_annotations)
                         }
                     }
+
+                    commonTest {
+                        dependencies {
+                            implementation(libs.libraries.koin_test)
+//                            implementation(libs.libraries.koin_test_junit4)
+                        }
+                    }
                 }
             }
 
