@@ -3,7 +3,9 @@ package com.eferraz.pokedex.ui.detail.vos
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.capitalize
 import androidx.compose.ui.text.intl.Locale
+import com.eferraz.pokedex.entity.PokemonCompleteVO
 import com.eferraz.pokedex.entity.PokemonVO
+import com.eferraz.pokedex.helpers.format
 import com.eferraz.pokedex.helpers.getColorForType
 import org.jetbrains.compose.resources.DrawableResource
 import kotlin.jvm.JvmInline
@@ -19,19 +21,19 @@ internal data class PokemonDetailVo(
     val about: About,
     val breeding: Breeding,
     val stats: Stats,
-    val abilities: Abilities,
+    val moves: Moves,
 ) {
 
-    constructor(model: PokemonVO) : this(
+    constructor(model: PokemonCompleteVO) : this(
         background = Background(model),
         header = Header(model),
         types = Types(model),
         image = ImageVo.Remote(model),
-        description = model.description,
+        description = model.about.description,
         about = About(model),
         breeding = Breeding(model),
         stats = Stats(model),
-        abilities = Abilities(model)
+        moves = Moves(model)
     )
 
     /**
@@ -87,13 +89,13 @@ internal data class PokemonDetailVo(
      */
     @JvmInline
     value class About(val items: List<FieldValueVo>) {
-        constructor(model: PokemonVO) : this(
+        constructor(model: PokemonCompleteVO) : this(
             items = listOf(
-                FieldValueVo("Species", model.genera.capitalize(Locale.Companion.current)),
-                FieldValueVo("Category", model.category.capitalize(Locale.Companion.current)),
-                FieldValueVo("Height", "0.70 cm"),
-                FieldValueVo("Weight", "6.9 kg"),
-                FieldValueVo("Abilities", "Chlorophyll")
+                FieldValueVo("Species", model.about.species.capitalize(Locale.Companion.current)),
+                FieldValueVo("Category", model.about.category.capitalize(Locale.Companion.current)),
+                FieldValueVo("Height", (model.about.height / 10).format(Locale.current.platformLocale) + " cm"),
+                FieldValueVo("Weight", (model.about.weight / 10).format(Locale.current.platformLocale) + " kg"),
+                FieldValueVo("Abilities", model.about.abilities.joinToString(","))
             )
         )
     }
@@ -148,9 +150,9 @@ internal data class PokemonDetailVo(
      * Abilities area
      */
     @JvmInline
-    value class Abilities(val items: List<FieldValueVo>) {
-        constructor(model: PokemonVO) : this(
-            items = model.abilities.map { FieldValueVo(it.id.toString(), it.name.capitalize(Locale.current)) }
+    value class Moves(val items: List<FieldValueVo>) {
+        constructor(model: PokemonCompleteVO) : this(
+            items = model.moves.map { FieldValueVo(it.id.toString(), it.name.capitalize(Locale.current)) }
         )
     }
 }

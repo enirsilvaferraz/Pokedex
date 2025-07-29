@@ -114,7 +114,7 @@ private fun SuccessScreen(
 
             item { ChartWidget(title = "Stats", items = vo.stats.items) }
 
-            item { GridFieldValueWidget(title = "Abilities", items = vo.abilities.items) }
+            item { GridFieldValueWidget(title = "Abilities", items = vo.moves.items) }
         }
     }
 }

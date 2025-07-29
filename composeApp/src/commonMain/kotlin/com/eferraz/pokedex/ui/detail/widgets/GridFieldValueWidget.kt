@@ -62,7 +62,7 @@ private fun GridFieldValueWidgetPreview(
 ) {
     PokedexTheme {
         Surface(color = pokemon.background.color) {
-            GridFieldValueWidget(modifier = Modifier.padding(24.dp), title = "Abilities", items = pokemon.abilities.items)
+            GridFieldValueWidget(modifier = Modifier.padding(24.dp), title = "Abilities", items = pokemon.moves.items)
         }
     }
 }

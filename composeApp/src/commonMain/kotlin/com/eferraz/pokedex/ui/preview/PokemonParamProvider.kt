@@ -44,7 +44,7 @@ internal val pokemon = PokemonDetailVo(
             PokemonDetailVo.Stats.ChartItem("Total", 318, 600)
         )
     ),
-    abilities = PokemonDetailVo.Abilities(
+    moves = PokemonDetailVo.Moves(
         listOf(
             FieldValueVo(1L.toString(), "Chlorophyll"),
             FieldValueVo(2L.toString(), "Overgrow"),

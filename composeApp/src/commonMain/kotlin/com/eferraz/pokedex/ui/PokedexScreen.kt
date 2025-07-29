@@ -36,6 +36,7 @@ import coil3.compose.AsyncImage
 import coil3.compose.LocalPlatformContext
 import coil3.request.ImageRequest
 import coil3.request.crossfade
+import com.eferraz.pokedex.entity.PokemonLightVO
 import com.eferraz.pokedex.entity.PokemonVO
 import com.eferraz.pokedex.entity.TypeVO
 import com.eferraz.pokedex.helpers.AppScaffold
@@ -66,8 +67,8 @@ internal fun PokedexRoute(
 @Composable
 private fun PokedexScreen(
     modifier: Modifier = Modifier,
-    pokemonList: LazyPagingItems<PokemonVO>,
-    onClick: (PokemonVO) -> Unit,
+    pokemonList: LazyPagingItems<PokemonLightVO>,
+    onClick: (PokemonLightVO) -> Unit,
 ) {
 
     AppScaffold(
@@ -92,8 +93,8 @@ private fun PokedexScreen(
 @Composable
 private fun ItemList(
     modifier: Modifier = Modifier,
-    model: PokemonVO,
-    onClick: (PokemonVO) -> Unit,
+    model: PokemonLightVO,
+    onClick: (PokemonLightVO) -> Unit,
 ) {
 
     Card(
@@ -173,14 +174,14 @@ private fun TypeTags(types: List<TypeVO>) {
 @Composable
 @Preview
 private fun PokedexScreenPreview(
-    @PreviewParameter(PokedexScreenPreviewProvider::class) model: List<PokemonVO>,
+    @PreviewParameter(PokedexScreenPreviewProvider::class) model: List<PokemonLightVO>,
 ) {
 //    PokedexScreen(Modifier, model, {})
 }
 
-private class PokedexScreenPreviewProvider : PreviewParameterProvider<List<PokemonVO>> {
+private class PokedexScreenPreviewProvider : PreviewParameterProvider<List<PokemonLightVO>> {
     override val values = sequenceOf(
-        listOf<PokemonVO>(
+        listOf<PokemonLightVO>(
 //            PokemonVO(id = 1, name = "Bulbasaur", type1 = TypeVO(0L, "Grass"), type2 = TypeVO(0L, "Poison"), image = ""),
 //            PokemonVO(id = 2, name = "Ivysaur", type1 = TypeVO(0L, "Grass"), type2 = TypeVO(0L, "Poison"), image = ""),
 //            PokemonVO(id = 3, name = "Venusaur", type1 = TypeVO(0L, "Grass"), type2 = TypeVO(0L, "Poison"), image = ""),

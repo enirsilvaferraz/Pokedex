@@ -3,16 +3,23 @@ package com.eferraz.pokedex.database.relationships
 import androidx.room.Embedded
 import androidx.room.Junction
 import androidx.room.Relation
+import com.eferraz.pokedex.database.entities.AbilityTable.Companion.toTable
 import com.eferraz.pokedex.database.entities.AboutTable
+import com.eferraz.pokedex.database.entities.AboutTable.Companion.toTable
 import com.eferraz.pokedex.database.entities.BreedingTable
+import com.eferraz.pokedex.database.entities.BreedingTable.Companion.toTable
+import com.eferraz.pokedex.database.entities.EggGroupTable.Companion.toTable
 import com.eferraz.pokedex.database.entities.MoveTable
+import com.eferraz.pokedex.database.entities.MoveTable.Companion.toTable
 import com.eferraz.pokedex.database.entities.PokemonMovesCrossRef
 import com.eferraz.pokedex.database.entities.PokemonTable
+import com.eferraz.pokedex.database.entities.PokemonTable.Companion.toTable
 import com.eferraz.pokedex.database.entities.StatsTable
+import com.eferraz.pokedex.database.entities.StatsTable.Companion.toTable
 import com.eferraz.pokedex.database.entities.TypeTable
 import com.eferraz.pokedex.database.entities.TypeTable.Companion.toModel
+import com.eferraz.pokedex.database.entities.TypeTable.Companion.toTable
 import com.eferraz.pokedex.entity.PokemonCompleteVO
-import com.eferraz.pokedex.entity.PokemonVO
 
 internal data class PokemonComplete(
 
@@ -58,6 +65,18 @@ internal data class PokemonComplete(
     )
     val moves: List<MoveTable>,
 ) {
+
+    companion object {
+        fun PokemonCompleteVO.toTable2() = PokemonComplete(
+            pokemon = toTable(),
+            type1 = type1.toTable(),
+            type2 = type2?.toTable(),
+            about = AboutWithAbilities(about.toTable(), about.abilities.map { it.toTable() }),
+            breeding = BreedingWithEggGroups(breeding.toTable(), breeding.eggGroups.map { it.toTable() }),
+            stats = stats.toTable(),
+            moves = moves.map { it.toTable() }
+        )
+    }
 
     fun toModel(): PokemonCompleteVO = PokemonCompleteVO(
         id = pokemon.id,
