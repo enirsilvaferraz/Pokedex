@@ -9,11 +9,4 @@ import com.eferraz.pokedex.database.entities.MoveTable
 import com.eferraz.pokedex.database.entities.TypeTable
 
 @Dao
-internal interface MoveDao {
-
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun insert(vararg entity: MoveTable)
-
-    @Query("SELECT * FROM moves WHERE move_id = :id")
-    suspend fun getById(id: Long): MoveTable?
-}
+internal interface MoveDao: BaseDao<MoveTable>

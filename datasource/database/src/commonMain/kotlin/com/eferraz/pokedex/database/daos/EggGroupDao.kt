@@ -7,11 +7,4 @@ import androidx.room.Query
 import com.eferraz.pokedex.database.entities.EggGroupTable
 
 @Dao
-internal interface EggGroupDao {
-
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun insert(vararg entity: EggGroupTable)
-
-    @Query("SELECT * FROM egg_group WHERE egg_group_id = :id")
-    suspend fun getById(id: Long): EggGroupTable?
-}
+internal interface EggGroupDao: BaseDao<EggGroupTable>

@@ -8,8 +8,4 @@ import com.eferraz.pokedex.database.entities.BreedingEggGroupCrossRef
 import com.eferraz.pokedex.database.entities.PokemonMovesCrossRef
 
 @Dao
-internal interface PokemonWithMovesDao {
-
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun insert(vararg entity: PokemonMovesCrossRef)
-}
+internal interface PokemonWithMovesDao: BaseDao<PokemonMovesCrossRef>

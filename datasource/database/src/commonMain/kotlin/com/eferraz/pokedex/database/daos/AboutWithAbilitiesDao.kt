@@ -6,8 +6,4 @@ import androidx.room.OnConflictStrategy
 import com.eferraz.pokedex.database.entities.AboutAbilitiesCrossRef
 
 @Dao
-internal interface AboutWithAbilitiesDao {
-
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun insert(vararg entity: AboutAbilitiesCrossRef)
-}
+internal interface AboutWithAbilitiesDao: BaseDao<AboutAbilitiesCrossRef>
