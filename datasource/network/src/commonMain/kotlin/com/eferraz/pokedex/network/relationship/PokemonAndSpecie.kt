@@ -8,8 +8,8 @@ import com.eferraz.pokedex.entity.MoveVO
 import com.eferraz.pokedex.entity.PokemonCompleteVO
 import com.eferraz.pokedex.entity.StatsVO
 import com.eferraz.pokedex.entity.TypeVO
-import com.eferraz.pokedex.network.responses.Pokemon
-import com.eferraz.pokedex.network.responses.PokemonSpeciesDetail
+import com.eferraz.pokedex.network.responses.pokemon.Pokemon
+import com.eferraz.pokedex.network.responses.species.PokemonSpeciesDetail
 
 internal data class PokemonAndSpecie(
     private val pokemon: Pokemon,

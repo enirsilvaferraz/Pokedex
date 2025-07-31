@@ -4,8 +4,8 @@ import com.eferraz.pokedex.entity.PokemonCompleteVO
 import com.eferraz.pokedex.entity.PokemonVO
 import com.eferraz.pokedex.network.core.ClientConfig
 import com.eferraz.pokedex.network.relationship.PokemonAndSpecie
-import com.eferraz.pokedex.network.responses.Pokemon
-import com.eferraz.pokedex.network.responses.PokemonSpeciesDetail
+import com.eferraz.pokedex.network.responses.pokemon.Pokemon
+import com.eferraz.pokedex.network.responses.species.PokemonSpeciesDetail
 import com.eferraz.pokedex.repositories.datasources.PokemonDataSource
 import io.ktor.client.call.body
 import io.ktor.client.request.get
