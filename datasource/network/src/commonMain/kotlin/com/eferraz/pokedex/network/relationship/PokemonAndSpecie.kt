@@ -33,7 +33,7 @@ internal data class PokemonAndSpecie(
         ),
         breeding = BreedingVO(
             id = pokemon.id,
-            male = species.genderRate.toFloat(),
+            genderRatio = species.genderRate.toFloat(),
             eggGroups = species.eggGroups.map { EggGroupVO(id = it.getId(), name = it.name.orEmpty()) },
         ),
         stats = StatsVO(

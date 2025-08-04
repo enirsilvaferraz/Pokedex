@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "8b0eac0909367f12802f077759288157",
+    "identityHash": "ef216f700161995eaa8687940ab6592d",
     "entities": [
       {
         "tableName": "ability",
@@ -196,7 +196,7 @@
       },
       {
         "tableName": "breeding",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`breeding_id` INTEGER NOT NULL, `male_ratio` REAL NOT NULL, PRIMARY KEY(`breeding_id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`breeding_id` INTEGER NOT NULL, `gender_ratio` REAL NOT NULL, PRIMARY KEY(`breeding_id`))",
         "fields": [
           {
             "fieldPath": "id",
@@ -205,8 +205,8 @@
             "notNull": true
           },
           {
-            "fieldPath": "maleRatio",
-            "columnName": "male_ratio",
+            "fieldPath": "genderRatio",
+            "columnName": "gender_ratio",
             "affinity": "REAL",
             "notNull": true
           }
@@ -512,7 +512,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '8b0eac0909367f12802f077759288157')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'ef216f700161995eaa8687940ab6592d')"
     ]
   }
 }

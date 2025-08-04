@@ -3,7 +3,6 @@ package com.eferraz.pokedex.database.relationships
 import androidx.room.Embedded
 import androidx.room.Junction
 import androidx.room.Relation
-import com.eferraz.pokedex.database.entities.AboutAbilitiesCrossRef
 import com.eferraz.pokedex.database.entities.BreedingEggGroupCrossRef
 import com.eferraz.pokedex.database.entities.BreedingTable
 import com.eferraz.pokedex.database.entities.EggGroupTable
@@ -24,7 +23,7 @@ internal data class BreedingWithEggGroups(
     fun toModel() = BreedingVO(
         id = breeding.id,
 //        hatchCounter = breeding.hatchCounter,
-        male = breeding.maleRatio,
+        genderRatio = breeding.genderRatio,
         eggGroups = eggGroups.map { it.toModel() }
     )
 }

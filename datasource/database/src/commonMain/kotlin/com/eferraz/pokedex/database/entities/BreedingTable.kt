@@ -12,14 +12,14 @@ internal data class BreedingTable(
     @ColumnInfo(name = "breeding_id")
     val id: Long,
 
-    @ColumnInfo(name = "male_ratio")
-    val maleRatio: Float, // e.g., 0.875 for 87.5% male
+    @ColumnInfo(name = "gender_ratio")
+    val genderRatio: Float,
 ) {
 
     companion object {
         internal fun BreedingVO.toTable() = BreedingTable(
             id = id,
-            maleRatio = male
+            genderRatio = genderRatio,
         )
     }
 }
