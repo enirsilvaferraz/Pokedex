@@ -32,7 +32,8 @@ internal abstract class KmpProjectPlugin : Plugin<Project> {
                     iosSimulatorArm64()
                 ).forEach { iosTarget ->
                     iosTarget.binaries.framework {
-                        baseName = project.name.capitalized() + "Kit"
+                        baseName = project.name.capitalized()
+                        println(baseName)
                     }
                 }
 
