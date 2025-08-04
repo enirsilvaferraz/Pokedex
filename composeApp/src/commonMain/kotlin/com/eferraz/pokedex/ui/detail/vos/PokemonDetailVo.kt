@@ -52,7 +52,7 @@ internal data class PokemonDetailVo(
     data class Header(val id: String, val name: String) {
         constructor(model: PokemonVO) : this(
             id = "#" + model.id.toString().padStart(3, '0'),
-            name = model.name.capitalize(Locale.Companion.current)
+            name = model.name.capitalize(Locale.current)
         )
     }
 
@@ -62,7 +62,7 @@ internal data class PokemonDetailVo(
     @JvmInline
     value class Types(val types: List<String>) {
         constructor(model: PokemonVO) : this(
-            types = model.types().map { it.name.capitalize(Locale.Companion.current) }
+            types = model.types().map { it.name.capitalize(Locale.current) }
         )
     }
 
@@ -91,11 +91,11 @@ internal data class PokemonDetailVo(
     value class About(val items: List<FieldValueVo>) {
         constructor(model: PokemonCompleteVO) : this(
             items = listOf(
-                FieldValueVo("Species", model.about.species.capitalize(Locale.Companion.current)),
-                FieldValueVo("Category", model.about.category.capitalize(Locale.Companion.current)),
+                FieldValueVo("Species", model.about.species.capitalize(Locale.current)),
+                FieldValueVo("Category", model.about.category.capitalize(Locale.current)),
                 FieldValueVo("Height", (model.about.height / 10).format(Locale.current.platformLocale) + " cm"),
                 FieldValueVo("Weight", (model.about.weight / 10).format(Locale.current.platformLocale) + " kg"),
-                FieldValueVo("Abilities", model.about.abilities.joinToString(","))
+                FieldValueVo("Abilities", model.about.abilities.joinToString(", ") { it.name.capitalize(Locale.current) })
             )
         )
     }
@@ -105,11 +105,11 @@ internal data class PokemonDetailVo(
      */
     @JvmInline
     value class Breeding(val items: List<FieldValueVo>) {
-        constructor(model: PokemonVO) : this(
+        constructor(model: PokemonCompleteVO) : this(
             items = listOf(
-                FieldValueVo("Gender", "87,5% Male, 12,5% Female"),
-                FieldValueVo("Egg Groups", "Monster"),
-                FieldValueVo("Egg Cycle", "Grass")
+                FieldValueVo("Gender Male", (model.breeding.male * 100).format(Locale.current.platformLocale) + "%"),
+                FieldValueVo("Gender Female", (model.breeding.female * 100).format(Locale.current.platformLocale) + "%"),
+                FieldValueVo("Egg Groups", model.breeding.eggGroups.joinToString(", ") { it.name.capitalize(Locale.current) })
             )
         )
     }
@@ -120,15 +120,15 @@ internal data class PokemonDetailVo(
     @JvmInline
     value class Stats(val items: List<ChartItem>) {
 
-        constructor(model: PokemonVO) : this(
+        constructor(model: PokemonCompleteVO) : this(
             items = listOf(
-                ChartItem("HP", 45),
-                ChartItem("Attack", 49),
-                ChartItem("Defense", 49),
-                ChartItem("Sp. Atk", 65),
-                ChartItem("Sp. Def", 65),
-                ChartItem("Speed", 45),
-                ChartItem("Total", 318, max = 600)
+                ChartItem("HP", model.stats.hp),
+                ChartItem("Attack", model.stats.attack),
+                ChartItem("Defense", model.stats.defense),
+                ChartItem("Sp. Atk", model.stats.specialAttack),
+                ChartItem("Sp. Def", model.stats.specialDefense),
+                ChartItem("Speed", model.stats.speed),
+                ChartItem("Total", model.stats.total, 600)
             )
         )
 
@@ -142,7 +142,7 @@ internal data class PokemonDetailVo(
 
             fun progress() = value.toFloat() / max.toFloat()
 
-            fun color() = if (value > max / 2) Color.Companion.Green else Color.Companion.Red
+            fun color() = if (value > max / 2) Color.Green else Color.Red
         }
     }
 

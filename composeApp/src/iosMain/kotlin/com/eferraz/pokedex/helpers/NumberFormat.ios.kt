@@ -8,6 +8,6 @@ import platform.Foundation.NSNumberFormatterDecimalStyle
 
 internal actual fun Float.format(locale: PlatformLocale) =
     NSNumberFormatter().apply {
-        this@NSNumberFormatter.numberStyle = NSNumberFormatterDecimalStyle
-        this@NSNumberFormatter.locale = locale
+        this@apply.numberStyle = NSNumberFormatterDecimalStyle
+        this@apply.locale = locale
     }.stringFromNumber(NSNumber(this)) ?: throw IllegalStateException("Invalid number")
