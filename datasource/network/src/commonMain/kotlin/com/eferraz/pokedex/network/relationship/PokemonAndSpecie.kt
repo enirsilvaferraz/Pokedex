@@ -27,8 +27,8 @@ internal data class PokemonAndSpecie(
             description = species.flavorTextEntries.first { it.language.name == "en" }.flavorText.replace("\n", " ").replace(Regex("\\f"), " "),
             species = species.genera.first { it.language.name == "en" }.genus,
             category = species.shape?.name.orEmpty(),
-            height = pokemon.height.toFloat() / 10,
-            weight = pokemon.weight.toFloat() / 10,
+            height = pokemon.height.toFloat(),
+            weight = pokemon.weight.toFloat(),
             abilities = pokemon.abilities.map { AbilityVO(id = it.ability.getId(), name = it.ability.name.orEmpty()) }
         ),
         breeding = BreedingVO(

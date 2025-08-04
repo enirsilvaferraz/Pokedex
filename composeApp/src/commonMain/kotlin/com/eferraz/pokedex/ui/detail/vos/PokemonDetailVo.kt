@@ -93,7 +93,7 @@ internal data class PokemonDetailVo(
             items = listOf(
                 FieldValueVo("Species", model.about.species.capitalize(Locale.current)),
                 FieldValueVo("Category", model.about.category.capitalize(Locale.current)),
-                FieldValueVo("Height", (model.about.height / 10).format(Locale.current.platformLocale) + " cm"),
+                FieldValueVo("Height", (model.about.height * 10).format(Locale.current.platformLocale) + " cm"),
                 FieldValueVo("Weight", (model.about.weight / 10).format(Locale.current.platformLocale) + " kg"),
                 FieldValueVo("Abilities", model.about.abilities.joinToString(", ") { it.name.capitalize(Locale.current) })
             )
