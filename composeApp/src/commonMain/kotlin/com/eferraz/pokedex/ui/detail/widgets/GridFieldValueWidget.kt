@@ -13,7 +13,6 @@ import androidx.compose.ui.unit.dp
 import com.eferraz.pokedex.helpers.PokedexTheme
 import com.eferraz.pokedex.ui.detail.components.CardComponent
 import com.eferraz.pokedex.ui.detail.components.CardTitleComponent
-import com.eferraz.pokedex.ui.detail.vos.FieldValueVo
 import com.eferraz.pokedex.ui.preview.pokemon
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
@@ -21,7 +20,7 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 internal fun GridFieldValueWidget(
     modifier: Modifier = Modifier,
     title: String,
-    items: List<FieldValueVo>,
+    items: Map<String, String>,
 ) {
 
     CardComponent(modifier = modifier) {
@@ -40,7 +39,7 @@ internal fun GridFieldValueWidget(
 
                     Text(
                         modifier = Modifier.padding(end = 8.dp),
-                        text = "$key.",
+                        text = key,
                         style = MaterialTheme.typography.bodyMedium
                     )
 
@@ -62,7 +61,7 @@ private fun GridFieldValueWidgetPreview(
 ) {
     PokedexTheme {
         Surface(color = pokemon.background.color) {
-            GridFieldValueWidget(modifier = Modifier.padding(24.dp), title = "Abilities", items = pokemon.moves.items)
+            GridFieldValueWidget(modifier = Modifier.padding(24.dp), title = "Moves", items = pokemon.moves.items)
         }
     }
 }

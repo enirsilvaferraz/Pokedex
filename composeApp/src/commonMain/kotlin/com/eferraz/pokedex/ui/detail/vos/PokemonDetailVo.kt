@@ -107,8 +107,8 @@ internal data class PokemonDetailVo(
     value class Breeding(val items: List<FieldValueVo>) {
         constructor(model: PokemonCompleteVO) : this(
             items = listOf(
-                FieldValueVo("Gender Male", (model.breeding.male * 100).format(Locale.current.platformLocale) + "%"),
-                FieldValueVo("Gender Female", (model.breeding.female * 100).format(Locale.current.platformLocale) + "%"),
+                FieldValueVo("Male", (model.breeding.male * 100).format(Locale.current.platformLocale) + "%"),
+                FieldValueVo("Female", (model.breeding.female * 100).format(Locale.current.platformLocale) + "%"),
                 FieldValueVo("Egg Groups", model.breeding.eggGroups.joinToString(", ") { it.name.capitalize(Locale.current) })
             )
         )
@@ -150,9 +150,9 @@ internal data class PokemonDetailVo(
      * Abilities area
      */
     @JvmInline
-    value class Moves(val items: List<FieldValueVo>) {
+    value class Moves(val items: Map<String, String>) {
         constructor(model: PokemonCompleteVO) : this(
-            items = model.moves.map { FieldValueVo(it.id.toString(), it.name.capitalize(Locale.current)) }
+            items = model.moves.take(10).associate { it.id.toString().plus(". ") to it.name.capitalize(Locale.current) }
         )
     }
 }

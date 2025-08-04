@@ -40,6 +40,10 @@ import org.koin.compose.viewmodel.koinViewModel
 import org.koin.core.parameter.parametersOf
 import pokedex.composeapp.generated.resources.Res
 import pokedex.composeapp.generated.resources.detail_screen_about
+import pokedex.composeapp.generated.resources.detail_screen_back_button
+import pokedex.composeapp.generated.resources.detail_screen_breeding
+import pokedex.composeapp.generated.resources.detail_screen_moves
+import pokedex.composeapp.generated.resources.detail_screen_stats
 
 @Composable
 internal fun PokemonRoute(
@@ -110,11 +114,16 @@ private fun SuccessScreen(
 
             item { FieldValueWidget(title = stringResource(Res.string.detail_screen_about), items = vo.about.items) }
 
-            item { FieldValueWidget(title = "Breeding", items = vo.breeding.items) }
+            item { FieldValueWidget(title = stringResource(Res.string.detail_screen_breeding), items = vo.breeding.items) }
 
-            item { ChartWidget(title = "Stats", items = vo.stats.items) }
+            item { ChartWidget(title = stringResource(Res.string.detail_screen_stats), items = vo.stats.items) }
 
-            item { GridFieldValueWidget(title = "Abilities", items = vo.moves.items) }
+            item {
+                GridFieldValueWidget(
+                    title = stringResource(Res.string.detail_screen_moves),
+                    items = vo.moves.items
+                )
+            }
         }
     }
 }
@@ -137,7 +146,7 @@ private fun TopBar(
             IconButton(onClick = onNavigateBack) {
                 Icon(
                     imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                    contentDescription = "Navigate Back",
+                    contentDescription = stringResource(Res.string.detail_screen_back_button),
                     tint = Color.White
                 )
             }

@@ -1,3 +1,7 @@
 <resources>
+    <string name="detail_screen_back_button">Navigate Back</string>
     <string name="detail_screen_about">About</string>
+    <string name="detail_screen_breeding">Breeding</string>
+    <string name="detail_screen_stats">Stats</string>
+    <string name="detail_screen_moves">Moves</string>
 </resources>
