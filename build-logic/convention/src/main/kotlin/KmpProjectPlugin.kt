@@ -3,6 +3,7 @@ import com.eferraz.pokedex.libs
 import com.eferraz.pokedex.plugins
 import org.gradle.api.Plugin
 import org.gradle.api.Project
+import org.gradle.internal.extensions.stdlib.capitalized
 import org.gradle.kotlin.dsl.apply
 import org.gradle.kotlin.dsl.configure
 import org.gradle.kotlin.dsl.invoke
@@ -31,8 +32,7 @@ internal abstract class KmpProjectPlugin : Plugin<Project> {
                     iosSimulatorArm64()
                 ).forEach { iosTarget ->
                     iosTarget.binaries.framework {
-                        baseName = "${project.name}Kit"
-                        isStatic = true
+                        baseName = project.name.capitalized() + "Kit"
                     }
                 }
 
