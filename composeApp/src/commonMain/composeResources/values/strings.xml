@@ -1,7 +1,22 @@
 <resources>
-    <string name="detail_screen_back_button">Navigate Back</string>
-    <string name="detail_screen_about">About</string>
-    <string name="detail_screen_breeding">Breeding</string>
-    <string name="detail_screen_stats">Stats</string>
-    <string name="detail_screen_moves">Moves</string>
+    <string name="detail_back_button">Navigate Back</string>
+    <string name="detail_about">About</string>
+    <string name="detail_about_species">Species</string>
+    <string name="detail_about_category">Category</string>
+    <string name="detail_about_height">Height</string>
+    <string name="detail_about_weight">Weight</string>
+    <string name="detail_about_abilities">Abilities</string>
+    <string name="detail_breeding">Breeding</string>
+    <string name="detail_breeding_male">Male</string>
+    <string name="detail_breeding_female">Female</string>
+    <string name="detail_breeding_egg_groups">Egg Groups</string>
+    <string name="detail_moves">Moves</string>
+    <string name="detail_stats">Stats</string>
+    <string name="detail_stats_hp">HP</string>
+    <string name="detail_stats_atk">Attack</string>
+    <string name="detail_stats_def">Defense</string>
+    <string name="detail_stats_sp_atk">Sp. Atk</string>
+    <string name="detail_stats_sp_def">Sp. Def</string>
+    <string name="detail_stats_speed">Speed</string>
+    <string name="detail_stats_total">Total</string>
 </resources>
