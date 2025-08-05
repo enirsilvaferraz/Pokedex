@@ -17,7 +17,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.eferraz.pokedex.helpers.PokedexTheme
-import com.eferraz.pokedex.ui.preview.pokemon
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
@@ -38,7 +37,7 @@ internal fun CardComponent(
 @Composable
 private fun CardComponentPreview() {
     PokedexTheme {
-        Surface(color = pokemon.background.color) {
+        Surface(color = Color.Red) {
             CardComponent(modifier = Modifier.padding(24.dp)) {
                 Box(Modifier.height(200.dp).fillMaxWidth().background(Color.LightGray))
             }

@@ -40,9 +40,9 @@ import com.eferraz.pokedex.entity.PokemonLightVO
 import com.eferraz.pokedex.entity.PokemonVO
 import com.eferraz.pokedex.entity.TypeVO
 import com.eferraz.pokedex.helpers.AppScaffold
-import com.eferraz.pokedex.helpers.color
 import com.eferraz.pokedex.helpers.formatedId
 import com.eferraz.pokedex.helpers.formatedName
+import com.eferraz.pokedex.ui.detail.vos.PokemonDetailVo
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.jetbrains.compose.ui.tooling.preview.PreviewParameter
 import org.jetbrains.compose.ui.tooling.preview.PreviewParameterProvider
@@ -99,7 +99,7 @@ private fun ItemList(
 
     Card(
         modifier = modifier.padding(vertical = 4.dp).height(95.dp),
-        colors = CardDefaults.cardColors(containerColor = model.color().copy(alpha = 0.3f))
+        colors = CardDefaults.cardColors(containerColor = PokemonDetailVo.Background(model).color.copy(alpha = 0.3f))
     ) {
 
         Row(

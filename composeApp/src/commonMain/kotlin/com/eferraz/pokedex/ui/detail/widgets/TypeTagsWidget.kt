@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -19,15 +18,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.eferraz.pokedex.helpers.PokedexTheme
 import com.eferraz.pokedex.ui.detail.vos.PokemonDetailVo
-import com.eferraz.pokedex.ui.preview.pokemon
-import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
 internal fun TypeTagsWidget(
     modifier: Modifier = Modifier,
-    types: PokemonDetailVo.Types,
+    types: List<PokemonDetailVo.Type>,
 ) {
 
     Row(
@@ -35,7 +31,7 @@ internal fun TypeTagsWidget(
         horizontalArrangement = spacedBy(space = 8.dp, alignment = Alignment.End)
     ) {
 
-        types.types.forEach { name ->
+        types.forEach { type ->
 
             Box(
                 modifier = Modifier
@@ -45,26 +41,12 @@ internal fun TypeTagsWidget(
             ) {
                 Text(
                     modifier = Modifier.widthIn(min = 60.dp),
-                    text = name,
+                    text = type.name,
                     color = Color.White,
                     style = MaterialTheme.typography.bodyMedium,
                     fontWeight = FontWeight.Bold,
                     textAlign = TextAlign.Center
                 )
-            }
-        }
-    }
-}
-
-@Preview
-@Composable
-private fun TypeTagsPreview(
-//    @PreviewParameter(PokemonParamProvider::class) pokemon: PokemonView
-) {
-    PokedexTheme {
-        Surface(color = pokemon.background.color) {
-            Box(modifier = Modifier.padding(24.dp)) {
-                TypeTagsWidget(modifier = Modifier, types = pokemon.types)
             }
         }
     }

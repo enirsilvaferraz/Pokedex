@@ -2,8 +2,8 @@ package com.eferraz.pokedex.ui.detail
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.eferraz.pokedex.ui.detail.vos.PokemonDetailVo
 import com.eferraz.pokedex.repositories.PokemonRepository
+import com.eferraz.pokedex.ui.detail.vos.PokemonDetailVo
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
