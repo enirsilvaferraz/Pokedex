@@ -10,7 +10,6 @@ import org.gradle.kotlin.dsl.configure
 import org.gradle.kotlin.dsl.dependencies
 import org.gradle.kotlin.dsl.invoke
 import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompilationTask
 
 internal class PokedexKoinPlugin : Plugin<Project> {
 
@@ -32,7 +31,7 @@ internal class PokedexKoinPlugin : Plugin<Project> {
 
                     commonMain {
 
-                        kotlin.srcDir("build/generated/ksp/metadata/commonMain/kotlin")
+                        kotlin.srcDir("build/generated/ksp/metadata/commonMain/kotlin/org/koin/ksp/generated")
 
                         dependencies {
 
@@ -62,10 +61,9 @@ internal class PokedexKoinPlugin : Plugin<Project> {
                 add("kspCommonMainMetadata", libs.libraries.koin_ksp_compiler)
             }
 
-            tasks.withType(KotlinCompilationTask::class.java).configureEach {
-                if (name != "kspCommonMainKotlinMetadata") {
-                    dependsOn("kspCommonMainKotlinMetadata")
-                }
+            // Issue fix https://github.com/InsertKoinIO/koin/issues/2174
+            tasks.named { it.startsWith("ksp") && it != "kspCommonMainKotlinMetadata" }.configureEach {
+                dependsOn(tasks.named("kspCommonMainKotlinMetadata"))
             }
         }
     }
