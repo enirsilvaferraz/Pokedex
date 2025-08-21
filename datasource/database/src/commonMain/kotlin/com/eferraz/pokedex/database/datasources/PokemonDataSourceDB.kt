@@ -27,7 +27,9 @@ import com.eferraz.pokedex.database.entities.StatsTable.Companion.toTable
 import com.eferraz.pokedex.database.entities.TypeTable.Companion.toTable
 import com.eferraz.pokedex.entity.PokemonCompleteVO
 import com.eferraz.pokedex.repositories.datasources.PokemonDataSource
+import org.koin.core.annotation.Factory
 
+@Factory([PokemonDataSource.Database::class])
 internal class PokemonDataSourceDB(
     private val room: AppDatabase,
     private val pokemonDao: PokemonDao,
