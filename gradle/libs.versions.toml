@@ -1,8 +1,10 @@
 [versions]
-agp = "8.12.1"
+
 android-compileSdk = "36"
 android-minSdk = "30"
 android-targetSdk = "36"
+
+agp = "8.12.1"
 android-tools = "31.12.1"
 androidx-activity = "1.10.1"
 androidx-lifecycle = "2.9.2"
@@ -91,7 +93,53 @@ gradle-plugin-kotlin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-p
 gradle-plugin-ksp = { group = "com.google.devtools.ksp", name = "com.google.devtools.ksp.gradle.plugin", version.ref = "ksp" }
 gradle-plugin-room = { group = "androidx.room", name = "room-gradle-plugin", version.ref = "room" }
 
+[bundles]
+
+# Ktor
+ktor-common = [
+    "kotlinx-coroutines-core",
+    "ktor-client-core",
+    "ktor-client-encoding",
+    "ktor-client-logging",
+    "ktor-serialization-kotlinx-json",
+    "ktor-client-content-negotiation",
+    "kermit"
+]
+ktor-android = [
+    "ktor-client-okhttp"
+]
+ktor-ios = [
+    "ktor-client-darwin"
+]
+
+# Koin
+koin-common = [
+    "koin-core",
+    "koin-annotations",
+]
+koin-common-compose = [
+    "koin-compose",
+    "koin-compose-viewmodel",
+    "koin-compose-viewmodel-navigation"
+]
+koin-common-compiler = [
+    "koin-ksp-compiler"
+]
+koin-common-test = [
+    "koin-test"
+]
+
+# Room
+room-common = [
+    "room-runtime",
+    "sqlite-bundled"
+]
+room-common-compiler = [
+    "room-compiler"
+]
+
 [plugins]
+
 android-kotlin-multiplatform-library = { id = "com.android.kotlin.multiplatform.library", version.ref = "agp" }
 android-application = { id = "com.android.application", version.ref = "agp" }
 android-library = { id = "com.android.library", version.ref = "agp" }
@@ -101,13 +149,13 @@ compose-multiplatform = { id = "org.jetbrains.compose", version.ref = "cmp" }
 kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin-serialization" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
-modulegraph = { id = "dev.iurysouza.modulegraph", version.ref = "modulegraph" }
+#modulegraph = { id = "dev.iurysouza.modulegraph", version.ref = "modulegraph" }
 room = { id = "androidx.room", version.ref = "room" }
 
 # Internal Plugins
-pokedex-koin-annotations = { id = "pokedex.koin.annotations"}
-pokedex-room = { id = "pokedex.room"}
-pokedex-kmp-library = { id = "pokedex.kmp.library"}
-pokedex-cmp-library = { id = "pokedex.cmp.library"}
-pokedex-kmp-application = { id = "pokedex.kmp.application"}
-foundation-ktor = { id = "foundation.ktor"}
+foundation-kmp-library = { id = "foundation-kmp-library" }
+foundation-kmp-application = { id = "foundation-kmp-application" }
+foundation-compose = { id = "foundation-compose" }
+foundation-koin = { id = "foundation.koin" }
+foundation-ktor = { id = "foundation.ktor" }
+foundation-room = { id = "foundation.room" }

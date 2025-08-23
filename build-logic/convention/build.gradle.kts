@@ -17,34 +17,46 @@ gradlePlugin {
 
     plugins {
 
-        register("pokedex-kmp-application") {
-            id = libs.plugins.pokedex.kmp.application.get().pluginId
-            implementationClass = "KmpApplicationPlugin"
+        libs.plugins.foundation.kmp.application.get().pluginId.let {
+            register(it) {
+                id = it
+                implementationClass = "KmpApplicationPlugin"
+            }
         }
 
-        register("pokedex-kmp-library") {
-            id = libs.plugins.pokedex.kmp.library.get().pluginId
-            implementationClass = "KmpLibraryPlugin"
+        libs.plugins.foundation.kmp.library.get().pluginId.let {
+            register(it) {
+                id = it
+                implementationClass = "KmpLibraryPlugin"
+            }
         }
 
-        register("pokedex-cmp-library") {
-            id = libs.plugins.pokedex.cmp.library.get().pluginId
-            implementationClass = "CmpLibraryPlugin"
+        libs.plugins.foundation.compose.get().pluginId.let {
+            register(it) {
+                id = it
+                implementationClass = "LibraryComposePlugin"
+            }
         }
 
-        register("pokedex-koin-annotations") {
-            id = libs.plugins.pokedex.koin.annotations.get().pluginId
-            implementationClass = "PokedexKoinPlugin"
+        libs.plugins.foundation.koin.get().pluginId.let {
+            register(it) {
+                id = it
+                implementationClass = "LibraryKoinPlugin"
+            }
         }
 
-        register("pokedex-room") {
-            id = libs.plugins.pokedex.room.get().pluginId
-            implementationClass = "PokedexRoomPlugin"
+        libs.plugins.foundation.room.get().pluginId.let {
+            register(it) {
+                id = it
+                implementationClass = "LibraryRoomPlugin"
+            }
         }
 
-        register("foundation-ktor") {
-            id = libs.plugins.foundation.ktor.get().pluginId
-            implementationClass = "FoundationKtorPlugin"
+        libs.plugins.foundation.ktor.get().pluginId.let {
+            register(it) {
+                id = it
+                implementationClass = "LibraryKtorPlugin"
+            }
         }
     }
 }

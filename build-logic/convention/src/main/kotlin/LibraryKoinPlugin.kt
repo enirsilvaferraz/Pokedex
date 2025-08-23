@@ -1,4 +1,5 @@
 import com.android.build.gradle.internal.utils.isComposeCompilerPluginApplied
+import com.eferraz.pokedex.bundles
 import com.eferraz.pokedex.libraries
 import com.eferraz.pokedex.libs
 import com.eferraz.pokedex.plugins
@@ -11,7 +12,7 @@ import org.gradle.kotlin.dsl.dependencies
 import org.gradle.kotlin.dsl.invoke
 import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
 
-internal class PokedexKoinPlugin : Plugin<Project> {
+internal class LibraryKoinPlugin : Plugin<Project> {
 
     override fun apply(target: Project) {
 
@@ -36,29 +37,23 @@ internal class PokedexKoinPlugin : Plugin<Project> {
                         dependencies {
 
                             implementation(project.dependencies.platform(libs.libraries.koin_bom))
-                            implementation(libs.libraries.koin_core)
+                            implementation(libs.bundles.koin_common)
 
-                            if (isComposeCompilerPluginApplied(project)) {
-                                implementation(libs.libraries.koin_compose)
-                                implementation(libs.libraries.koin_compose_viewmodel)
-                                implementation(libs.libraries.koin_compose_viewmodel_navigation)
-                            }
-
-                            api(libs.libraries.koin_annotations)
+                            if (isComposeCompilerPluginApplied(project))
+                                implementation(libs.bundles.koin_common_compose)
                         }
                     }
 
                     commonTest {
                         dependencies {
-                            implementation(libs.libraries.koin_test)
-//                            implementation(libs.libraries.koin_test_junit4)
+                            implementation(libs.bundles.koin_common_test)
                         }
                     }
                 }
             }
 
             dependencies {
-                add("kspCommonMainMetadata", libs.libraries.koin_ksp_compiler)
+                add("kspCommonMainMetadata", libs.bundles.koin_common_compiler)
             }
 
             // Issue fix https://github.com/InsertKoinIO/koin/issues/2174

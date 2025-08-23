@@ -1,6 +1,6 @@
 plugins {
-    alias(libs.plugins.pokedex.kmp.library)
-    alias(libs.plugins.pokedex.koin.annotations)
+    alias(libs.plugins.foundation.kmp.library)
+    alias(libs.plugins.foundation.koin)
     alias(libs.plugins.foundation.ktor)
 }
 

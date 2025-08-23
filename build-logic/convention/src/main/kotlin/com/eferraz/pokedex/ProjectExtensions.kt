@@ -14,5 +14,8 @@ internal val VersionCatalog.plugins: CatalogDefinitions.Plugins
 internal val VersionCatalog.libraries: CatalogDefinitions.Libraries
     get() = CatalogDefinitions.Libraries(this)
 
+internal val VersionCatalog.bundles: CatalogDefinitions.Bundles
+    get() = CatalogDefinitions.Bundles(this)
+
 internal val VersionCatalog.versions: CatalogDefinitions.Versions
     get() = CatalogDefinitions.Versions(this)

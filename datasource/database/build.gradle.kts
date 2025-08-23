@@ -1,7 +1,7 @@
 plugins {
-    alias(libs.plugins.pokedex.kmp.library)
-    alias(libs.plugins.pokedex.room)
-    alias(libs.plugins.pokedex.koin.annotations)
+    alias(libs.plugins.foundation.kmp.library)
+    alias(libs.plugins.foundation.room)
+    alias(libs.plugins.foundation.koin)
 }
 
 kotlin {

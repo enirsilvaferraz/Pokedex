@@ -10,7 +10,7 @@ import org.jetbrains.compose.ComposeExtension
 import org.jetbrains.compose.ExperimentalComposeLibrary
 import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
 
-internal class CmpLibraryPlugin : Plugin<Project> {
+internal class LibraryComposePlugin : Plugin<Project> {
 
     override fun apply(target: Project) {
 

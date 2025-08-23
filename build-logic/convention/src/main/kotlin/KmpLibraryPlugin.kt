@@ -1,4 +1,5 @@
 import com.android.build.api.dsl.androidLibrary
+import com.eferraz.pokedex.AbstractKmpProjectPlugin
 import com.eferraz.pokedex.ProjectConstants.NAMESPACE
 import com.eferraz.pokedex.libs
 import com.eferraz.pokedex.plugins
@@ -8,7 +9,7 @@ import org.gradle.kotlin.dsl.apply
 import org.gradle.kotlin.dsl.configure
 import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
 
-internal class KmpLibraryPlugin : KmpProjectPlugin() {
+internal class KmpLibraryPlugin : AbstractKmpProjectPlugin() {
 
     override fun apply(target: Project) {
         super.apply(target)

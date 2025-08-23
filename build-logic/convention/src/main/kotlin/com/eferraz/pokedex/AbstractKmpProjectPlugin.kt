@@ -1,6 +1,5 @@
-import com.eferraz.pokedex.libraries
-import com.eferraz.pokedex.libs
-import com.eferraz.pokedex.plugins
+package com.eferraz.pokedex
+
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.internal.extensions.stdlib.capitalized
@@ -9,7 +8,7 @@ import org.gradle.kotlin.dsl.configure
 import org.gradle.kotlin.dsl.invoke
 import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
 
-internal abstract class KmpProjectPlugin : Plugin<Project> {
+internal abstract class AbstractKmpProjectPlugin : Plugin<Project> {
 
     override fun apply(target: Project) {
 
@@ -33,7 +32,6 @@ internal abstract class KmpProjectPlugin : Plugin<Project> {
                 ).forEach { iosTarget ->
                     iosTarget.binaries.framework {
                         baseName = project.name.capitalized()
-                        println(baseName)
                     }
                 }
 

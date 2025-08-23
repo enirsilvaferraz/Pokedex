@@ -22,37 +22,34 @@ internal interface CatalogDefinitions {
 
         val kotlin_stdlib = libs.find("kotlin-stdlib")
         val kotlin_test = libs.find("kotlin-test")
-        val kotlinx_coroutines_core = libs.find("kotlinx-coroutines-core")
-        val koin_annotations = libs.find("koin-annotations")
         val koin_bom = libs.find("koin-bom")
-        val koin_compose = libs.find("koin-compose")
-        val koin_test = libs.find("koin-test")
-        val koin_test_junit4 = libs.find("koin-test-junit4")
-        val koin_compose_viewmodel = libs.find("koin-compose-viewmodel")
-        val koin_compose_viewmodel_navigation = libs.find("koin-compose-viewmodel-navigation")
-        val koin_core = libs.find("koin-core")
-        val koin_ksp_compiler = libs.find("koin-ksp-compiler")
-        val room_compiler = libs.find("room-compiler")
-        val room_runtime = libs.find("room-runtime")
-        val sqlite_bundled = libs.find("sqlite-bundled")
-        val ktor_client_core = libs.find("ktor-client-core")
-        val ktor_client_okhttp = libs.find("ktor-client-okhttp")
-        val ktor_client_darwin = libs.find("ktor-client-darwin")
-        val ktor_client_encoding = libs.find("ktor-client-encoding")
-        val ktor_client_logging = libs.find("ktor-client-logging")
-        val ktor_serialization_kotlinx_json = libs.find("ktor-serialization-kotlinx-json")
-        val ktor_client_content_negotiation = libs.find("ktor-client-content-negotiation")
-        val kermit = libs.find("kermit")
 
         private fun VersionCatalog.find(alias: String) = findLibrary(alias).get()
     }
 
     class Versions(libs: VersionCatalog) {
 
-        val compileSdk = libs.find("android.compileSdk") // Keep original: android.compileSdk
-        val minSdk = libs.find("android.minSdk") // Keep original: android.minSdk
-        val targetSdk = libs.find("android.targetSdk") // Keep original: android.targetSdk
+        val compileSdk = libs.find("android.compileSdk")
+        val minSdk = libs.find("android.minSdk")
+        val targetSdk = libs.find("android.targetSdk")
 
         private fun VersionCatalog.find(alias: String) = findVersion(alias).get().requiredVersion.toInt()
+    }
+
+    class Bundles(libs: VersionCatalog) {
+
+        val ktor_common = libs.find("ktor-common")
+        val ktor_android = libs.find("ktor-android")
+        val ktor_ios = libs.find("ktor-ios")
+
+        val koin_common = libs.find("koin-common")
+        val koin_common_compose = libs.find("koin-common-compose")
+        val koin_common_compiler = libs.find("koin-common-compiler")
+        val koin_common_test = libs.find("koin-common-test")
+
+        val room_common = libs.find("room-common")
+        val room_common_compiler = libs.find("room-common-compiler")
+
+        private fun VersionCatalog.find(alias: String) = findBundle(alias).get()
     }
 }

@@ -1,5 +1,5 @@
 import androidx.room.gradle.RoomExtension
-import com.eferraz.pokedex.libraries
+import com.eferraz.pokedex.bundles
 import com.eferraz.pokedex.libs
 import com.eferraz.pokedex.plugins
 import org.gradle.api.Plugin
@@ -10,7 +10,7 @@ import org.gradle.kotlin.dsl.dependencies
 import org.gradle.kotlin.dsl.invoke
 import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
 
-internal class PokedexRoomPlugin : Plugin<Project> {
+internal class LibraryRoomPlugin : Plugin<Project> {
 
     override fun apply(target: Project) {
 
@@ -23,8 +23,7 @@ internal class PokedexRoomPlugin : Plugin<Project> {
                 sourceSets {
                     commonMain {
                         dependencies {
-                            implementation(libs.libraries.room_runtime)
-                            implementation(libs.libraries.sqlite_bundled)
+                            implementation(libs.bundles.room_common)
                         }
                     }
                 }
@@ -32,7 +31,7 @@ internal class PokedexRoomPlugin : Plugin<Project> {
 
             dependencies {
                 listOf("kspAndroid", "kspIosSimulatorArm64", "kspIosX64", "kspIosArm64").forEach {
-                    add(it, libs.libraries.room_compiler)
+                    add(it, libs.bundles.room_common_compiler)
                 }
             }
 

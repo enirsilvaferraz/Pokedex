@@ -1,8 +1,8 @@
 plugins {
     alias(libs.plugins.kotlin.serialization)
-    alias(libs.plugins.pokedex.cmp.library)
-    alias(libs.plugins.pokedex.kmp.application)
-    alias(libs.plugins.pokedex.koin.annotations)
+    alias(libs.plugins.foundation.compose)
+    alias(libs.plugins.foundation.kmp.application)
+    alias(libs.plugins.foundation.koin)
 }
 
 kotlin {
