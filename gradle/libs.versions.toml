@@ -9,7 +9,7 @@ androidx-lifecycle = "2.9.2"
 coil = "3.3.0"
 cmp = "1.8.2"
 coroutines = "1.10.2"
-kermit = "2.0.6"
+kermit = "2.0.8"
 koin-bom = "4.1.0"
 koin-annotations = "2.1.1-RC1"
 kotlin = "2.2.10"
@@ -110,3 +110,4 @@ pokedex-room = { id = "pokedex.room"}
 pokedex-kmp-library = { id = "pokedex.kmp.library"}
 pokedex-cmp-library = { id = "pokedex.cmp.library"}
 pokedex-kmp-application = { id = "pokedex.kmp.application"}
+foundation-ktor = { id = "foundation.ktor"}

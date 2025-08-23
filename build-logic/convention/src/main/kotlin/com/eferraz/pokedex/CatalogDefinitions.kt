@@ -13,6 +13,7 @@ internal interface CatalogDefinitions {
         val kotlin_multiplatform = libs.find("kotlin-multiplatform")
         val kotlin_multiplatform_library = libs.find("android-kotlin-multiplatform-library")
         val room = libs.find("room")
+        val kotlin_serialization = libs.find("kotlin-serialization")
 
         private fun VersionCatalog.find(alias: String): String = findPlugin(alias).get().get().pluginId
     }
@@ -21,6 +22,7 @@ internal interface CatalogDefinitions {
 
         val kotlin_stdlib = libs.find("kotlin-stdlib")
         val kotlin_test = libs.find("kotlin-test")
+        val kotlinx_coroutines_core = libs.find("kotlinx-coroutines-core")
         val koin_annotations = libs.find("koin-annotations")
         val koin_bom = libs.find("koin-bom")
         val koin_compose = libs.find("koin-compose")
@@ -33,6 +35,14 @@ internal interface CatalogDefinitions {
         val room_compiler = libs.find("room-compiler")
         val room_runtime = libs.find("room-runtime")
         val sqlite_bundled = libs.find("sqlite-bundled")
+        val ktor_client_core = libs.find("ktor-client-core")
+        val ktor_client_okhttp = libs.find("ktor-client-okhttp")
+        val ktor_client_darwin = libs.find("ktor-client-darwin")
+        val ktor_client_encoding = libs.find("ktor-client-encoding")
+        val ktor_client_logging = libs.find("ktor-client-logging")
+        val ktor_serialization_kotlinx_json = libs.find("ktor-serialization-kotlinx-json")
+        val ktor_client_content_negotiation = libs.find("ktor-client-content-negotiation")
+        val kermit = libs.find("kermit")
 
         private fun VersionCatalog.find(alias: String) = findLibrary(alias).get()
     }

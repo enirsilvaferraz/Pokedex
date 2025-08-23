@@ -41,5 +41,10 @@ gradlePlugin {
             id = libs.plugins.pokedex.room.get().pluginId
             implementationClass = "PokedexRoomPlugin"
         }
+
+        register("foundation-ktor") {
+            id = libs.plugins.foundation.ktor.get().pluginId
+            implementationClass = "FoundationKtorPlugin"
+        }
     }
 }

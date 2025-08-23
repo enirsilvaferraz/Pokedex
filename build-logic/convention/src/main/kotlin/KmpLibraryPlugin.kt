@@ -19,6 +19,7 @@ internal class KmpLibraryPlugin : KmpProjectPlugin() {
 
             extensions.configure<KotlinMultiplatformExtension> {
 
+                @Suppress("UnstableApiUsage")
                 androidLibrary {
                     namespace = "$NAMESPACE.${project.name}"
                     compileSdk = libs.versions.targetSdk
