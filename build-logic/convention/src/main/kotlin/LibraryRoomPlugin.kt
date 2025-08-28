@@ -30,7 +30,12 @@ internal class LibraryRoomPlugin : Plugin<Project> {
             }
 
             dependencies {
-                listOf("kspAndroid", "kspIosSimulatorArm64", "kspIosX64", "kspIosArm64").forEach {
+                listOf(
+                    "kspAndroid",
+                    "kspIosSimulatorArm64",
+                    "kspIosX64",
+                    "kspIosArm64"
+                ).forEach {
                     add(it, libs.bundles.room_common_compiler)
                 }
             }
