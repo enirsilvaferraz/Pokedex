@@ -1,6 +1,7 @@
 package com.eferraz.pokedex.repositories
 
 import com.eferraz.pokedex.repositories.datasources.PokemonDataSource
+import com.eferraz.pokedex.usecases.repositories.PokemonRepository
 import org.koin.core.annotation.Factory
 import org.koin.core.annotation.Provided
 

@@ -8,6 +8,7 @@ kotlin {
         commonMain {
             dependencies {
                 implementation(project(path = ":business:entity"))
+                implementation(project(path = ":business:usecases"))
                 implementation(libs.kotlinx.coroutines.core)
                 implementation(libs.paging.common)
             }

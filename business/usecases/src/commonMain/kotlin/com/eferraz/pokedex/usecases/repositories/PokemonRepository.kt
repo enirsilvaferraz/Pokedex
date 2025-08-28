@@ -1,4 +1,4 @@
-package com.eferraz.pokedex.repositories
+package com.eferraz.pokedex.usecases.repositories
 
 import com.eferraz.pokedex.entity.PokemonCompleteVO
 

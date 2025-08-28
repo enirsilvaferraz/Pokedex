@@ -2,8 +2,8 @@ package com.eferraz.pokedex.repositories
 
 import app.cash.paging.PagingState
 import com.eferraz.pokedex.entity.PokemonLightVO
-import com.eferraz.pokedex.entity.PokemonVO
 import com.eferraz.pokedex.repositories.datasources.PokemonDataSource
+import com.eferraz.pokedex.usecases.repositories.PokemonListRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 import kotlinx.coroutines.withContext

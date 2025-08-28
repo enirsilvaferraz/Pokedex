@@ -1,8 +1,6 @@
-package com.eferraz.pokedex.repositories
+package com.eferraz.pokedex.usecases.repositories
 
 import app.cash.paging.PagingSource
-import com.eferraz.pokedex.entity.PokemonCompleteVO
 import com.eferraz.pokedex.entity.PokemonLightVO
-import com.eferraz.pokedex.entity.PokemonVO
 
 public abstract class PokemonListRepository : PagingSource<Int, PokemonLightVO>()
