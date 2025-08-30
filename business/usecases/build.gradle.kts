@@ -8,7 +8,6 @@ kotlin {
         commonMain {
             dependencies {
                 api(project(path = ":business:entity"))
-                //implementation(project(path = ":adapters::repositories")) // TODO Dependencia proibida
                 implementation(libs.paging.common)
             }
         }
