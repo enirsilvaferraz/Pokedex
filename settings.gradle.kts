@@ -32,6 +32,7 @@ dependencyResolutionManagement {
 }
 
 include(":composeApp")
+project(":composeApp").projectDir = File(settingsDir,"core/presentation/composeApp")
 
 include(":entity")
 project(":entity").projectDir = File(settingsDir,"core/domain/entity")
