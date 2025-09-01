@@ -13,47 +13,37 @@ graph LR
     :composeApp["composeApp"] 
   end
   
-  subgraph :business
-    :business:useCases["useCases"]
+  subgraph :domain
+    :domain:useCases["usecases"]
+    :domain:entity["entity"]
+  end
+  
+  subgraph :data
+    :data:network["network"]
+    :data:database["database"]
+    :data:repositories["repositories"]
   end
 
-  subgraph :entity
-    :business:entity["entity"]
-  end
-  
-  subgraph :adapters
-    :adapters:repositories["repositories"]
-    :adapters:viewModels["viewModels"]
-  end
-  
-  subgraph :datasource
-    :datasource:network["network"]
-    :datasource:database["database"]
-  end
+    :domain:useCases --> :domain:entity
+    :composeApp --> :domain:useCases
+    :composeApp --> :domain:entity
+    :composeApp --> :data:repositories
+    :composeApp --> :data:network
+    :composeApp --> :data:database
+    :data:database --> :domain:entity
+    :data:network --> :domain:entity
 
-  :composeApp --> :adapters:viewModels
-  :adapters:viewModels --> :business:useCases
-  :business:useCases --> :business:entity
-%%  :composeApp --> :business:entity
-%%  :composeApp --> :adapters:repositories
-%%  :composeApp --> :datasource:network
-%%  :composeApp --> :datasource:database
-
-%%   :adapters:repositories --> :business:entity
-   :adapters:repositories --> :business:useCases
-  
-%%  :datasource:network --> :business:entity
-  :datasource:network --> :adapters:repositories
-  
-%%  :datasource:database --> :business:entity
-  :datasource:database --> :adapters:repositories
+    :data:repositories --> :domain:entity
+    :data:repositories --> :domain:useCases
+    :data:repositories --> :data:network
+    :data:repositories --> :data:database 
 
 classDef android-application fill:#2C4162,stroke:#fff,stroke-width:2px,color:#fff;
 classDef unknown fill:#676767,stroke:#fff,stroke-width:2px,color:#fff;
 class :composeApp android-application
-class :business:entity unknown
-class :adapters:repositories unknown
-class :datasource:network unknown
-class :datasource:database unknown
+class :domain:entity unknown
+class :data:repositories unknown
+class :data:network unknown
+class :data:database unknown
 
 ```

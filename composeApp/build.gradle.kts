@@ -21,11 +21,11 @@ kotlin {
             implementation(libs.paging.common)
             implementation(libs.paging.compose.common)
 
-            implementation(project(path = ":business:entity"))
-            implementation(project(path = ":business:usecases"))
-            implementation(project(path = ":adapters::repositories"))
-            implementation(project(path = ":datasource:network"))
-            implementation(project(path = ":datasource:database"))
+            implementation(project(path = ":entity"))
+            implementation(project(path = ":usecases"))
+            implementation(project(path = ":repositories"))
+            implementation(project(path = ":network"))
+            implementation(project(path = ":database"))
         }
     }
 }

@@ -25,6 +25,7 @@ import com.eferraz.pokedex.database.entities.PokemonMovesCrossRef
 import com.eferraz.pokedex.database.entities.PokemonTable
 import com.eferraz.pokedex.database.entities.StatsTable
 import com.eferraz.pokedex.database.entities.TypeTable
+import com.eferraz.pokedex.database.views.PokemonLightView
 
 @Database(
     entities = [
@@ -40,6 +41,9 @@ import com.eferraz.pokedex.database.entities.TypeTable
         StatsTable::class,
         TypeTable::class
     ],
+//    views = [
+//        PokemonLightView::class
+//    ],
     version = 1
 )
 @ConstructedBy(AppDatabaseConstructor::class)
