@@ -49,12 +49,12 @@ import org.jetbrains.compose.ui.tooling.preview.PreviewParameterProvider
 import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
-public fun PokedexRoute(
+internal fun PokedexRoute(
     modifier: Modifier = Modifier,
+    vm: PokedexViewModel = koinViewModel(),
     onClick: (PokemonVO) -> Unit,
 ) {
 
-    val vm: PokedexViewModel = koinViewModel()
     val list = vm.flow.collectAsLazyPagingItems()
 
     PokedexScreen(

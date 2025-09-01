@@ -17,7 +17,7 @@ internal object AppDI {
             EntityModule().module,
             UseCaseModule().module,
             RepositoryModule().module,
-            ComposeAppModule().module,
+            ComposeModule().module,
         )
     }
 }
