@@ -34,6 +34,9 @@ dependencyResolutionManagement {
 include(":composeApp")
 project(":composeApp").projectDir = File(settingsDir,"core/presentation/composeApp")
 
+include(":pokemon-list")
+project(":pokemon-list").projectDir = File(settingsDir,"core/presentation/pokemon-list")
+
 include(":entity")
 project(":entity").projectDir = File(settingsDir,"core/domain/entity")
 

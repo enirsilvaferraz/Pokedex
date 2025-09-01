@@ -5,4 +5,4 @@ import org.koin.core.annotation.Module
 
 @Module
 @ComponentScan("com.eferraz.pokedex")
-public class ComposeModule
+public class ComposeAppModule

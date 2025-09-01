@@ -46,15 +46,15 @@ import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
 import org.koin.core.parameter.parametersOf
-import pokedex.composeapp.generated.resources.Res
-import pokedex.composeapp.generated.resources.detail_about
-import pokedex.composeapp.generated.resources.detail_back_button
-import pokedex.composeapp.generated.resources.detail_breeding
-import pokedex.composeapp.generated.resources.detail_moves
-import pokedex.composeapp.generated.resources.detail_stats
+import pokedex.pokemon_list.generated.resources.Res
+import pokedex.pokemon_list.generated.resources.detail_about
+import pokedex.pokemon_list.generated.resources.detail_back_button
+import pokedex.pokemon_list.generated.resources.detail_breeding
+import pokedex.pokemon_list.generated.resources.detail_moves
+import pokedex.pokemon_list.generated.resources.detail_stats
 
 @Composable
-internal fun PokemonRoute(
+public fun PokemonRoute(
     modifier: Modifier = Modifier,
     id: Long,
     onNavigateBack: () -> Unit = {},
