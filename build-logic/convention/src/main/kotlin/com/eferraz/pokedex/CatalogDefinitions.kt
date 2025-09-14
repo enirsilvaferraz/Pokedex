@@ -50,6 +50,8 @@ internal interface CatalogDefinitions {
         val room_common = libs.find("room-common")
         val room_common_compiler = libs.find("room-common-compiler")
 
+        val navigation_common = libs.find("navigation-common")
+
         private fun VersionCatalog.find(alias: String) = findBundle(alias).get()
     }
 }
