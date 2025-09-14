@@ -31,15 +31,15 @@ internal class KmpApplicationPlugin : AbstractKmpProjectPlugin() {
 
             extensions.configure<ApplicationExtension> {
 
-//                namespace = // aplicado posteriomente com a chamada do metodo setNamespace
+                // namespace = // aplicado posteriomente
                 compileSdk = libs.versions.compileSdk
 
                 defaultConfig {
-//                    applicationId = // aplicado posteriomente com a chamada do metodo setNamespace
+                    // applicationId = // aplicado posteriomente
                     minSdk = libs.versions.minSdk
                     targetSdk = libs.versions.targetSdk
-                    versionCode = 1
-                    versionName = "1.0"
+                    // versionCode = 1
+                    // versionName = "1.0"
                 }
 
                 packaging {

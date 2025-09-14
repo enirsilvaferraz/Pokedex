@@ -1,38 +1,38 @@
 import com.eferraz.pokedex.application
+import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 
 plugins {
-    alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.foundation.compose)
     alias(libs.plugins.foundation.kmp.application)
     alias(libs.plugins.foundation.koin)
+    alias(libs.plugins.foundation.navigation)
 }
 
 application {
     namespace = "com.eferraz.pokedex"
+    versionCode = 1
+    versionName = "1.0"
 }
 
 kotlin {
-    sourceSets {
-        commonMain.dependencies {
 
-            implementation(libs.androidx.lifecycle.viewmodel)
-            implementation(libs.androidx.lifecycle.runtimeCompose)
+    @OptIn(ExperimentalKotlinGradlePluginApi::class)
+    dependencies {
 
-            implementation(libs.coil.compose)
-            implementation(libs.coil.network.ktor3)
+        implementation(libs.androidx.lifecycle.viewmodel)
+        implementation(libs.androidx.lifecycle.runtimeCompose)
 
-            implementation(libs.navigation.compose)
-            implementation(libs.kotlinx.serialization.json)
+        implementation(libs.coil.compose)
+        implementation(libs.coil.network.ktor3)
 
-            implementation(libs.paging.common)
-            implementation(libs.paging.compose.common)
+        implementation(libs.paging.common)
+        implementation(libs.paging.compose.common)
 
-            implementation(project(path = ":entity"))
-            implementation(project(path = ":usecases"))
-            implementation(project(path = ":repositories"))
-            implementation(project(path = ":network"))
-            implementation(project(path = ":database"))
-        }
+        implementation(project(":entity"))
+        implementation(project(":usecases"))
+        implementation(project(":repositories"))
+        implementation(project(":network"))
+        implementation(project(":database"))
     }
 }
 

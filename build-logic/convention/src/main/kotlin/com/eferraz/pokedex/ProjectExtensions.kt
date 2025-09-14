@@ -24,11 +24,13 @@ internal val VersionCatalog.bundles: CatalogDefinitions.Bundles
 internal val VersionCatalog.versions: CatalogDefinitions.Versions
     get() = CatalogDefinitions.Versions(this)
 
-internal fun Project.configureApplication(namespaceParam: String) {
+internal fun Project.configureApplication(namespaceParam: String, versionNameParam: String, versionCodeParam: Int) {
     extensions.configure<ApplicationExtension> {
         namespace = namespaceParam
         defaultConfig {
             applicationId = namespaceParam
+            versionName = versionNameParam
+            versionCode = versionCodeParam
         }
     }
 }
@@ -42,24 +44,22 @@ internal fun Project.configureLibrary(namespaceParam: String) {
     }
 }
 
-fun Project.library(scope: ProjectScope.() -> Unit) {
+fun Project.library(scope: ProjectLibraryScope.() -> Unit) {
 
-    val config = object : ProjectScope {
-        override var namespace: String = ""
-    }
+    with(ProjectLibraryScope) { scope() }
 
-    with(config) { scope() }
-
-    configureLibrary(config.namespace)
+    configureLibrary(
+        ProjectLibraryScope.namespace ?: throw IllegalStateException("Namespace is required")
+    )
 }
 
-fun Project.application(scope: ProjectScope.() -> Unit) {
+fun Project.application(scope: ProjectApplicationScope.() -> Unit) {
 
-    val config = object : ProjectScope {
-        override var namespace: String = ""
-    }
+    with(ProjectApplicationScope) { scope() }
 
-    with(config) { scope() }
-
-    configureApplication(config.namespace)
+    configureApplication(
+        ProjectApplicationScope.namespace ?: throw IllegalStateException("Namespace is required"),
+        ProjectApplicationScope.versionName ?: throw IllegalStateException("Version name is required"),
+        ProjectApplicationScope.versionCode ?: throw IllegalStateException("Version code is required")
+    )
 }

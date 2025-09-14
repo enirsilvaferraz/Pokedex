@@ -21,7 +21,7 @@ internal class KmpLibraryPlugin : AbstractKmpProjectPlugin() {
 
                 @Suppress("UnstableApiUsage")
                 androidLibrary {
-//                    namespace = "${project.getNamespace()}.${project.name}"
+                    // namespace = // Aplicado posteriormente
                     compileSdk = libs.versions.targetSdk
                     minSdk = libs.versions.minSdk
                 }

@@ -3,7 +3,6 @@ import com.eferraz.pokedex.bundles
 import com.eferraz.pokedex.libraries
 import com.eferraz.pokedex.libs
 import com.eferraz.pokedex.plugins
-import com.google.devtools.ksp.gradle.KspExtension
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.apply
@@ -19,12 +18,6 @@ internal class LibraryKoinPlugin : Plugin<Project> {
         with(target) {
 
             apply(plugin = libs.plugins.ksp)
-
-            extensions.configure<KspExtension> {
-                arg("KOIN_CONFIG_CHECK", "true")
-                arg("KOIN_LOG_TIMES", "true")
-                arg("KOIN_DEFAULT_MODULE", "false")
-            }
 
             extensions.configure<KotlinMultiplatformExtension> {
 
