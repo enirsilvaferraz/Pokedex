@@ -1,10 +1,10 @@
-import com.eferraz.pokedex.CatalogDefinitions.Libraries.ACTIVITY_COMPOSE
-import com.eferraz.pokedex.CatalogDefinitions.Plugins.COMPOSE_COMPILER
-import com.eferraz.pokedex.CatalogDefinitions.Plugins.COMPOSE_MULTIPLATFORM
-import com.eferraz.pokedex.CatalogDefinitions.Plugins.KOTLIN_MULTIPLATFORM
-import com.eferraz.pokedex.library
-import com.eferraz.pokedex.libs
-import com.eferraz.pokedex.plugin
+import com.eferraz.buildlogic.CatalogDefinitions.Libraries.ACTIVITY_COMPOSE
+import com.eferraz.buildlogic.CatalogDefinitions.Plugins.COMPOSE_COMPILER
+import com.eferraz.buildlogic.CatalogDefinitions.Plugins.COMPOSE_MULTIPLATFORM
+import com.eferraz.buildlogic.CatalogDefinitions.Plugins.KOTLIN_MULTIPLATFORM
+import com.eferraz.buildlogic.library
+import com.eferraz.buildlogic.libs
+import com.eferraz.buildlogic.plugin
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.apply

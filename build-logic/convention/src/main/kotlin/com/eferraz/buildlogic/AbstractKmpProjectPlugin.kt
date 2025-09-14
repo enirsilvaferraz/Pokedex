@@ -1,8 +1,8 @@
-package com.eferraz.pokedex
+package com.eferraz.buildlogic
 
-import com.eferraz.pokedex.CatalogDefinitions.Libraries.KOTLIN_STDLIB
-import com.eferraz.pokedex.CatalogDefinitions.Libraries.KOTLIN_TEST
-import com.eferraz.pokedex.CatalogDefinitions.Plugins.KOTLIN_MULTIPLATFORM
+import com.eferraz.buildlogic.CatalogDefinitions.Libraries.KOTLIN_STDLIB
+import com.eferraz.buildlogic.CatalogDefinitions.Libraries.KOTLIN_TEST
+import com.eferraz.buildlogic.CatalogDefinitions.Plugins.KOTLIN_MULTIPLATFORM
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.internal.extensions.stdlib.capitalized

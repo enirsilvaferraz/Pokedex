@@ -1,4 +1,4 @@
-import com.eferraz.pokedex.library
+import com.eferraz.buildlogic.library
 
 plugins {
     alias(libs.plugins.foundation.kmp.library)

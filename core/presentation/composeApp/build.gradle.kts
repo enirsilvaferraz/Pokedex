@@ -1,4 +1,4 @@
-import com.eferraz.pokedex.application
+import com.eferraz.buildlogic.application
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 
 plugins {

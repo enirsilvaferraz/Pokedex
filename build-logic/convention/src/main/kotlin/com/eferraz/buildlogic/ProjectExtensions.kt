@@ -1,4 +1,4 @@
-package com.eferraz.pokedex
+package com.eferraz.buildlogic
 
 import org.gradle.api.Project
 import org.gradle.api.artifacts.VersionCatalog

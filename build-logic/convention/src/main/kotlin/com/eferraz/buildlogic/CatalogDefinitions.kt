@@ -1,4 +1,4 @@
-package com.eferraz.pokedex
+package com.eferraz.buildlogic
 
 internal interface CatalogDefinitions {
 

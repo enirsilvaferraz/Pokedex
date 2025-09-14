@@ -1,4 +1,4 @@
-package com.eferraz.pokedex
+package com.eferraz.buildlogic
 
 import com.android.build.api.dsl.ApplicationExtension
 import org.gradle.api.Project

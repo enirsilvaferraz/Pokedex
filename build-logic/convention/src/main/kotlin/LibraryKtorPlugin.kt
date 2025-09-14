@@ -1,10 +1,10 @@
-import com.eferraz.pokedex.CatalogDefinitions.Bundles.KTOR_ANDROID
-import com.eferraz.pokedex.CatalogDefinitions.Bundles.KTOR_COMMON
-import com.eferraz.pokedex.CatalogDefinitions.Bundles.KTOR_IOS
-import com.eferraz.pokedex.CatalogDefinitions.Plugins.KOTLIN_SERIALIZATION
-import com.eferraz.pokedex.bundle
-import com.eferraz.pokedex.libs
-import com.eferraz.pokedex.plugin
+import com.eferraz.buildlogic.CatalogDefinitions.Bundles.KTOR_ANDROID
+import com.eferraz.buildlogic.CatalogDefinitions.Bundles.KTOR_COMMON
+import com.eferraz.buildlogic.CatalogDefinitions.Bundles.KTOR_IOS
+import com.eferraz.buildlogic.CatalogDefinitions.Plugins.KOTLIN_SERIALIZATION
+import com.eferraz.buildlogic.bundle
+import com.eferraz.buildlogic.libs
+import com.eferraz.buildlogic.plugin
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.apply
