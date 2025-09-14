@@ -1,5 +1,8 @@
 package com.eferraz.pokedex
 
+import com.eferraz.pokedex.CatalogDefinitions.Libraries.KOTLIN_STDLIB
+import com.eferraz.pokedex.CatalogDefinitions.Libraries.KOTLIN_TEST
+import com.eferraz.pokedex.CatalogDefinitions.Plugins.KOTLIN_MULTIPLATFORM
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.internal.extensions.stdlib.capitalized
@@ -14,7 +17,7 @@ internal abstract class AbstractKmpProjectPlugin : Plugin<Project> {
 
         with(target) {
 
-            apply(plugin = libs.plugins.kotlin_multiplatform)
+            apply(plugin = libs.plugin(KOTLIN_MULTIPLATFORM))
 
             extensions.configure<KotlinMultiplatformExtension> {
 
@@ -39,13 +42,13 @@ internal abstract class AbstractKmpProjectPlugin : Plugin<Project> {
 
                     commonMain {
                         dependencies {
-                            implementation(libs.libraries.kotlin_stdlib)
+                            implementation(libs.library(KOTLIN_STDLIB))
                         }
                     }
 
                     commonTest {
                         dependencies {
-                            implementation(libs.libraries.kotlin_test)
+                            implementation(libs.library(KOTLIN_TEST))
                         }
                     }
                 }

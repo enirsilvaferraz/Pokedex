@@ -1,6 +1,10 @@
-import com.eferraz.pokedex.bundles
+import com.eferraz.pokedex.CatalogDefinitions.Bundles.KTOR_ANDROID
+import com.eferraz.pokedex.CatalogDefinitions.Bundles.KTOR_COMMON
+import com.eferraz.pokedex.CatalogDefinitions.Bundles.KTOR_IOS
+import com.eferraz.pokedex.CatalogDefinitions.Plugins.KOTLIN_SERIALIZATION
+import com.eferraz.pokedex.bundle
 import com.eferraz.pokedex.libs
-import com.eferraz.pokedex.plugins
+import com.eferraz.pokedex.plugin
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.apply
@@ -14,7 +18,7 @@ internal class LibraryKtorPlugin : Plugin<Project> {
 
         with(target) {
 
-            apply(plugin = libs.plugins.kotlin_serialization)
+            apply(plugin = libs.plugin(KOTLIN_SERIALIZATION))
 
             extensions.configure<KotlinMultiplatformExtension> {
 
@@ -22,19 +26,19 @@ internal class LibraryKtorPlugin : Plugin<Project> {
 
                     commonMain {
                         dependencies {
-                            implementation(libs.bundles.ktor_common)
+                            implementation(libs.bundle(KTOR_COMMON))
                         }
                     }
 
                     androidMain {
                         dependencies {
-                            implementation(libs.bundles.ktor_android)
+                            implementation(libs.bundle(KTOR_ANDROID))
                         }
                     }
 
                     iosMain {
                         dependencies {
-                            implementation(libs.bundles.ktor_ios)
+                            implementation(libs.bundle(KTOR_IOS))
                         }
                     }
                 }

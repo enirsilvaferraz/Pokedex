@@ -1,5 +1,10 @@
+import com.eferraz.pokedex.CatalogDefinitions.Libraries.ACTIVITY_COMPOSE
+import com.eferraz.pokedex.CatalogDefinitions.Plugins.COMPOSE_COMPILER
+import com.eferraz.pokedex.CatalogDefinitions.Plugins.COMPOSE_MULTIPLATFORM
+import com.eferraz.pokedex.CatalogDefinitions.Plugins.KOTLIN_MULTIPLATFORM
+import com.eferraz.pokedex.library
 import com.eferraz.pokedex.libs
-import com.eferraz.pokedex.plugins
+import com.eferraz.pokedex.plugin
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.apply
@@ -16,9 +21,9 @@ internal class LibraryComposePlugin : Plugin<Project> {
 
         with(target) {
 
-            apply(plugin = libs.plugins.kotlin_multiplatform)
-            apply(plugin = libs.plugins.compose_multiplatform)
-            apply(plugin = libs.plugins.compose_compiler)
+            apply(plugin = libs.plugin(KOTLIN_MULTIPLATFORM))
+            apply(plugin = libs.plugin(COMPOSE_MULTIPLATFORM))
+            apply(plugin = libs.plugin(COMPOSE_COMPILER))
 
             val compose = extensions.getByType<ComposeExtension>().dependencies
 
@@ -42,7 +47,7 @@ internal class LibraryComposePlugin : Plugin<Project> {
                     }
 
                     androidMain.dependencies {
-                        implementation(libs.findLibrary("androidx-activity-compose").get())
+                        implementation(libs.library(ACTIVITY_COMPOSE))
                     }
                 }
             }

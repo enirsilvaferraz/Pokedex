@@ -1,7 +1,11 @@
 import androidx.room.gradle.RoomExtension
-import com.eferraz.pokedex.bundles
+import com.eferraz.pokedex.CatalogDefinitions.Bundles.ROOM_COMMON
+import com.eferraz.pokedex.CatalogDefinitions.Bundles.ROOM_COMMON_COMPILER
+import com.eferraz.pokedex.CatalogDefinitions.Plugins.KSP
+import com.eferraz.pokedex.CatalogDefinitions.Plugins.ROOM
+import com.eferraz.pokedex.bundle
 import com.eferraz.pokedex.libs
-import com.eferraz.pokedex.plugins
+import com.eferraz.pokedex.plugin
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.apply
@@ -16,14 +20,14 @@ internal class LibraryRoomPlugin : Plugin<Project> {
 
         with(target) {
 
-            apply(plugin = libs.plugins.ksp)
-            apply(plugin = libs.plugins.room)
+            apply(plugin = libs.plugin(KSP))
+            apply(plugin = libs.plugin(ROOM))
 
             extensions.configure<KotlinMultiplatformExtension> {
                 sourceSets {
                     commonMain {
                         dependencies {
-                            implementation(libs.bundles.room_common)
+                            implementation(libs.bundle(ROOM_COMMON))
                         }
                     }
                 }
@@ -36,7 +40,7 @@ internal class LibraryRoomPlugin : Plugin<Project> {
                     "kspIosX64",
                     "kspIosArm64"
                 ).forEach {
-                    add(it, libs.bundles.room_common_compiler)
+                    add(it, libs.bundle(ROOM_COMMON_COMPILER))
                 }
             }
 

@@ -1,57 +1,45 @@
 package com.eferraz.pokedex
 
-import org.gradle.api.artifacts.VersionCatalog
-
 internal interface CatalogDefinitions {
 
-    class Plugins(libs: VersionCatalog) {
-
-        val android_application = libs.find("android.application")
-        val compose_compiler = libs.find("compose-compiler")
-        val compose_multiplatform = libs.find("compose-multiplatform")
-        val ksp = libs.find("ksp")
-        val kotlin_multiplatform = libs.find("kotlin-multiplatform")
-        val kotlin_multiplatform_library = libs.find("android-kotlin-multiplatform-library")
-        val room = libs.find("room")
-        val kotlin_serialization = libs.find("kotlin-serialization")
-
-        private fun VersionCatalog.find(alias: String): String = findPlugin(alias).get().get().pluginId
+    enum class Plugins(val alias: String) {
+        ANDROID_APPLICATION("android.application"),
+        COMPOSE_COMPILER("compose-compiler"),
+        COMPOSE_MULTIPLATFORM("compose-multiplatform"),
+        KSP("ksp"),
+        KOTLIN_MULTIPLATFORM("kotlin-multiplatform"),
+        KOTLIN_MULTIPLATFORM_LIBRARY("android-kotlin-multiplatform-library"),
+        ROOM("room"),
+        KOTLIN_SERIALIZATION("kotlin-serialization")
     }
 
-    class Libraries(libs: VersionCatalog) {
-
-        val kotlin_stdlib = libs.find("kotlin-stdlib")
-        val kotlin_test = libs.find("kotlin-test")
-        val koin_bom = libs.find("koin-bom")
-
-        private fun VersionCatalog.find(alias: String) = findLibrary(alias).get()
+    enum class Libraries(val alias: String) {
+        KOTLIN_STDLIB("kotlin-stdlib"),
+        KOTLIN_TEST("kotlin-test"),
+        KOIN_BOM("koin-bom"),
+        ACTIVITY_COMPOSE("androidx-activity-compose")
     }
 
-    class Versions(libs: VersionCatalog) {
-
-        val compileSdk = libs.find("android.compileSdk")
-        val minSdk = libs.find("android.minSdk")
-        val targetSdk = libs.find("android.targetSdk")
-
-        private fun VersionCatalog.find(alias: String) = findVersion(alias).get().requiredVersion.toInt()
+    enum class Versions(val alias: String) {
+        COMPILE_SDK("android.compileSdk"),
+        MIN_SDK("android.minSdk"),
+        TARGET_SDK("android.targetSdk"),
     }
 
-    class Bundles(libs: VersionCatalog) {
+    enum class Bundles(val alias: String) {
 
-        val ktor_common = libs.find("ktor-common")
-        val ktor_android = libs.find("ktor-android")
-        val ktor_ios = libs.find("ktor-ios")
+        KTOR_COMMON("ktor-common"),
+        KTOR_ANDROID("ktor-android"),
+        KTOR_IOS("ktor-ios"),
 
-        val koin_common = libs.find("koin-common")
-        val koin_common_compose = libs.find("koin-common-compose")
-        val koin_common_compiler = libs.find("koin-common-compiler")
-        val koin_common_test = libs.find("koin-common-test")
+        KOIN_COMMON("koin-common"),
+        KOIN_COMMON_COMPOSE("koin-common-compose"),
+        KOIN_COMMON_COMPILER("koin-common-compiler"),
+        KOIN_COMMON_TEST("koin-common-test"),
 
-        val room_common = libs.find("room-common")
-        val room_common_compiler = libs.find("room-common-compiler")
+        ROOM_COMMON("room-common"),
+        ROOM_COMMON_COMPILER("room-common-compiler"),
 
-        val navigation_common = libs.find("navigation-common")
-
-        private fun VersionCatalog.find(alias: String) = findBundle(alias).get()
+        NAVIGATION_COMMON("navigation-common")
     }
 }

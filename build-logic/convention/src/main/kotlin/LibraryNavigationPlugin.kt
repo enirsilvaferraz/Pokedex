@@ -1,6 +1,8 @@
-import com.eferraz.pokedex.bundles
+import com.eferraz.pokedex.CatalogDefinitions.Bundles.NAVIGATION_COMMON
+import com.eferraz.pokedex.CatalogDefinitions.Plugins.KOTLIN_SERIALIZATION
+import com.eferraz.pokedex.bundle
 import com.eferraz.pokedex.libs
-import com.eferraz.pokedex.plugins
+import com.eferraz.pokedex.plugin
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.apply
@@ -14,13 +16,13 @@ internal class LibraryNavigationPlugin : Plugin<Project> {
 
         with(target) {
 
-            apply(plugin = libs.plugins.kotlin_serialization)
+            apply(plugin = libs.plugin(KOTLIN_SERIALIZATION))
 
             extensions.configure<KotlinMultiplatformExtension> {
                 sourceSets {
                     commonMain {
                         dependencies {
-                            implementation(libs.bundles.navigation_common)
+                            implementation(libs.bundle(NAVIGATION_COMMON))
                         }
                     }
                 }
