@@ -1,9 +1,14 @@
+import com.eferraz.pokedex.library
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 
 plugins {
     alias(libs.plugins.foundation.kmp.library)
     alias(libs.plugins.foundation.koin)
     alias(libs.plugins.foundation.ktor)
+}
+
+library {
+    namespace = "com.eferraz.pokedex"
 }
 
 kotlin {

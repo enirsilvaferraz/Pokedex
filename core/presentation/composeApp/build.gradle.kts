@@ -1,8 +1,14 @@
+import com.eferraz.pokedex.application
+
 plugins {
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.foundation.compose)
     alias(libs.plugins.foundation.kmp.application)
     alias(libs.plugins.foundation.koin)
+}
+
+application {
+    namespace = "com.eferraz.pokedex"
 }
 
 kotlin {

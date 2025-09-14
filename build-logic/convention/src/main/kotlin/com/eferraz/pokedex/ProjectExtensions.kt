@@ -1,9 +1,13 @@
 package com.eferraz.pokedex
 
+import com.android.build.api.dsl.ApplicationExtension
+import com.android.build.api.dsl.androidLibrary
 import org.gradle.api.Project
 import org.gradle.api.artifacts.VersionCatalog
 import org.gradle.api.artifacts.VersionCatalogsExtension
+import org.gradle.kotlin.dsl.configure
 import org.gradle.kotlin.dsl.getByType
+import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
 
 internal val Project.libs
     get(): VersionCatalog = extensions.getByType<VersionCatalogsExtension>().named("libs")
@@ -19,3 +23,43 @@ internal val VersionCatalog.bundles: CatalogDefinitions.Bundles
 
 internal val VersionCatalog.versions: CatalogDefinitions.Versions
     get() = CatalogDefinitions.Versions(this)
+
+internal fun Project.configureApplication(namespaceParam: String) {
+    extensions.configure<ApplicationExtension> {
+        namespace = namespaceParam
+        defaultConfig {
+            applicationId = namespaceParam
+        }
+    }
+}
+
+internal fun Project.configureLibrary(namespaceParam: String) {
+    extensions.configure<KotlinMultiplatformExtension> {
+        @Suppress("UnstableApiUsage")
+        androidLibrary {
+            namespace = "${namespaceParam}.${project.name}"
+        }
+    }
+}
+
+fun Project.library(scope: ProjectScope.() -> Unit) {
+
+    val config = object : ProjectScope {
+        override var namespace: String = ""
+    }
+
+    with(config) { scope() }
+
+    configureLibrary(config.namespace)
+}
+
+fun Project.application(scope: ProjectScope.() -> Unit) {
+
+    val config = object : ProjectScope {
+        override var namespace: String = ""
+    }
+
+    with(config) { scope() }
+
+    configureApplication(config.namespace)
+}

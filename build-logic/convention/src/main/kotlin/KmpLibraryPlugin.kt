@@ -1,6 +1,5 @@
 import com.android.build.api.dsl.androidLibrary
 import com.eferraz.pokedex.AbstractKmpProjectPlugin
-import com.eferraz.pokedex.ProjectConstants.NAMESPACE
 import com.eferraz.pokedex.libs
 import com.eferraz.pokedex.plugins
 import com.eferraz.pokedex.versions
@@ -22,7 +21,7 @@ internal class KmpLibraryPlugin : AbstractKmpProjectPlugin() {
 
                 @Suppress("UnstableApiUsage")
                 androidLibrary {
-                    namespace = "$NAMESPACE.${project.name}"
+//                    namespace = "${project.getNamespace()}.${project.name}"
                     compileSdk = libs.versions.targetSdk
                     minSdk = libs.versions.minSdk
                 }

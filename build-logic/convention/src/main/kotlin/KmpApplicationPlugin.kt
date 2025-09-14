@@ -1,6 +1,5 @@
 import com.android.build.api.dsl.ApplicationExtension
 import com.eferraz.pokedex.AbstractKmpProjectPlugin
-import com.eferraz.pokedex.ProjectConstants.NAMESPACE
 import com.eferraz.pokedex.libs
 import com.eferraz.pokedex.plugins
 import com.eferraz.pokedex.versions
@@ -32,11 +31,11 @@ internal class KmpApplicationPlugin : AbstractKmpProjectPlugin() {
 
             extensions.configure<ApplicationExtension> {
 
-                namespace = NAMESPACE
+//                namespace = // aplicado posteriomente com a chamada do metodo setNamespace
                 compileSdk = libs.versions.compileSdk
 
                 defaultConfig {
-                    applicationId = NAMESPACE
+//                    applicationId = // aplicado posteriomente com a chamada do metodo setNamespace
                     minSdk = libs.versions.minSdk
                     targetSdk = libs.versions.targetSdk
                     versionCode = 1
