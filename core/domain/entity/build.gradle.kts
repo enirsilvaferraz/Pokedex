@@ -1,10 +1,10 @@
-import com.eferraz.buildlogic.androidLibrary
+import com.eferraz.buildlogic.scopes.library
 
 plugins {
     alias(libs.plugins.foundation.project.library)
     alias(libs.plugins.foundation.library.koin)
 }
 
-androidLibrary {
+library {
     namespace = "com.eferraz.pokedex"
 }

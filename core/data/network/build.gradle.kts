@@ -1,4 +1,4 @@
-import com.eferraz.buildlogic.androidLibrary
+import com.eferraz.buildlogic.scopes.library
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 
 plugins {
@@ -7,7 +7,7 @@ plugins {
     alias(libs.plugins.foundation.library.ktor)
 }
 
-androidLibrary {
+library {
     namespace = "com.eferraz.pokedex"
 }
 
@@ -15,7 +15,7 @@ kotlin {
 
     @OptIn(ExperimentalKotlinGradlePluginApi::class)
     dependencies {
-        implementation(project(":entity"))
-        implementation(project(":repositories"))
+        implementation(projects.entity)
+        implementation(projects.repositories)
     }
 }

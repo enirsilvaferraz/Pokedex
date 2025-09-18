@@ -1,5 +1,4 @@
-import com.eferraz.buildlogic.androidApplication
-import org.jetbrains.compose.desktop.application.dsl.TargetFormat
+import com.eferraz.buildlogic.scopes.application
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 
 plugins {
@@ -9,22 +8,10 @@ plugins {
     alias(libs.plugins.foundation.library.navigation)
 }
 
-androidApplication {
+application {
     namespace = "com.eferraz.pokedex"
     versionCode = 1
-    versionName = "1.0"
-}
-
-compose.desktop {
-    application {
-        mainClass = "com.eferraz.pokedex.MainKt"
-
-        nativeDistributions {
-            targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb, TargetFormat.Exe)
-            packageName = "com.eferraz.pokedex"
-            packageVersion = "1.0.0"
-        }
-    }
+    versionName = "1.0.0"
 }
 
 kotlin {
@@ -41,11 +28,11 @@ kotlin {
         implementation(libs.paging.common)
         implementation(libs.paging.compose.common)
 
-        implementation(project(":entity"))
-        implementation(project(":usecases"))
-        implementation(project(":repositories"))
-        implementation(project(":network"))
-        implementation(project(":database"))
+        implementation(projects.entity)
+        implementation(projects.usecases)
+        implementation(projects.repositories)
+        implementation(projects.network)
+        implementation(projects.database)
     }
 }
 

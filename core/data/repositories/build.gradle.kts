@@ -1,4 +1,4 @@
-import com.eferraz.buildlogic.androidLibrary
+import com.eferraz.buildlogic.scopes.library
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 
 plugins {
@@ -6,7 +6,7 @@ plugins {
     alias(libs.plugins.foundation.library.koin)
 }
 
-androidLibrary {
+library {
     namespace = "com.eferraz.pokedex"
 }
 
