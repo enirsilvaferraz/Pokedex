@@ -37,7 +37,7 @@ internal fun CardComponent(
 @Composable
 private fun CardComponentPreview() {
     PokedexTheme {
-        Surface(color = Color.Red) {
+        Surface(color = Color.Gray) {
             CardComponent(modifier = Modifier.padding(24.dp)) {
                 Box(Modifier.height(200.dp).fillMaxWidth().background(Color.LightGray))
             }

@@ -1,12 +1,12 @@
-import com.eferraz.buildlogic.library
+import com.eferraz.buildlogic.androidLibrary
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 
 plugins {
-    alias(libs.plugins.foundation.kmp.library)
-    alias(libs.plugins.foundation.koin)
+    alias(libs.plugins.foundation.project.library)
+    alias(libs.plugins.foundation.library.koin)
 }
 
-library {
+androidLibrary {
     namespace = "com.eferraz.pokedex"
 }
 
@@ -14,8 +14,9 @@ kotlin {
 
     @OptIn(ExperimentalKotlinGradlePluginApi::class)
     dependencies {
-        implementation(project(":entity"))
-        implementation(project(":usecases"))
+        implementation(projects.entity)
+        implementation(projects.usecases)
+
         implementation(libs.kotlinx.coroutines)
         implementation(libs.paging.common)
     }

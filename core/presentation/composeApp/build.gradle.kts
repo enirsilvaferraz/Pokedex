@@ -1,14 +1,14 @@
-import com.eferraz.buildlogic.application
+import com.eferraz.buildlogic.androidApplication
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 
 plugins {
-    alias(libs.plugins.foundation.compose)
-    alias(libs.plugins.foundation.kmp.application)
-    alias(libs.plugins.foundation.koin)
-    alias(libs.plugins.foundation.navigation)
+    alias(libs.plugins.foundation.project.application)
+    alias(libs.plugins.foundation.library.compose)
+    alias(libs.plugins.foundation.library.koin)
+    alias(libs.plugins.foundation.library.navigation)
 }
 
-application {
+androidApplication {
     namespace = "com.eferraz.pokedex"
     versionCode = 1
     versionName = "1.0"
