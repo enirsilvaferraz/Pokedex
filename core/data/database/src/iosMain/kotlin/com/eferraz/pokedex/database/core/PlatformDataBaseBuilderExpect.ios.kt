@@ -7,11 +7,10 @@ import platform.Foundation.NSDocumentDirectory
 import platform.Foundation.NSFileManager
 import platform.Foundation.NSUserDomainMask
 
-@Suppress("EXPECT_ACTUAL_CLASSIFIERS_ARE_IN_BETA_WARNING")
 internal actual object PlatformDataBaseBuilder : DataBaseBuilder {
 
     actual override fun buildPlatform(): RoomDatabase.Builder<AppDatabase> {
-        val dbFilePath = documentDirectory() + "/pokedex.db"
+        val dbFilePath = documentDirectory() + "/" + databaseName()
         return Room.databaseBuilder<AppDatabase>(name = dbFilePath)
     }
 
