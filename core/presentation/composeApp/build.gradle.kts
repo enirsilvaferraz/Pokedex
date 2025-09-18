@@ -1,4 +1,5 @@
 import com.eferraz.buildlogic.androidApplication
+import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 
 plugins {
@@ -12,6 +13,18 @@ androidApplication {
     namespace = "com.eferraz.pokedex"
     versionCode = 1
     versionName = "1.0"
+}
+
+compose.desktop {
+    application {
+        mainClass = "com.eferraz.pokedex.MainKt"
+
+        nativeDistributions {
+            targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb, TargetFormat.Exe)
+            packageName = "com.eferraz.pokedex"
+            packageVersion = "1.0.0"
+        }
+    }
 }
 
 kotlin {

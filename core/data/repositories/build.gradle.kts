@@ -17,7 +17,7 @@ kotlin {
         implementation(projects.entity)
         implementation(projects.usecases)
 
-        implementation(libs.kotlinx.coroutines)
+        implementation(libs.kotlinx.coroutines.core)
         implementation(libs.paging.common)
     }
 }
