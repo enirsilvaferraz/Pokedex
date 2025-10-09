@@ -11,6 +11,7 @@ import org.koin.ksp.generated.module
 internal object AppDI {
 
     operator fun invoke() = KoinConfiguration {
+
         modules(
             DatabaseModule().module,
             NetworkModule().module,
@@ -19,5 +20,7 @@ internal object AppDI {
             RepositoryModule().module,
             ComposeModule().module,
         )
+
+        printLogger()
     }
 }

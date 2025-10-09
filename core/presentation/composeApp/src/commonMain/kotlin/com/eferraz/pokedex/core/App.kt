@@ -28,7 +28,7 @@ public fun App() {
             }
 
             composable<PokemonDetailRouting> {
-                PokemonRoute(id = (it.toRoute() as PokemonDetailRouting).id) {
+                PokemonRoute(id = it.toRoute<PokemonDetailRouting>().id) {
                     navController.popBackStack()
                 }
             }
