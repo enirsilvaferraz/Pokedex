@@ -1,10 +1,9 @@
-import com.eferraz.buildlogic.scopes.library
-
 plugins {
-    alias(libs.plugins.foundation.project.library)
+    alias(libs.plugins.foundation.project)
     alias(libs.plugins.foundation.library.koin)
 }
 
-library {
-    namespace = "com.eferraz.pokedex"
+kotlin.android {
+    namespace = "com.eferraz.entity"
+    compileSdk = libs.versions.android.compileSdk.get().toInt()
 }

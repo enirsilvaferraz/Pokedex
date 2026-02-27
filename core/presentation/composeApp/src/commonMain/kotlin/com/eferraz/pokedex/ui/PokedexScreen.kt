@@ -43,9 +43,9 @@ import com.eferraz.pokedex.helpers.AppScaffold
 import com.eferraz.pokedex.helpers.formatedId
 import com.eferraz.pokedex.helpers.formatedName
 import com.eferraz.pokedex.ui.detail.vos.PokemonDetailVo
-import org.jetbrains.compose.ui.tooling.preview.Preview
-import org.jetbrains.compose.ui.tooling.preview.PreviewParameter
-import org.jetbrains.compose.ui.tooling.preview.PreviewParameterProvider
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewParameter
+import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import org.koin.compose.viewmodel.koinViewModel
 
 @Composable

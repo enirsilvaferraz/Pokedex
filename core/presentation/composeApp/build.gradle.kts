@@ -1,17 +1,14 @@
-import com.eferraz.buildlogic.scopes.application
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 
 plugins {
-    alias(libs.plugins.foundation.project.application)
-    alias(libs.plugins.foundation.library.compose)
+    alias(libs.plugins.foundation.project)
+    alias(libs.plugins.foundation.library.comp)
     alias(libs.plugins.foundation.library.koin)
-    alias(libs.plugins.foundation.library.navigation)
 }
 
-application {
+kotlin.android {
     namespace = "com.eferraz.pokedex"
-    versionCode = 1
-    versionName = "1.0.0"
+    compileSdk = libs.versions.android.compileSdk.get().toInt()
 }
 
 kotlin {
@@ -37,5 +34,5 @@ kotlin {
 }
 
 dependencies {
-    debugImplementation(compose.uiTooling)
+    "androidRuntimeClasspath"(libs.androidx.ui.tooling)
 }
