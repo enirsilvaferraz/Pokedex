@@ -1,6 +1,7 @@
-package com.eferraz.pokedex.di
+package com.eferraz.pokedex
 
 import com.eferraz.pokedex.database.di.DatabaseModule
+import com.eferraz.pokedex.di.ComposeModule
 import com.eferraz.pokedex.entity.di.EntityModule
 import com.eferraz.pokedex.network.di.NetworkModule
 import com.eferraz.pokedex.repositories.di.RepositoryModule
@@ -18,5 +19,5 @@ import org.koin.core.annotation.KoinApplication
         ComposeModule::class
     ]
 )
-@ComponentScan("com.eferraz.investments")
+@ComponentScan("com.eferraz.pokedex")
 internal class MyKoinApp

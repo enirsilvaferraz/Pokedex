@@ -37,20 +37,33 @@ dependencyResolutionManagement {
     }
 }
 
+plugins {
+    id("org.gradle.toolchains.foojay-resolver-convention") version "1.0.0"
+}
+
+include(":umbrellaApp")
+project(":umbrellaApp").projectDir = File(settingsDir, "core/apps/umbrellaApp")
+
+include(":androidApp")
+project(":androidApp").projectDir = File(settingsDir, "core/apps/androidApp")
+
+include(":desktopApp")
+project(":desktopApp").projectDir = File(settingsDir, "core/apps/desktopApp")
+
 include(":composeApp")
-project(":composeApp").projectDir = File(settingsDir,"core/presentation/composeApp")
+project(":composeApp").projectDir = File(settingsDir, "core/presentation/composeApp")
 
 include(":entity")
-project(":entity").projectDir = File(settingsDir,"core/domain/entity")
+project(":entity").projectDir = File(settingsDir, "core/domain/entity")
 
 include(":usecases")
-project(":usecases").projectDir = File(settingsDir,"core/domain/usecases")
+project(":usecases").projectDir = File(settingsDir, "core/domain/usecases")
 
 include(":repositories")
-project(":repositories").projectDir = File(settingsDir,"core/data/repositories")
+project(":repositories").projectDir = File(settingsDir, "core/data/repositories")
 
 include(":network")
-project(":network").projectDir = File(settingsDir,"core/data/network")
+project(":network").projectDir = File(settingsDir, "core/data/network")
 
 include(":database")
-project(":database").projectDir = File(settingsDir,"core/data/database")
+project(":database").projectDir = File(settingsDir, "core/data/database")

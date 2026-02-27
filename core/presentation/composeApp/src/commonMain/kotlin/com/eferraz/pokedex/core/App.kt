@@ -5,15 +5,11 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
-import com.eferraz.pokedex.di.MyKoinApp
 import com.eferraz.pokedex.ui.PokedexRoute
 import com.eferraz.pokedex.ui.detail.PokemonRoute
-import org.koin.plugin.module.dsl.startKoin
 
 @Composable
-public fun App() {
-
-    startKoin<MyKoinApp>()
+public fun InternalApp() {
 
     val navController = rememberNavController()
 
