@@ -9,6 +9,7 @@ plugins {
 kotlin.android {
     namespace = "com.eferraz.pokedex"
     compileSdk = libs.versions.android.compileSdk.get().toInt()
+    androidResources.enable = true
 }
 
 kotlin {
