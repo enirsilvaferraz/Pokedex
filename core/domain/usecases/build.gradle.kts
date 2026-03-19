@@ -26,4 +26,10 @@ kotlin {
 
         implementation(libs.paging.common)
     }
+
+    sourceSets {
+        jvmTest.dependencies {
+            implementation(libs.androidx.paging.testing)
+        }
+    }
 }

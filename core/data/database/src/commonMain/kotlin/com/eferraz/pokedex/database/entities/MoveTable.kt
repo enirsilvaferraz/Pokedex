@@ -3,7 +3,7 @@ package com.eferraz.pokedex.database.entities
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.eferraz.pokedex.entity.MoveVO
+import com.eferraz.pokedex.entity.Move
 
 @Entity(tableName = "moves")
 internal data class MoveTable(
@@ -16,13 +16,13 @@ internal data class MoveTable(
     val name: String,
 ) {
 
-    fun toModel(): MoveVO = MoveVO(
+    fun toModel(): Move = Move(
         id = id,
         name = name
     )
 
     companion object {
-        internal fun MoveVO.toTable() = MoveTable(
+        internal fun Move.toTable() = MoveTable(
             id = id,
             name = name
         )

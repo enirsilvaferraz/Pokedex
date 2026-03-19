@@ -3,10 +3,8 @@ package com.eferraz.pokedex.ui.detail.vos
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.capitalize
 import androidx.compose.ui.text.intl.Locale
-import com.eferraz.pokedex.entity.MoveVO
-import com.eferraz.pokedex.entity.PokemonCompleteVO
-import com.eferraz.pokedex.entity.PokemonVO
-import com.eferraz.pokedex.entity.TypeVO
+import com.eferraz.pokedex.entity.PokemonComplete
+import com.eferraz.pokedex.entity.BasePokemon
 import com.eferraz.pokedex.helpers.formatDecimal
 import org.jetbrains.compose.resources.StringResource
 import pokedex.features.composeapp.generated.resources.Res
@@ -41,7 +39,7 @@ internal data class PokemonDetailVo(
     val moves: List<Move>,
 ) {
 
-    constructor(model: PokemonCompleteVO) : this(
+    constructor(model: PokemonComplete) : this(
         background = Background(model),
         header = Header(model),
         types = model.types().map { Type(it) },
@@ -78,7 +76,7 @@ internal data class PokemonDetailVo(
     value class Background(
         val color: Color,
     ) {
-        constructor(model: PokemonVO) : this(
+        constructor(model: BasePokemon) : this(
             color = when (model.type1.name.lowercase()) {
                 "normal" -> Color(0xFFA8A77A)    // Normal - Grayish Beige
                 "fire" -> Color(0xFFEE8130)      // Fire - Orange-Red
@@ -109,7 +107,7 @@ internal data class PokemonDetailVo(
         val id: String,
         val name: String,
     ) {
-        constructor(model: PokemonVO) : this(
+        constructor(model: BasePokemon) : this(
             id = model.id.formatID(),
             name = model.name.capitalize()
         )
@@ -119,7 +117,7 @@ internal data class PokemonDetailVo(
     value class Type(
         val name: String,
     ) {
-        constructor(model: TypeVO) : this(
+        constructor(model: com.eferraz.pokedex.entity.Type) : this(
             name = model.name.capitalize()
         )
     }
@@ -128,7 +126,7 @@ internal data class PokemonDetailVo(
         val url: String,
         val contentDescription: String,
     ) {
-        constructor(model: PokemonVO) : this(
+        constructor(model: BasePokemon) : this(
             url = model.image,
             contentDescription = model.name
         )
@@ -157,7 +155,7 @@ internal data class PokemonDetailVo(
         val id: String,
         val name: String,
     ) {
-        constructor(model: MoveVO) : this(
+        constructor(model: com.eferraz.pokedex.entity.Move) : this(
             id = model.id.formatID(),
             name = model.name.capitalize()
         )

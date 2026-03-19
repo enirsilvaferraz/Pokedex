@@ -6,7 +6,7 @@ import androidx.room.Relation
 import com.eferraz.pokedex.database.entities.AbilityTable
 import com.eferraz.pokedex.database.entities.AboutAbilitiesCrossRef
 import com.eferraz.pokedex.database.entities.AboutTable
-import com.eferraz.pokedex.entity.AboutVO
+import com.eferraz.pokedex.entity.About
 
 internal data class AboutWithAbilities(
 
@@ -26,7 +26,7 @@ internal data class AboutWithAbilities(
     val abilities: List<AbilityTable>,
 ) {
 
-    fun toModel() = AboutVO(
+    fun toModel() = About(
         id = about.id,
         description = about.description,
         species = about.species,

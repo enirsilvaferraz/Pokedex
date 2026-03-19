@@ -19,7 +19,7 @@ import com.eferraz.pokedex.database.entities.StatsTable.Companion.toTable
 import com.eferraz.pokedex.database.entities.TypeTable
 import com.eferraz.pokedex.database.entities.TypeTable.Companion.toModel
 import com.eferraz.pokedex.database.entities.TypeTable.Companion.toTable
-import com.eferraz.pokedex.entity.PokemonCompleteVO
+import com.eferraz.pokedex.entity.PokemonComplete
 
 internal data class PokemonComplete(
 
@@ -67,7 +67,7 @@ internal data class PokemonComplete(
 ) {
 
     companion object {
-        fun PokemonCompleteVO.toTable2() = PokemonComplete(
+        fun PokemonComplete.toTable2() = PokemonComplete(
             pokemon = toTable(),
             type1 = type1.toTable(),
             type2 = type2?.toTable(),
@@ -78,7 +78,7 @@ internal data class PokemonComplete(
         )
     }
 
-    fun toModel(): PokemonCompleteVO = PokemonCompleteVO(
+    fun toModel(): PokemonComplete = PokemonComplete(
         id = pokemon.id,
         name = pokemon.name,
         image = pokemon.image,

@@ -4,7 +4,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.Index
-import com.eferraz.pokedex.entity.BreedingVO
+import com.eferraz.pokedex.entity.Breeding
 
 @Entity(
     tableName = "breeding_egg_groups",
@@ -39,7 +39,7 @@ internal data class BreedingEggGroupCrossRef(
 ) {
 
     companion object {
-        internal fun BreedingVO.toCrossRef() = this.eggGroups.map {
+        internal fun Breeding.toCrossRef() = this.eggGroups.map {
             BreedingEggGroupCrossRef(
                 breedingId = this.id,
                 eggGroupId = it.id

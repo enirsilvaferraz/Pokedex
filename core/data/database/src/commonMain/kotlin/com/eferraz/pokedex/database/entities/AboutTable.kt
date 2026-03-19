@@ -3,7 +3,7 @@ package com.eferraz.pokedex.database.entities
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.eferraz.pokedex.entity.AboutVO
+import com.eferraz.pokedex.entity.About
 
 @Entity(tableName = "about")
 internal data class AboutTable(
@@ -29,7 +29,7 @@ internal data class AboutTable(
 ) {
 
     companion object {
-        internal fun AboutVO.toTable() = AboutTable(
+        internal fun About.toTable() = AboutTable(
             id = id,
             description = description,
             species = species,

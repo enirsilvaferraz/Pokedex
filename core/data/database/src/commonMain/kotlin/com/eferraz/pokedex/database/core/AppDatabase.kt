@@ -41,9 +41,6 @@ import com.eferraz.pokedex.database.views.PokemonLightView
         StatsTable::class,
         TypeTable::class
     ],
-//    views = [
-//        PokemonLightView::class
-//    ],
     version = 2
 )
 @ConstructedBy(AppDatabaseConstructor::class)

@@ -25,7 +25,7 @@ import com.eferraz.pokedex.database.entities.PokemonMovesCrossRef.Companion.toCr
 import com.eferraz.pokedex.database.entities.PokemonTable.Companion.toTable
 import com.eferraz.pokedex.database.entities.StatsTable.Companion.toTable
 import com.eferraz.pokedex.database.entities.TypeTable.Companion.toTable
-import com.eferraz.pokedex.entity.PokemonCompleteVO
+import com.eferraz.pokedex.entity.PokemonComplete
 import org.koin.core.annotation.Factory
 
 @Factory([PokemonDataSourceDatabase::class])
@@ -45,12 +45,12 @@ internal class PokemonDataSourceDB(
 ) : PokemonDataSourceDatabase {
 
     override suspend fun getComplete(id: Int) =
-        pokemonDao.getComplete(id)?.toModel()
+        pokemonDao.getCompleteData(id)?.toModel()
 
     override suspend fun getLight(id: Int) =
-        pokemonDao.getLight(id)?.toModel()
+        pokemonDao.getLightData(id)?.toModel()
 
-    override suspend fun insert(entity: PokemonCompleteVO) {
+    override suspend fun insert(entity: PokemonComplete) {
 
         room.useWriterConnection { transactor ->
 

@@ -3,7 +3,7 @@ package com.eferraz.pokedex.database.entities
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.eferraz.pokedex.entity.StatsVO
+import com.eferraz.pokedex.entity.Stats
 
 @Entity(tableName = "stats")
 internal data class StatsTable(
@@ -31,7 +31,7 @@ internal data class StatsTable(
     val speed: Int
 ) {
 
-    fun toModel(): StatsVO = StatsVO(
+    fun toModel(): Stats = Stats(
         id = id,
         hp = hp,
         attack = attack,
@@ -42,7 +42,7 @@ internal data class StatsTable(
     )
 
     companion object {
-        internal fun StatsVO.toTable() = StatsTable(
+        internal fun Stats.toTable() = StatsTable(
             id = id,
             hp = hp,
             attack = attack,

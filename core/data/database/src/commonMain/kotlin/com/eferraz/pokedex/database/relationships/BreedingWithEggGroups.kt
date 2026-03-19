@@ -6,7 +6,7 @@ import androidx.room.Relation
 import com.eferraz.pokedex.database.entities.BreedingEggGroupCrossRef
 import com.eferraz.pokedex.database.entities.BreedingTable
 import com.eferraz.pokedex.database.entities.EggGroupTable
-import com.eferraz.pokedex.entity.BreedingVO
+import com.eferraz.pokedex.entity.Breeding
 
 internal data class BreedingWithEggGroups(
 
@@ -20,7 +20,7 @@ internal data class BreedingWithEggGroups(
     )
     val eggGroups: List<EggGroupTable>
 ) {
-    fun toModel() = BreedingVO(
+    fun toModel() = Breeding(
         id = breeding.id,
         genderRatio = breeding.genderRatio,
         eggGroups = eggGroups.map { it.toModel() }

@@ -3,7 +3,7 @@ package com.eferraz.pokedex.database.entities
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.eferraz.pokedex.entity.EggGroupVO
+import com.eferraz.pokedex.entity.EggGroup
 
 @Entity(tableName = "egg_group")
 internal data class EggGroupTable(
@@ -16,13 +16,13 @@ internal data class EggGroupTable(
     val name: String,
 ) {
 
-    fun toModel(): EggGroupVO = EggGroupVO(
+    fun toModel(): EggGroup = EggGroup(
         id = id,
         name = name
     )
 
     companion object {
-        internal fun EggGroupVO.toTable() = EggGroupTable(
+        internal fun EggGroup.toTable() = EggGroupTable(
             id = id,
             name = name,
         )

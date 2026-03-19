@@ -4,7 +4,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.Index
-import com.eferraz.pokedex.entity.PokemonCompleteVO
+import com.eferraz.pokedex.entity.PokemonComplete
 
 @Entity(
     tableName = "pokemon_moves",
@@ -39,7 +39,7 @@ internal data class PokemonMovesCrossRef(
 ) {
 
     companion object {
-        internal fun PokemonCompleteVO.toCrossRef() = this.moves.map {
+        internal fun PokemonComplete.toCrossRef() = this.moves.map {
             PokemonMovesCrossRef(
                 pokemonId = this.id,
                 moveId = it.id

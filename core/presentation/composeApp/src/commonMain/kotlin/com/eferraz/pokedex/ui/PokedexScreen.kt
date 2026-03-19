@@ -36,9 +36,9 @@ import coil3.compose.AsyncImage
 import coil3.compose.LocalPlatformContext
 import coil3.request.ImageRequest
 import coil3.request.crossfade
-import com.eferraz.pokedex.entity.PokemonLightVO
-import com.eferraz.pokedex.entity.PokemonVO
-import com.eferraz.pokedex.entity.TypeVO
+import com.eferraz.pokedex.entity.PokemonLight
+import com.eferraz.pokedex.entity.BasePokemon
+import com.eferraz.pokedex.entity.Type
 import com.eferraz.pokedex.helpers.AppScaffold
 import com.eferraz.pokedex.helpers.formatedId
 import com.eferraz.pokedex.helpers.formatedName
@@ -52,7 +52,7 @@ import org.koin.compose.viewmodel.koinViewModel
 internal fun PokedexRoute(
     modifier: Modifier = Modifier,
     vm: PokedexViewModel = koinViewModel(),
-    onClick: (PokemonVO) -> Unit,
+    onClick: (BasePokemon) -> Unit,
 ) {
 
     val list = vm.flow.collectAsLazyPagingItems()
@@ -67,8 +67,8 @@ internal fun PokedexRoute(
 @Composable
 private fun PokedexScreen(
     modifier: Modifier = Modifier,
-    pokemonList: LazyPagingItems<PokemonLightVO>,
-    onClick: (PokemonLightVO) -> Unit,
+    pokemonList: LazyPagingItems<PokemonLight>,
+    onClick: (PokemonLight) -> Unit,
 ) {
 
     AppScaffold(
@@ -93,8 +93,8 @@ private fun PokedexScreen(
 @Composable
 private fun ItemList(
     modifier: Modifier = Modifier,
-    model: PokemonLightVO,
-    onClick: (PokemonLightVO) -> Unit,
+    model: PokemonLight,
+    onClick: (PokemonLight) -> Unit,
 ) {
 
     Card(
@@ -145,7 +145,7 @@ private fun Image(url: String, contentDescription: String) {
 }
 
 @Composable
-private fun TypeTags(types: List<TypeVO>) {
+private fun TypeTags(types: List<Type>) {
 
     LazyRow(
         modifier = Modifier.padding(top = 12.dp),
@@ -174,14 +174,14 @@ private fun TypeTags(types: List<TypeVO>) {
 @Composable
 @Preview
 private fun PokedexScreenPreview(
-    @PreviewParameter(PokedexScreenPreviewProvider::class) model: List<PokemonLightVO>,
+    @PreviewParameter(PokedexScreenPreviewProvider::class) model: List<PokemonLight>,
 ) {
 //    PokedexScreen(Modifier, model, {})
 }
 
-private class PokedexScreenPreviewProvider : PreviewParameterProvider<List<PokemonLightVO>> {
+private class PokedexScreenPreviewProvider : PreviewParameterProvider<List<PokemonLight>> {
     override val values = sequenceOf(
-        listOf<PokemonLightVO>(
+        listOf<PokemonLight>(
 //            PokemonVO(id = 1, name = "Bulbasaur", type1 = TypeVO(0L, "Grass"), type2 = TypeVO(0L, "Poison"), image = ""),
 //            PokemonVO(id = 2, name = "Ivysaur", type1 = TypeVO(0L, "Grass"), type2 = TypeVO(0L, "Poison"), image = ""),
 //            PokemonVO(id = 3, name = "Venusaur", type1 = TypeVO(0L, "Grass"), type2 = TypeVO(0L, "Poison"), image = ""),

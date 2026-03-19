@@ -3,7 +3,7 @@ package com.eferraz.pokedex.database.entities
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.eferraz.pokedex.entity.BreedingVO
+import com.eferraz.pokedex.entity.Breeding
 
 @Entity(tableName = "breeding",)
 internal data class BreedingTable(
@@ -17,7 +17,7 @@ internal data class BreedingTable(
 ) {
 
     companion object {
-        internal fun BreedingVO.toTable() = BreedingTable(
+        internal fun Breeding.toTable() = BreedingTable(
             id = id,
             genderRatio = genderRatio,
         )

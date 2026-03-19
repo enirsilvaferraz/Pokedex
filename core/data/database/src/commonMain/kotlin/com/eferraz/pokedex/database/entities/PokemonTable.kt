@@ -5,7 +5,7 @@ import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.Index
 import androidx.room.PrimaryKey
-import com.eferraz.pokedex.entity.PokemonCompleteVO
+import com.eferraz.pokedex.entity.PokemonComplete
 
 @Entity(
     tableName = "pokemon",
@@ -83,7 +83,7 @@ internal data class PokemonTable(
 ) {
 
     companion object {
-        internal fun PokemonCompleteVO.toTable() = PokemonTable(
+        internal fun PokemonComplete.toTable() = PokemonTable(
             id = id,
             name = name,
             image = image,

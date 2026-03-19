@@ -5,7 +5,7 @@ import androidx.room.Relation
 import com.eferraz.pokedex.database.entities.PokemonTable
 import com.eferraz.pokedex.database.entities.TypeTable
 import com.eferraz.pokedex.database.entities.TypeTable.Companion.toModel
-import com.eferraz.pokedex.entity.PokemonLightVO
+import com.eferraz.pokedex.entity.PokemonLight
 
 internal data class PokemonLight(
 
@@ -25,7 +25,7 @@ internal data class PokemonLight(
     val type2: TypeTable?,
 ) {
 
-    fun toModel() = PokemonLightVO(
+    fun toModel() = PokemonLight(
         id = pokemon.id,
         name = pokemon.name,
         image = pokemon.image,

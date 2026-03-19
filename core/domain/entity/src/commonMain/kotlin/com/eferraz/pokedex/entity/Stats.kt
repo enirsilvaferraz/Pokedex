@@ -1,6 +1,6 @@
 package com.eferraz.pokedex.entity
 
-public data class StatsVO(
+public data class Stats(
     val id: Long,
     val hp: Int,
     val attack: Int,
@@ -8,5 +8,7 @@ public data class StatsVO(
     val specialAttack: Int,
     val specialDefense: Int,
     val speed: Int,
-    val total: Int = hp + attack + defense + specialAttack + specialDefense + speed,
-)
+) {
+
+    val total: Int = hp + attack + defense + specialAttack + specialDefense + speed
+}

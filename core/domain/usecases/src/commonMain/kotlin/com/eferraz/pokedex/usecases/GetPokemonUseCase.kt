@@ -1,9 +1,9 @@
 package com.eferraz.pokedex.usecases
 
 import app.cash.paging.PagingData
-import com.eferraz.pokedex.entity.PokemonLightVO
+import com.eferraz.pokedex.entity.PokemonLight
 import kotlinx.coroutines.flow.Flow
 
 public interface GetPokemonUseCase {
-    public operator fun invoke(): Flow<PagingData<PokemonLightVO>>
+    public operator fun invoke(): Flow<PagingData<PokemonLight>>
 }

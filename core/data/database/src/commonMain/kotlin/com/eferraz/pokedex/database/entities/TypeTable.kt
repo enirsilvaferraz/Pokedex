@@ -3,7 +3,7 @@ package com.eferraz.pokedex.database.entities
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.eferraz.pokedex.entity.TypeVO
+import com.eferraz.pokedex.entity.Type
 
 @Entity("type")
 internal data class TypeTable(
@@ -18,12 +18,12 @@ internal data class TypeTable(
 
     companion object {
 
-        internal fun TypeVO.toTable() = TypeTable(
+        internal fun Type.toTable() = TypeTable(
             id = id,
             name = name
         )
 
-        fun TypeTable.toModel(): TypeVO = TypeVO(
+        fun TypeTable.toModel(): Type = Type(
             id = id,
             name = name
         )
