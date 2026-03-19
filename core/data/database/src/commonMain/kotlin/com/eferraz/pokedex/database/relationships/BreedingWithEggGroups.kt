@@ -22,7 +22,6 @@ internal data class BreedingWithEggGroups(
 ) {
     fun toModel() = BreedingVO(
         id = breeding.id,
-//        hatchCounter = breeding.hatchCounter,
         genderRatio = breeding.genderRatio,
         eggGroups = eggGroups.map { it.toModel() }
     )

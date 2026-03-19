@@ -11,11 +11,11 @@ import org.koin.core.annotation.KoinApplication
 
 @KoinApplication(
     modules = [
+        EntityModule::class,
         DatabaseModule::class,
         NetworkModule::class,
-        EntityModule::class,
-        UseCaseModule::class,
         RepositoryModule::class,
+        UseCaseModule::class,
         ComposeModule::class
     ]
 )

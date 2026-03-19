@@ -7,8 +7,11 @@ import org.koin.plugin.module.dsl.startKoin
 
 @Composable
 public fun App(koinAppDeclaration: (KoinApplication.() -> Unit)? = null) {
+
     startKoin<MyKoinApp> {
         koinAppDeclaration?.invoke(this)
+        printLogger()
     }
+
     InternalApp()
 }
