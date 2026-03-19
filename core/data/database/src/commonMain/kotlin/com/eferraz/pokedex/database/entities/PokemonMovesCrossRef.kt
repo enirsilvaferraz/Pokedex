@@ -3,11 +3,15 @@ package com.eferraz.pokedex.database.entities
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
+import androidx.room.Index
 import com.eferraz.pokedex.entity.PokemonCompleteVO
 
 @Entity(
     tableName = "pokemon_moves",
     primaryKeys = ["pokemon_id", "move_id"],
+    indices = [
+        Index(value = ["move_id"])
+    ],
     foreignKeys = [
         ForeignKey(
             entity = PokemonTable::class,

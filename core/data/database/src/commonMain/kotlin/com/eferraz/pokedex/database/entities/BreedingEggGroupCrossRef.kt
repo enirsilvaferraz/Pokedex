@@ -3,12 +3,15 @@ package com.eferraz.pokedex.database.entities
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
-import com.eferraz.pokedex.entity.AboutVO
+import androidx.room.Index
 import com.eferraz.pokedex.entity.BreedingVO
 
 @Entity(
     tableName = "breeding_egg_groups",
     primaryKeys = ["breeding_id", "egg_group_id"],
+    indices = [
+        Index(value = ["egg_group_id"])
+    ],
     foreignKeys = [
         ForeignKey(
             entity = BreedingTable::class,

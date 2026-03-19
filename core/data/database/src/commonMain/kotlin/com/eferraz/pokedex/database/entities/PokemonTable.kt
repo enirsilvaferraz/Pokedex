@@ -3,11 +3,19 @@ package com.eferraz.pokedex.database.entities
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
+import androidx.room.Index
 import androidx.room.PrimaryKey
 import com.eferraz.pokedex.entity.PokemonCompleteVO
 
 @Entity(
     tableName = "pokemon",
+    indices = [
+        Index(value = ["type1"]),
+        Index(value = ["type2"]),
+        Index(value = ["about"]),
+        Index(value = ["breeding"]),
+        Index(value = ["stats"])
+    ],
     foreignKeys = [
         ForeignKey(
             entity = TypeTable::class,

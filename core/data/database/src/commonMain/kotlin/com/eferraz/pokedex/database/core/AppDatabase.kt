@@ -44,7 +44,7 @@ import com.eferraz.pokedex.database.views.PokemonLightView
 //    views = [
 //        PokemonLightView::class
 //    ],
-    version = 1
+    version = 2
 )
 @ConstructedBy(AppDatabaseConstructor::class)
 internal abstract class AppDatabase : RoomDatabase() {
