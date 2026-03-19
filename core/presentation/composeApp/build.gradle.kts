@@ -26,8 +26,8 @@ kotlin {
         implementation(libs.paging.common)
         implementation(libs.paging.compose.common)
 
-        implementation(projects.entity)
-        implementation(projects.usecases)
+        implementation(projects.domain.entity)
+        implementation(projects.domain.usecases)
     }
 }
 

@@ -7,7 +7,7 @@ plugins {
 }
 
 dependencies {
-    implementation(projects.umbrellaApp)
+    implementation(projects.apps.umbrellaApp)
     implementation(compose.desktop.currentOs)
 }
 

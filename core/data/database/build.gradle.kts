@@ -16,7 +16,7 @@ kotlin {
     @OptIn(ExperimentalKotlinGradlePluginApi::class)
     dependencies {
 
-        implementation(projects.entity)
+        implementation(projects.domain.entity)
 
         implementation(libs.paging.common)
     }
