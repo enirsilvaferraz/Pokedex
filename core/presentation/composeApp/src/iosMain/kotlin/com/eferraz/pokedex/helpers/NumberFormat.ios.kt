@@ -9,5 +9,5 @@ import platform.Foundation.NSNumberFormatterDecimalStyle
 internal actual fun Float.formatDecimal() =
     NSNumberFormatter().apply {
         this@apply.numberStyle = NSNumberFormatterDecimalStyle
-        this@apply.locale = Locale.current.platformLocale
+//        this@apply.locale = Locale.current.platformLocale
     }.stringFromNumber(NSNumber(this)) ?: throw IllegalStateException("Invalid number")

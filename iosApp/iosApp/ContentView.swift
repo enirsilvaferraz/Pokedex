@@ -1,6 +1,6 @@
 import UIKit
 import SwiftUI
-import ComposeApp
+import UmbrellaApp
 
 struct ComposeView: UIViewControllerRepresentable {
     func makeUIViewController(context: Context) -> UIViewController {

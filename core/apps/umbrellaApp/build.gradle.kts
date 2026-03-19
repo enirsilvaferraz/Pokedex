@@ -26,4 +26,5 @@ kotlin {
 kotlin.android {
     namespace = "com.eferraz.pokedex.umbrella"
     compileSdk = libs.versions.android.compileSdk.get().toInt()
+    androidResources.enable = true
 }
