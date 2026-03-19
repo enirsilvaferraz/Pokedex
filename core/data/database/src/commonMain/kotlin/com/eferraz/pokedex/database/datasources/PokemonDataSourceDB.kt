@@ -26,10 +26,9 @@ import com.eferraz.pokedex.database.entities.PokemonTable.Companion.toTable
 import com.eferraz.pokedex.database.entities.StatsTable.Companion.toTable
 import com.eferraz.pokedex.database.entities.TypeTable.Companion.toTable
 import com.eferraz.pokedex.entity.PokemonCompleteVO
-import com.eferraz.pokedex.repositories.datasources.PokemonDataSource
 import org.koin.core.annotation.Factory
 
-@Factory([PokemonDataSource.Database::class])
+@Factory([PokemonDataSourceDatabase::class])
 internal class PokemonDataSourceDB(
     private val room: AppDatabase,
     private val pokemonDao: PokemonDao,
@@ -43,7 +42,7 @@ internal class PokemonDataSourceDB(
     private val statsDao: StatsDao,
     private val moveDao: MoveDao,
     private val pokemonWithMovesDao: PokemonWithMovesDao,
-) : PokemonDataSource.Database {
+) : PokemonDataSourceDatabase {
 
     override suspend fun getComplete(id: Int) =
         pokemonDao.getComplete(id)?.toModel()

@@ -2,7 +2,8 @@ package com.eferraz.pokedex.repositories
 
 import app.cash.paging.PagingState
 import com.eferraz.pokedex.entity.PokemonLightVO
-import com.eferraz.pokedex.repositories.datasources.PokemonDataSource
+import com.eferraz.pokedex.database.datasources.PokemonDataSourceDatabase
+import com.eferraz.pokedex.network.datasources.PokemonDataSourceNetwork
 import com.eferraz.pokedex.usecases.repositories.PokemonListRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
@@ -10,10 +11,10 @@ import kotlinx.coroutines.withContext
 import org.koin.core.annotation.Factory
 import org.koin.core.annotation.Provided
 
-@Factory(binds = [PokemonListRepository::class])
+@Factory([PokemonListRepository::class])
 internal class PokemonListRepositoryImpl(
-    @Provided private val api: PokemonDataSource.Network,
-    @Provided private val database: PokemonDataSource.Database,
+    @Provided private val api: PokemonDataSourceNetwork,
+    @Provided private val database: PokemonDataSourceDatabase,
 ) : PokemonListRepository() {
 
     override fun getRefreshKey(state: PagingState<Int, PokemonLightVO>) = state.anchorPosition

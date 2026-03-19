@@ -17,7 +17,6 @@ kotlin {
     dependencies {
 
         implementation(projects.entity)
-        implementation(projects.repositories)
 
         implementation(libs.paging.common)
     }

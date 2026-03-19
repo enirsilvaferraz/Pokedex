@@ -1,12 +1,10 @@
 package com.eferraz.pokedex.network.datasources
 
 import com.eferraz.pokedex.entity.PokemonCompleteVO
-import com.eferraz.pokedex.entity.PokemonVO
 import com.eferraz.pokedex.network.core.ClientConfig
 import com.eferraz.pokedex.network.relationship.PokemonAndSpecie
 import com.eferraz.pokedex.network.responses.pokemon.Pokemon
 import com.eferraz.pokedex.network.responses.species.PokemonSpeciesDetail
-import com.eferraz.pokedex.repositories.datasources.PokemonDataSource
 import io.ktor.client.call.body
 import io.ktor.client.request.get
 import io.ktor.client.request.url
@@ -17,7 +15,7 @@ import org.koin.core.annotation.Factory
 @Factory
 internal class PokemonApi(
     private val config: ClientConfig,
-) : PokemonDataSource.Network {
+) : PokemonDataSourceNetwork {
 
     override suspend fun get(id: Int): PokemonCompleteVO = coroutineScope {
 

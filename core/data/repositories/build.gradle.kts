@@ -16,6 +16,8 @@ kotlin {
     dependencies {
         implementation(projects.entity)
         implementation(projects.usecases)
+        implementation(projects.network)
+        implementation(projects.database)
 
         implementation(libs.kotlinx.coroutines.core)
         implementation(libs.paging.common)

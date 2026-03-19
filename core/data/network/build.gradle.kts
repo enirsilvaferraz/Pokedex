@@ -16,6 +16,5 @@ kotlin {
     @OptIn(ExperimentalKotlinGradlePluginApi::class)
     dependencies {
         implementation(projects.entity)
-        implementation(projects.repositories)
     }
 }
