@@ -35,14 +35,14 @@ import kotlinx.coroutines.flow.StateFlow
 import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
-internal fun NewPokedexScreen(
+internal fun PokedexScreen(
     modifier: Modifier = Modifier,
     onClick: (BasePokemon) -> Unit,
 ) {
 
-    val vm: NewPokedexViewModel = koinViewModel()
+    val vm: PokedexViewModel = koinViewModel()
 
-    NewPokedexScreen(
+    PokedexScreen(
         modifier = modifier,
         stateFlow = vm.state,
         onClick = onClick,
@@ -51,11 +51,11 @@ internal fun NewPokedexScreen(
 }
 
 @Composable
-private fun NewPokedexScreen(
+private fun PokedexScreen(
     modifier: Modifier = Modifier,
-    stateFlow: StateFlow<NewPokedexViewModel.UiState>,
+    stateFlow: StateFlow<PokedexViewModel.UiState>,
     onClick: (BasePokemon) -> Unit,
-    onIntent: (NewPokedexViewModel.Intent) -> Unit,
+    onIntent: (PokedexViewModel.Intent) -> Unit,
 ) {
 
     val state by stateFlow.collectAsState()
@@ -67,27 +67,25 @@ private fun NewPokedexScreen(
 
         when (val s = state) {
 
-            NewPokedexViewModel.UiState.Error -> {
+            PokedexViewModel.UiState.Error -> {
                 FailureScreen(
                     modifier = innerModifier,
-                    onClick = { onIntent(NewPokedexViewModel.Intent.Retry) },
+                    onClick = remember { { onIntent(PokedexViewModel.Intent.Retry) } },
                 )
             }
 
-            NewPokedexViewModel.UiState.Loading -> {
+            PokedexViewModel.UiState.Loading -> {
                 LoadingScreen(
                     modifier = innerModifier,
                 )
             }
 
-            is NewPokedexViewModel.UiState.Success -> {
+            is PokedexViewModel.UiState.Success -> {
                 SuccessScreen(
                     modifier = innerModifier,
                     summariesById = s.summaries,
                     onClick = onClick,
-                    onItemVisible = { pokemon ->
-                        onIntent(NewPokedexViewModel.Intent.ItemVisible(pokemon))
-                    },
+                    onItemVisible = remember { { onIntent(PokedexViewModel.Intent.ItemVisible(it)) } },
                 )
             }
         }
@@ -170,10 +168,10 @@ private fun FailureScreen(
 @Preview
 @Composable
 private fun NewPokedexScreenPreview(
-    @PreviewParameter(NewPokedexStatePreviewProvider::class) state: NewPokedexViewModel.UiState,
+    @PreviewParameter(NewPokedexStatePreviewProvider::class) state: PokedexViewModel.UiState,
 ) {
     val stateFlow = remember(state) { MutableStateFlow(state) }
-    NewPokedexScreen(
+    PokedexScreen(
         stateFlow = stateFlow,
         onClick = {},
         onIntent = {},
@@ -184,11 +182,11 @@ private fun NewPokedexScreenPreview(
 @Composable
 private fun NewPokedexSuccessScreenPreview() {
     val items = newPokedexPreviewPokemonList()
-    val success = NewPokedexViewModel.UiState.Success(
+    val success = PokedexViewModel.UiState.Success(
         summaries = items.associateBy { it.id },
     )
-    val stateFlow = remember { MutableStateFlow<NewPokedexViewModel.UiState>(success) }
-    NewPokedexScreen(
+    val stateFlow = remember { MutableStateFlow<PokedexViewModel.UiState>(success) }
+    PokedexScreen(
         stateFlow = stateFlow,
         onClick = {},
         onIntent = {},
@@ -219,15 +217,13 @@ private fun newPokedexPreviewPokemonList(): List<PokemonSummary> = listOf(
     ),
 )
 
-private class NewPokedexStatePreviewProvider : PreviewParameterProvider<NewPokedexViewModel.UiState> {
-    override val values: Sequence<NewPokedexViewModel.UiState> = run {
+private class NewPokedexStatePreviewProvider : PreviewParameterProvider<PokedexViewModel.UiState> {
+    override val values: Sequence<PokedexViewModel.UiState> = run {
         val previewItems = newPokedexPreviewPokemonList()
         sequenceOf(
-            NewPokedexViewModel.UiState.Loading,
-            NewPokedexViewModel.UiState.Error,
-            NewPokedexViewModel.UiState.Success(
-                summaries = previewItems.associateBy { it.id },
-            ),
+            PokedexViewModel.UiState.Loading,
+            PokedexViewModel.UiState.Error,
+            PokedexViewModel.UiState.Success(summaries = previewItems.associateBy { it.id },),
         )
     }
 }

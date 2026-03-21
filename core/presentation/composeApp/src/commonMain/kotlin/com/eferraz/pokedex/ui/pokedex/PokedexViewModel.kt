@@ -3,8 +3,8 @@ package com.eferraz.pokedex.ui.pokedex
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.eferraz.pokedex.entity.BasePokemon
-import com.eferraz.pokedex.entity.summary.PokemonPlaceholder
-import com.eferraz.pokedex.usecases.GetPokemonSummaryUseCase
+import com.eferraz.pokedex.entity.summary.PokemonSummary
+import com.eferraz.pokedex.usecases.UpdatePokemonSummaryUseCase
 import com.eferraz.pokedex.usecases.NewObservePokemonListUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -16,9 +16,9 @@ import org.koin.core.annotation.KoinViewModel
 import org.koin.core.annotation.Provided
 
 @KoinViewModel
-internal class NewPokedexViewModel(
+internal class PokedexViewModel(
     @Provided private val observePokemonList: NewObservePokemonListUseCase,
-    @Provided private val getSummary: GetPokemonSummaryUseCase,
+    @Provided private val getSummary: UpdatePokemonSummaryUseCase,
 ) : ViewModel() {
 
     val state: StateFlow<UiState> field = MutableStateFlow<UiState>(UiState.Loading)
@@ -50,9 +50,9 @@ internal class NewPokedexViewModel(
     }
 
     private fun onItemVisible(intent: Intent.ItemVisible) {
-        (intent.pokemon as? PokemonPlaceholder)?.let { placeholder: PokemonPlaceholder ->
+        (intent.pokemon as? PokemonSummary)?.takeIf { it.isPlaceholder() }?.let { summary ->
             viewModelScope.launch {
-                getSummary(placeholder)
+                getSummary(summary)
             }
         }
     }

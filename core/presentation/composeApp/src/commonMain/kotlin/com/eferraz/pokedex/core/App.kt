@@ -6,7 +6,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
 import com.eferraz.pokedex.ui.detail.PokemonRoute
-import com.eferraz.pokedex.ui.pokedex.NewPokedexScreen
+import com.eferraz.pokedex.ui.pokedex.PokedexScreen
 
 @Composable
 public fun InternalApp() {
@@ -16,7 +16,7 @@ public fun InternalApp() {
     NavHost(navController = navController, startDestination = PokemonListRouting) {
 
         composable<PokemonListRouting> {
-            NewPokedexScreen {
+            PokedexScreen {
                 navController.navigate(PokemonDetailRouting(it.id))
             }
         }

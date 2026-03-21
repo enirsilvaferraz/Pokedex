@@ -2,7 +2,6 @@ package com.eferraz.pokedex.ui.pokedex
 
 import androidx.compose.runtime.Immutable
 import com.eferraz.pokedex.entity.BasePokemon
-import com.eferraz.pokedex.entity.summary.PokemonPlaceholder
 import com.eferraz.pokedex.entity.summary.PokemonSummary
 
 @Immutable
@@ -29,19 +28,21 @@ internal sealed class PokemonItemListUi {
 
 internal fun BasePokemon.toPokedexListItemUi(): PokemonItemListUi = when (this) {
 
-    is PokemonSummary -> PokemonItemListUi.SummaryRow(
-        id = id,
-        name = name,
-        artworkUrl = artwork,
-        type1Name = type1.name,
-        type2Name = type2?.name,
-    )
-
-    is PokemonPlaceholder -> PokemonItemListUi.PlaceholderRow(
-        id = id,
-        name = name,
-        artworkUrl = artwork,
-    )
+    is PokemonSummary -> if (isPlaceholder()) {
+        PokemonItemListUi.PlaceholderRow(
+            id = id,
+            name = name,
+            artworkUrl = artwork,
+        )
+    } else {
+        PokemonItemListUi.SummaryRow(
+            id = id,
+            name = name,
+            artworkUrl = artwork,
+            type1Name = type1?.name ?: error("type1 obrigatório quando não é placeholder"),
+            type2Name = type2?.name,
+        )
+    }
 
     else -> throw IllegalStateException("Unknown type") // todo sensivel
 }
