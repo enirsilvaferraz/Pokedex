@@ -3,8 +3,8 @@ package com.eferraz.pokedex.ui.detail.vos
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.capitalize
 import androidx.compose.ui.text.intl.Locale
-import com.eferraz.pokedex.entity.PokemonComplete
 import com.eferraz.pokedex.entity.BasePokemon
+import com.eferraz.pokedex.entity.detail.PokemonDetailed
 import com.eferraz.pokedex.helpers.formatDecimal
 import org.jetbrains.compose.resources.StringResource
 import pokedex.features.composeapp.generated.resources.Res
@@ -39,7 +39,7 @@ internal data class PokemonDetailVo(
     val moves: List<Move>,
 ) {
 
-    constructor(model: PokemonComplete) : this(
+    constructor(model: PokemonDetailed) : this(
         background = Background(model),
         header = Header(model),
         types = model.types().map { Type(it) },
@@ -76,7 +76,7 @@ internal data class PokemonDetailVo(
     value class Background(
         val color: Color,
     ) {
-        constructor(model: BasePokemon) : this(
+        constructor(model: PokemonDetailed) : this(
             color = when (model.type1.name.lowercase()) {
                 "normal" -> Color(0xFFA8A77A)    // Normal - Grayish Beige
                 "fire" -> Color(0xFFEE8130)      // Fire - Orange-Red
@@ -117,7 +117,7 @@ internal data class PokemonDetailVo(
     value class Type(
         val name: String,
     ) {
-        constructor(model: com.eferraz.pokedex.entity.Type) : this(
+        constructor(model: com.eferraz.pokedex.entity.detail.Type) : this(
             name = model.name.capitalize()
         )
     }
@@ -126,8 +126,8 @@ internal data class PokemonDetailVo(
         val url: String,
         val contentDescription: String,
     ) {
-        constructor(model: BasePokemon) : this(
-            url = model.image,
+        constructor(model: PokemonDetailed) : this(
+            url = model.artwork,
             contentDescription = model.name
         )
     }
@@ -155,7 +155,7 @@ internal data class PokemonDetailVo(
         val id: String,
         val name: String,
     ) {
-        constructor(model: com.eferraz.pokedex.entity.Move) : this(
+        constructor(model: com.eferraz.pokedex.entity.detail.Move) : this(
             id = model.id.formatID(),
             name = model.name.capitalize()
         )

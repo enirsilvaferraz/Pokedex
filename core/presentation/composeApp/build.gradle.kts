@@ -1,4 +1,5 @@
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
     alias(libs.plugins.foundation.project)
@@ -10,9 +11,17 @@ kotlin.android {
     namespace = "com.eferraz.pokedex"
     compileSdk = libs.versions.android.compileSdk.get().toInt()
     androidResources.enable = true
+    compilerOptions {
+        jvmTarget.set(JvmTarget.JVM_17)
+    }
 }
 
 kotlin {
+
+    compilerOptions {
+        freeCompilerArgs.add("-Xreturn-value-checker=check")
+        freeCompilerArgs.add("-Xexplicit-backing-fields")
+    }
 
     @OptIn(ExperimentalKotlinGradlePluginApi::class)
     dependencies {
@@ -24,7 +33,7 @@ kotlin {
         implementation(libs.coil.network.ktor3)
 
         implementation(libs.paging.common)
-        implementation(libs.paging.compose.common)
+        implementation(libs.paging.compose)
 
         implementation(projects.domain.entity)
         implementation(projects.domain.usecases)
