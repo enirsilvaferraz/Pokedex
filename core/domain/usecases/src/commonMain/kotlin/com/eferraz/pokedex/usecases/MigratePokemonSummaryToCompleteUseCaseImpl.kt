@@ -1,7 +1,7 @@
 package com.eferraz.pokedex.usecases
 
 import com.eferraz.pokedex.entity.summary.PokemonSummary
-import com.eferraz.pokedex.usecases.repositories.PokemonRepository
+import com.eferraz.pokedex.usecases.repositories.PokemonDetailedRepository
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.Semaphore
@@ -10,12 +10,12 @@ import kotlinx.coroutines.sync.withPermit
 import org.koin.core.annotation.Factory
 
 @Factory
-internal class UpdatePokemonSummaryUseCaseImpl(
+internal class MigratePokemonSummaryToCompleteUseCaseImpl(
     dispatcher: CoroutineDispatcher,
-    private val repository: PokemonRepository,
-    private val mutex : Mutex,
-    private val semaphore : Semaphore
-) : UpdatePokemonSummaryUseCase(dispatcher) {
+    private val repository: PokemonDetailedRepository,
+    private val mutex: Mutex,
+    private val semaphore: Semaphore,
+) : MigratePokemonSummaryToCompleteUseCase(dispatcher) {
 
     private val inFlight = mutableSetOf<Long>()
 

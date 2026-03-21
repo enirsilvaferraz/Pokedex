@@ -4,8 +4,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.eferraz.pokedex.entity.BasePokemon
 import com.eferraz.pokedex.entity.summary.PokemonSummary
-import com.eferraz.pokedex.usecases.UpdatePokemonSummaryUseCase
-import com.eferraz.pokedex.usecases.NewObservePokemonListUseCase
+import com.eferraz.pokedex.usecases.MigratePokemonSummaryToCompleteUseCase
+import com.eferraz.pokedex.usecases.ObservePokemonListUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
@@ -17,8 +17,8 @@ import org.koin.core.annotation.Provided
 
 @KoinViewModel
 internal class PokedexViewModel(
-    @Provided private val observePokemonList: NewObservePokemonListUseCase,
-    @Provided private val getSummary: UpdatePokemonSummaryUseCase,
+    @Provided private val observeUseCase: ObservePokemonListUseCase,
+    @Provided private val migrateToCompleteUseCase: MigratePokemonSummaryToCompleteUseCase,
 ) : ViewModel() {
 
     val state: StateFlow<UiState> field = MutableStateFlow<UiState>(UiState.Loading)
@@ -34,7 +34,7 @@ internal class PokedexViewModel(
     }
 
     private fun onInitLoad() {
-        observePokemonList()
+        observeUseCase()
             .onEach { items ->
                 state.value = UiState.Success(summaries = items.associateBy { it.id })
             }
@@ -52,7 +52,7 @@ internal class PokedexViewModel(
     private fun onItemVisible(intent: Intent.ItemVisible) {
         (intent.pokemon as? PokemonSummary)?.takeIf { it.isPlaceholder() }?.let { summary ->
             viewModelScope.launch {
-                getSummary(summary)
+                migrateToCompleteUseCase(summary)
             }
         }
     }
