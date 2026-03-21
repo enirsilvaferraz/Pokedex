@@ -6,7 +6,7 @@ import androidx.room.Relation
 import com.eferraz.pokedex.database.entities.AbilityTable
 import com.eferraz.pokedex.database.entities.AboutAbilitiesCrossRef
 import com.eferraz.pokedex.database.entities.AboutTable
-import com.eferraz.pokedex.entity.About
+import com.eferraz.pokedex.entity.detail.About
 
 internal data class AboutWithAbilities(
 

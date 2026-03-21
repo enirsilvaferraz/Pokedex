@@ -3,7 +3,7 @@ package com.eferraz.pokedex.database.entities
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.eferraz.pokedex.entity.Move
+import com.eferraz.pokedex.entity.detail.Move
 
 @Entity(tableName = "moves")
 internal data class MoveTable(

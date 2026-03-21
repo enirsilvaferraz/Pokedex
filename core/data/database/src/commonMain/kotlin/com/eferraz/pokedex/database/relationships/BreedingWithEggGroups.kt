@@ -6,7 +6,7 @@ import androidx.room.Relation
 import com.eferraz.pokedex.database.entities.BreedingEggGroupCrossRef
 import com.eferraz.pokedex.database.entities.BreedingTable
 import com.eferraz.pokedex.database.entities.EggGroupTable
-import com.eferraz.pokedex.entity.Breeding
+import com.eferraz.pokedex.entity.detail.Breeding
 
 internal data class BreedingWithEggGroups(
 

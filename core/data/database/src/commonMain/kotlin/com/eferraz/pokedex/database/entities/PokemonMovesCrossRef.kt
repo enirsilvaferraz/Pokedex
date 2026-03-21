@@ -4,7 +4,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.Index
-import com.eferraz.pokedex.entity.PokemonComplete
+import com.eferraz.pokedex.entity.detail.PokemonDetailed
 
 @Entity(
     tableName = "pokemon_moves",
@@ -14,7 +14,7 @@ import com.eferraz.pokedex.entity.PokemonComplete
     ],
     foreignKeys = [
         ForeignKey(
-            entity = PokemonTable::class,
+            entity = PokemonSummaryTable::class,
             parentColumns = ["pokemon_id"],
             childColumns = ["pokemon_id"],
             onDelete = ForeignKey.CASCADE,
@@ -39,7 +39,7 @@ internal data class PokemonMovesCrossRef(
 ) {
 
     companion object {
-        internal fun PokemonComplete.toCrossRef() = this.moves.map {
+        internal fun PokemonDetailed.toCrossRef() = this.moves.map {
             PokemonMovesCrossRef(
                 pokemonId = this.id,
                 moveId = it.id

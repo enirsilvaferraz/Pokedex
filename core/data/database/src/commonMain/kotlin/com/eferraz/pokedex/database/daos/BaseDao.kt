@@ -1,10 +1,9 @@
 package com.eferraz.pokedex.database.daos
 
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
+import androidx.room.Upsert
 
 internal interface BaseDao<T : Any> {
 
-    @Insert(onConflict = OnConflictStrategy.Companion.IGNORE)
-    suspend fun insert(vararg entity: T)
+    @Upsert
+    suspend fun upsert(vararg entity: T)
 }

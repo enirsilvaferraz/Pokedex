@@ -12,7 +12,6 @@ internal interface DataBaseBuilder : KoinComponent {
         buildPlatform()
             .setDriver(BundledSQLiteDriver())
             .setQueryCoroutineContext(Dispatchers.IO)
-            .addMigrations(MIGRATION_1_2)
             .build()
 
     fun buildPlatform(): RoomDatabase.Builder<AppDatabase>

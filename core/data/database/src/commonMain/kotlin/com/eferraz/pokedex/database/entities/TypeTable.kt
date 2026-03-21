@@ -3,7 +3,7 @@ package com.eferraz.pokedex.database.entities
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.eferraz.pokedex.entity.Type
+import com.eferraz.pokedex.entity.detail.Type
 
 @Entity("type")
 internal data class TypeTable(

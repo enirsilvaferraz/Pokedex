@@ -11,20 +11,29 @@ import com.eferraz.pokedex.database.entities.BreedingTable.Companion.toTable
 import com.eferraz.pokedex.database.entities.EggGroupTable.Companion.toTable
 import com.eferraz.pokedex.database.entities.MoveTable
 import com.eferraz.pokedex.database.entities.MoveTable.Companion.toTable
+import com.eferraz.pokedex.database.entities.PokemonDetailTable
+import com.eferraz.pokedex.database.entities.PokemonDetailTable.Companion.toDetailTable
 import com.eferraz.pokedex.database.entities.PokemonMovesCrossRef
-import com.eferraz.pokedex.database.entities.PokemonTable
-import com.eferraz.pokedex.database.entities.PokemonTable.Companion.toTable
+import com.eferraz.pokedex.database.entities.PokemonSummaryTable
+import com.eferraz.pokedex.database.entities.PokemonSummaryTable.Companion.toRefTable
 import com.eferraz.pokedex.database.entities.StatsTable
 import com.eferraz.pokedex.database.entities.StatsTable.Companion.toTable
 import com.eferraz.pokedex.database.entities.TypeTable
 import com.eferraz.pokedex.database.entities.TypeTable.Companion.toModel
 import com.eferraz.pokedex.database.entities.TypeTable.Companion.toTable
-import com.eferraz.pokedex.entity.PokemonComplete
+import com.eferraz.pokedex.entity.detail.PokemonDetailed as PokemonDetailedModel
 
 internal data class PokemonComplete(
 
     @Embedded
-    val pokemon: PokemonTable,
+    val detail: PokemonDetailTable,
+
+    @Relation(
+        parentColumn = "pokemon_id",
+        entityColumn = "pokemon_id",
+        entity = PokemonSummaryTable::class
+    )
+    val ref: List<PokemonSummaryTable>,
 
     @Relation(
         parentColumn = "type1",
@@ -67,8 +76,9 @@ internal data class PokemonComplete(
 ) {
 
     companion object {
-        fun PokemonComplete.toTable2() = PokemonComplete(
-            pokemon = toTable(),
+        fun PokemonDetailedModel.toTable2() = PokemonComplete(
+            detail = toDetailTable(),
+            ref = listOf(toRefTable()),
             type1 = type1.toTable(),
             type2 = type2?.toTable(),
             about = AboutWithAbilities(about.toTable(), about.abilities.map { it.toTable() }),
@@ -78,10 +88,10 @@ internal data class PokemonComplete(
         )
     }
 
-    fun toModel(): PokemonComplete = PokemonComplete(
-        id = pokemon.id,
-        name = pokemon.name,
-        image = pokemon.image,
+    fun toModel(): PokemonDetailedModel = PokemonDetailedModel(
+        id = detail.pokemonId,
+        name = ref.single().name,
+        image = detail.image,
         type1 = type1.toModel(),
         type2 = type2?.toModel(),
         about = about.toModel(),

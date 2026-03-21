@@ -5,18 +5,18 @@ import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.Index
 import androidx.room.PrimaryKey
-import com.eferraz.pokedex.entity.PokemonComplete
+import com.eferraz.pokedex.entity.detail.PokemonDetailed
 
 @Entity(
-    tableName = "pokemon",
-    indices = [
-        Index(value = ["type1"]),
-        Index(value = ["type2"]),
-        Index(value = ["about"]),
-        Index(value = ["breeding"]),
-        Index(value = ["stats"])
-    ],
+    tableName = "pokemon_detail",
     foreignKeys = [
+        ForeignKey(
+            entity = PokemonSummaryTable::class,
+            parentColumns = ["pokemon_id"],
+            childColumns = ["pokemon_id"],
+            onDelete = ForeignKey.CASCADE,
+            onUpdate = ForeignKey.CASCADE
+        ),
         ForeignKey(
             entity = TypeTable::class,
             parentColumns = ["type_id"],
@@ -52,16 +52,20 @@ import com.eferraz.pokedex.entity.PokemonComplete
             onDelete = ForeignKey.CASCADE,
             onUpdate = ForeignKey.CASCADE
         ),
+    ],
+    indices = [
+        Index(value = ["type1"]),
+        Index(value = ["type2"]),
+        Index(value = ["about"]),
+        Index(value = ["breeding"]),
+        Index(value = ["stats"])
     ]
 )
-internal data class PokemonTable(
+internal data class PokemonDetailTable(
 
     @PrimaryKey
     @ColumnInfo(name = "pokemon_id")
-    val id: Long,
-
-    @ColumnInfo(name = "name")
-    val name: String,
+    val pokemonId: Long,
 
     @ColumnInfo(name = "image")
     val image: String,
@@ -83,9 +87,9 @@ internal data class PokemonTable(
 ) {
 
     companion object {
-        internal fun PokemonComplete.toTable() = PokemonTable(
-            id = id,
-            name = name,
+
+        internal fun PokemonDetailed.toDetailTable() = PokemonDetailTable(
+            pokemonId = id,
             image = image,
             typeID1 = type1.id,
             typeID2 = type2?.id,

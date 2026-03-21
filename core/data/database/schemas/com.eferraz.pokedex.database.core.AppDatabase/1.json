@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "ef216f700161995eaa8687940ab6592d",
+    "identityHash": "d5cfe3d6db92935202d5d305872632f1",
     "entities": [
       {
         "tableName": "ability",
@@ -169,6 +169,17 @@
             "egg_group_id"
           ]
         },
+        "indices": [
+          {
+            "name": "index_breeding_egg_groups_egg_group_id",
+            "unique": false,
+            "columnNames": [
+              "egg_group_id"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_breeding_egg_groups_egg_group_id` ON `${TABLE_NAME}` (`egg_group_id`)"
+          }
+        ],
         "foreignKeys": [
           {
             "table": "breeding",
@@ -268,7 +279,7 @@
       },
       {
         "tableName": "pokemon_moves",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`pokemon_id` INTEGER NOT NULL, `move_id` INTEGER NOT NULL, PRIMARY KEY(`pokemon_id`, `move_id`), FOREIGN KEY(`pokemon_id`) REFERENCES `pokemon`(`pokemon_id`) ON UPDATE CASCADE ON DELETE CASCADE , FOREIGN KEY(`move_id`) REFERENCES `moves`(`move_id`) ON UPDATE CASCADE ON DELETE CASCADE )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`pokemon_id` INTEGER NOT NULL, `move_id` INTEGER NOT NULL, PRIMARY KEY(`pokemon_id`, `move_id`), FOREIGN KEY(`pokemon_id`) REFERENCES `pokemon_ref`(`pokemon_id`) ON UPDATE CASCADE ON DELETE CASCADE , FOREIGN KEY(`move_id`) REFERENCES `moves`(`move_id`) ON UPDATE CASCADE ON DELETE CASCADE )",
         "fields": [
           {
             "fieldPath": "pokemonId",
@@ -290,9 +301,20 @@
             "move_id"
           ]
         },
+        "indices": [
+          {
+            "name": "index_pokemon_moves_move_id",
+            "unique": false,
+            "columnNames": [
+              "move_id"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_pokemon_moves_move_id` ON `${TABLE_NAME}` (`move_id`)"
+          }
+        ],
         "foreignKeys": [
           {
-            "table": "pokemon",
+            "table": "pokemon_ref",
             "onDelete": "CASCADE",
             "onUpdate": "CASCADE",
             "columns": [
@@ -316,8 +338,8 @@
         ]
       },
       {
-        "tableName": "pokemon",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`pokemon_id` INTEGER NOT NULL, `name` TEXT NOT NULL, `image` TEXT NOT NULL, `type1` INTEGER NOT NULL, `type2` INTEGER, `about` INTEGER NOT NULL, `breeding` INTEGER NOT NULL, `stats` INTEGER NOT NULL, PRIMARY KEY(`pokemon_id`), FOREIGN KEY(`type1`) REFERENCES `type`(`type_id`) ON UPDATE CASCADE ON DELETE CASCADE , FOREIGN KEY(`type2`) REFERENCES `type`(`type_id`) ON UPDATE CASCADE ON DELETE CASCADE , FOREIGN KEY(`about`) REFERENCES `about`(`about_id`) ON UPDATE CASCADE ON DELETE CASCADE , FOREIGN KEY(`breeding`) REFERENCES `breeding`(`breeding_id`) ON UPDATE CASCADE ON DELETE CASCADE , FOREIGN KEY(`stats`) REFERENCES `stats`(`stats_id`) ON UPDATE CASCADE ON DELETE CASCADE )",
+        "tableName": "pokemon_ref",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`pokemon_id` INTEGER NOT NULL, `name` TEXT NOT NULL, PRIMARY KEY(`pokemon_id`))",
         "fields": [
           {
             "fieldPath": "id",
@@ -329,6 +351,24 @@
             "fieldPath": "name",
             "columnName": "name",
             "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "pokemon_id"
+          ]
+        }
+      },
+      {
+        "tableName": "pokemon_detail",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`pokemon_id` INTEGER NOT NULL, `image` TEXT NOT NULL, `type1` INTEGER NOT NULL, `type2` INTEGER, `about` INTEGER NOT NULL, `breeding` INTEGER NOT NULL, `stats` INTEGER NOT NULL, PRIMARY KEY(`pokemon_id`), FOREIGN KEY(`pokemon_id`) REFERENCES `pokemon_ref`(`pokemon_id`) ON UPDATE CASCADE ON DELETE CASCADE , FOREIGN KEY(`type1`) REFERENCES `type`(`type_id`) ON UPDATE CASCADE ON DELETE CASCADE , FOREIGN KEY(`type2`) REFERENCES `type`(`type_id`) ON UPDATE CASCADE ON DELETE CASCADE , FOREIGN KEY(`about`) REFERENCES `about`(`about_id`) ON UPDATE CASCADE ON DELETE CASCADE , FOREIGN KEY(`breeding`) REFERENCES `breeding`(`breeding_id`) ON UPDATE CASCADE ON DELETE CASCADE , FOREIGN KEY(`stats`) REFERENCES `stats`(`stats_id`) ON UPDATE CASCADE ON DELETE CASCADE )",
+        "fields": [
+          {
+            "fieldPath": "pokemonId",
+            "columnName": "pokemon_id",
+            "affinity": "INTEGER",
             "notNull": true
           },
           {
@@ -373,7 +413,65 @@
             "pokemon_id"
           ]
         },
+        "indices": [
+          {
+            "name": "index_pokemon_detail_type1",
+            "unique": false,
+            "columnNames": [
+              "type1"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_pokemon_detail_type1` ON `${TABLE_NAME}` (`type1`)"
+          },
+          {
+            "name": "index_pokemon_detail_type2",
+            "unique": false,
+            "columnNames": [
+              "type2"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_pokemon_detail_type2` ON `${TABLE_NAME}` (`type2`)"
+          },
+          {
+            "name": "index_pokemon_detail_about",
+            "unique": false,
+            "columnNames": [
+              "about"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_pokemon_detail_about` ON `${TABLE_NAME}` (`about`)"
+          },
+          {
+            "name": "index_pokemon_detail_breeding",
+            "unique": false,
+            "columnNames": [
+              "breeding"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_pokemon_detail_breeding` ON `${TABLE_NAME}` (`breeding`)"
+          },
+          {
+            "name": "index_pokemon_detail_stats",
+            "unique": false,
+            "columnNames": [
+              "stats"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_pokemon_detail_stats` ON `${TABLE_NAME}` (`stats`)"
+          }
+        ],
         "foreignKeys": [
+          {
+            "table": "pokemon_ref",
+            "onDelete": "CASCADE",
+            "onUpdate": "CASCADE",
+            "columns": [
+              "pokemon_id"
+            ],
+            "referencedColumns": [
+              "pokemon_id"
+            ]
+          },
           {
             "table": "type",
             "onDelete": "CASCADE",
@@ -510,9 +608,15 @@
         }
       }
     ],
+    "views": [
+      {
+        "viewName": "PokemonSummaryView",
+        "createSql": "CREATE VIEW `${VIEW_NAME}` AS SELECT\n            r.pokemon_id AS id,\n            r.name AS name,\n            t1.type_id AS type1Id,\n            t1.name AS type1Name,\n            t2.type_id AS type2Id,\n            t2.name AS type2Name\n        FROM pokemon_ref r\n        LEFT JOIN pokemon_detail d ON r.pokemon_id = d.pokemon_id\n        LEFT JOIN type t1 ON d.type1 = t1.type_id\n        LEFT JOIN type t2 ON d.type2 = t2.type_id"
+      }
+    ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'ef216f700161995eaa8687940ab6592d')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'd5cfe3d6db92935202d5d305872632f1')"
     ]
   }
 }

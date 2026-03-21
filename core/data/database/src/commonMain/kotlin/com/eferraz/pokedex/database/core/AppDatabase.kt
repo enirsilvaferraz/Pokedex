@@ -10,7 +10,7 @@ import com.eferraz.pokedex.database.daos.BreedingDao
 import com.eferraz.pokedex.database.daos.BreedingWithEggGroupsDao
 import com.eferraz.pokedex.database.daos.EggGroupDao
 import com.eferraz.pokedex.database.daos.MoveDao
-import com.eferraz.pokedex.database.daos.PokemonDao
+import com.eferraz.pokedex.database.daos.PokemonSummaryDao
 import com.eferraz.pokedex.database.daos.PokemonWithMovesDao
 import com.eferraz.pokedex.database.daos.StatsDao
 import com.eferraz.pokedex.database.daos.TypeDao
@@ -21,11 +21,12 @@ import com.eferraz.pokedex.database.entities.BreedingEggGroupCrossRef
 import com.eferraz.pokedex.database.entities.BreedingTable
 import com.eferraz.pokedex.database.entities.EggGroupTable
 import com.eferraz.pokedex.database.entities.MoveTable
+import com.eferraz.pokedex.database.entities.PokemonDetailTable
 import com.eferraz.pokedex.database.entities.PokemonMovesCrossRef
-import com.eferraz.pokedex.database.entities.PokemonTable
+import com.eferraz.pokedex.database.entities.PokemonSummaryTable
 import com.eferraz.pokedex.database.entities.StatsTable
 import com.eferraz.pokedex.database.entities.TypeTable
-import com.eferraz.pokedex.database.views.PokemonLightView
+import com.eferraz.pokedex.database.views.PokemonSummaryView
 
 @Database(
     entities = [
@@ -37,11 +38,13 @@ import com.eferraz.pokedex.database.views.PokemonLightView
         EggGroupTable::class,
         MoveTable::class,
         PokemonMovesCrossRef::class,
-        PokemonTable::class,
+        PokemonSummaryTable::class,
+        PokemonDetailTable::class,
         StatsTable::class,
         TypeTable::class
     ],
-    version = 2
+    views = [PokemonSummaryView::class],
+    version = 1
 )
 @ConstructedBy(AppDatabaseConstructor::class)
 internal abstract class AppDatabase : RoomDatabase() {
@@ -60,7 +63,7 @@ internal abstract class AppDatabase : RoomDatabase() {
 
     abstract fun moveDao(): MoveDao
 
-    abstract fun pokemonDao(): PokemonDao
+    abstract fun pokemonDao(): PokemonSummaryDao
 
     abstract fun pokemonWithMovesDao(): PokemonWithMovesDao
 

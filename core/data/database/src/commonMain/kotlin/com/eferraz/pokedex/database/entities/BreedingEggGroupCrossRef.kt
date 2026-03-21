@@ -4,7 +4,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.Index
-import com.eferraz.pokedex.entity.Breeding
+import com.eferraz.pokedex.entity.detail.Breeding
 
 @Entity(
     tableName = "breeding_egg_groups",
