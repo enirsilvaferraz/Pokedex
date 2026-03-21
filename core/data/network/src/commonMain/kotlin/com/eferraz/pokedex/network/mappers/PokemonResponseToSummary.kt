@@ -5,20 +5,22 @@ import com.eferraz.pokedex.entity.summary.PokemonSummary
 import com.eferraz.pokedex.network.responses.NamedApiResource
 import com.eferraz.pokedex.network.responses.pokemon.PokemonResponse
 
-internal fun PokemonResponse.toPokemonSummary(): PokemonSummary {
-    val sorted = types.sortedBy { it.slot }
-    val primary = sorted.firstOrNull() ?: error("Pokémon $id sem tipo na resposta da API")
+internal fun toModel(response: PokemonResponse): PokemonSummary {
+
+    val sorted = response.types.sortedBy { it.slot }
+
+    val primary = sorted.first()
     val secondary = sorted.getOrNull(1)
+
     return PokemonSummary(
-        id = id,
-        name = name,
+        id = response.id,
+        name = response.name,
         type1 = Type(id = primary.type.getId(), name = primary.type.name.orEmpty()),
-        artwork = sprites.other?.officialArtwork?.frontDefault ?: sprites.frontDefault,
         type2 = secondary?.let { Type(id = it.type.getId(), name = it.type.name.orEmpty()) },
     )
 }
 
-internal fun toPokemonSummaryFromNamedResource(resource: NamedApiResource): PokemonSummary =
+internal fun toModel(resource: NamedApiResource) =
     PokemonSummary(
         id = resource.getId(),
         name = resource.name.orEmpty(),

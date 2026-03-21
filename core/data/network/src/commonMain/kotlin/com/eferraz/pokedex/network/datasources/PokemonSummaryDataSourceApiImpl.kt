@@ -2,8 +2,7 @@ package com.eferraz.pokedex.network.datasources
 
 import com.eferraz.pokedex.entity.summary.PokemonSummary
 import com.eferraz.pokedex.network.PokeApi
-import com.eferraz.pokedex.network.mappers.toPokemonSummary
-import com.eferraz.pokedex.network.mappers.toPokemonSummaryFromNamedResource
+import com.eferraz.pokedex.network.mappers.toModel
 import org.koin.core.annotation.Factory
 
 @Factory
@@ -12,8 +11,8 @@ internal class PokemonSummaryDataSourceApiImpl(
 ) : PokemonSummaryDataSourceApi {
 
     override suspend fun get(limit: Int, offset: Int): List<PokemonSummary> =
-        pokeApi.pokemon(limit, offset).results.map(::toPokemonSummaryFromNamedResource)
+        pokeApi.pokemon(limit, offset).results.map(::toModel)
 
     override suspend fun get(id: Long): PokemonSummary =
-        pokeApi.pokemon(id).toPokemonSummary()
+        toModel(pokeApi.pokemon(id))
 }
