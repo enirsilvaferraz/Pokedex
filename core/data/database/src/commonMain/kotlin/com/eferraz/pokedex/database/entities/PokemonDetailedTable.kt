@@ -61,7 +61,7 @@ import com.eferraz.pokedex.entity.detail.PokemonDetailed
         Index(value = ["stats"])
     ]
 )
-internal data class PokemonDetailTable(
+internal data class PokemonDetailedTable(
 
     @PrimaryKey
     @ColumnInfo(name = "pokemon_id")
@@ -88,7 +88,7 @@ internal data class PokemonDetailTable(
 
     companion object {
 
-        internal fun PokemonDetailed.toDetailTable() = PokemonDetailTable(
+        internal fun PokemonDetailed.toDetailTable() = PokemonDetailedTable(
             pokemonId = id,
             image = image,
             typeID1 = type1.id,
