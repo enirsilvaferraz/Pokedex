@@ -1,21 +1,11 @@
 package com.eferraz.pokedex.network.responses.pokemon
 
-import com.eferraz.pokedex.network.responses.pokemon.AbilityEntry
-import com.eferraz.pokedex.network.responses.pokemon.Cries
-import com.eferraz.pokedex.network.responses.pokemon.GameIndex
-import com.eferraz.pokedex.network.responses.pokemon.HeldItem
-import com.eferraz.pokedex.network.responses.pokemon.MoveEntry
 import com.eferraz.pokedex.network.responses.NamedApiResource
-import com.eferraz.pokedex.network.responses.pokemon.PastAbilityEntry
-import com.eferraz.pokedex.network.responses.pokemon.PastTypeEntry
-import com.eferraz.pokedex.network.responses.pokemon.Sprites
-import com.eferraz.pokedex.network.responses.pokemon.StatEntry
-import com.eferraz.pokedex.network.responses.pokemon.TypeEntry
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-internal data class Pokemon(
+internal data class PokemonResponse(
     @SerialName("abilities")
     val abilities: List<AbilityEntry>,
     @SerialName("base_experience")

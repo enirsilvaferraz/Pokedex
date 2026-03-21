@@ -1,21 +1,22 @@
 package com.eferraz.pokedex.network.relationship
 
-import com.eferraz.pokedex.entity.Ability
-import com.eferraz.pokedex.entity.About
-import com.eferraz.pokedex.entity.Breeding
-import com.eferraz.pokedex.entity.EggGroup
-import com.eferraz.pokedex.entity.Move
-import com.eferraz.pokedex.entity.Stats
-import com.eferraz.pokedex.entity.Type
-import com.eferraz.pokedex.network.responses.pokemon.Pokemon
+import com.eferraz.pokedex.entity.detail.Ability
+import com.eferraz.pokedex.entity.detail.About
+import com.eferraz.pokedex.entity.detail.Breeding
+import com.eferraz.pokedex.entity.detail.EggGroup
+import com.eferraz.pokedex.entity.detail.Move
+import com.eferraz.pokedex.entity.detail.PokemonDetailed
+import com.eferraz.pokedex.entity.detail.Stats
+import com.eferraz.pokedex.entity.detail.Type
+import com.eferraz.pokedex.network.responses.pokemon.PokemonResponse
 import com.eferraz.pokedex.network.responses.species.PokemonSpeciesDetail
 
 internal data class PokemonAndSpecie(
-    private val pokemon: Pokemon,
+    private val pokemon: PokemonResponse,
     private val species: PokemonSpeciesDetail,
 ) {
 
-    fun toModel(): Pokemon = Pokemon(
+    fun toModel(): PokemonDetailed = PokemonDetailed(
         id = pokemon.id,
         name = pokemon.name,
         image = pokemon.sprites.other?.officialArtwork?.frontDefault ?: pokemon.sprites.frontDefault,
@@ -42,8 +43,7 @@ internal data class PokemonAndSpecie(
             defense = pokemon.stats.find { it.stat.name == "defense" }?.baseStat ?: 0,
             specialAttack = pokemon.stats.find { it.stat.name == "special-attack" }?.baseStat ?: 0,
             specialDefense = pokemon.stats.find { it.stat.name == "special-defense" }?.baseStat ?: 0,
-            speed = pokemon.stats.find { it.stat.name == "speed" }?.baseStat ?: 0,
-            total = pokemon.stats.sumOf { it.baseStat }
+            speed = pokemon.stats.find { it.stat.name == "speed" }?.baseStat ?: 0
         ),
         moves = pokemon.moves.map { Move(id = it.move.getId(), name = it.move.name.orEmpty()) }
     )
