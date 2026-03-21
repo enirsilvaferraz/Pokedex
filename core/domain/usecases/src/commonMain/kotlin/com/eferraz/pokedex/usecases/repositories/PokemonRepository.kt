@@ -1,7 +1,9 @@
 package com.eferraz.pokedex.usecases.repositories
 
-import com.eferraz.pokedex.entity.PokemonComplete
+import com.eferraz.pokedex.entity.BasePokemon
+import kotlinx.coroutines.flow.Flow
 
 public interface PokemonRepository {
-    public suspend fun get(id: Long): PokemonComplete
+    public fun getAll(): Flow<List<BasePokemon>>
+    public suspend fun fetch(id: Long)
 }

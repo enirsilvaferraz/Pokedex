@@ -1,4 +1,5 @@
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
     alias(libs.plugins.foundation.project)
@@ -15,6 +16,9 @@ koinCompiler {
 kotlin.android {
     namespace = "com.eferraz.usecases"
     compileSdk = libs.versions.android.compileSdk.get().toInt()
+    compilerOptions {
+        jvmTarget.set(JvmTarget.JVM_17)
+    }
 }
 
 kotlin {
