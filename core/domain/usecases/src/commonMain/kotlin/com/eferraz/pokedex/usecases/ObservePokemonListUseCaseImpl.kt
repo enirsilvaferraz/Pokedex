@@ -1,6 +1,6 @@
 package com.eferraz.pokedex.usecases
 
-import com.eferraz.pokedex.entity.BasePokemon
+import com.eferraz.pokedex.entity.summary.PokemonSummary
 import com.eferraz.pokedex.usecases.repositories.PokemonSummaryRepository
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
@@ -13,6 +13,6 @@ internal class ObservePokemonListUseCaseImpl(
     private val repository: PokemonSummaryRepository,
 ) : ObservePokemonListUseCase {
 
-    override fun invoke(): Flow<List<BasePokemon>> =
+    override fun invoke(): Flow<List<PokemonSummary>> =
         repository.getAll().flowOn(dispatcher)
 }

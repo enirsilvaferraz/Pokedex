@@ -8,31 +8,31 @@ import com.eferraz.pokedex.entity.detail.Breeding
 
 @Entity(
     tableName = "breeding_egg_groups",
-    primaryKeys = ["breeding_id", "egg_group_id"],
+    primaryKeys = ["species_id", "egg_group_id"],
     indices = [
-        Index(value = ["egg_group_id"])
+        Index(value = ["egg_group_id"]),
     ],
     foreignKeys = [
         ForeignKey(
             entity = BreedingTable::class,
-            parentColumns = ["breeding_id"],
-            childColumns = ["breeding_id"],
+            parentColumns = ["species_id"],
+            childColumns = ["species_id"],
             onDelete = ForeignKey.CASCADE,
-            onUpdate = ForeignKey.CASCADE
+            onUpdate = ForeignKey.CASCADE,
         ),
         ForeignKey(
             entity = EggGroupTable::class,
             parentColumns = ["egg_group_id"],
             childColumns = ["egg_group_id"],
             onDelete = ForeignKey.CASCADE,
-            onUpdate = ForeignKey.CASCADE
+            onUpdate = ForeignKey.CASCADE,
         ),
-    ]
+    ],
 )
 internal data class BreedingEggGroupCrossRef(
 
-    @ColumnInfo(name = "breeding_id")
-    val breedingId: Long,
+    @ColumnInfo(name = "species_id")
+    val speciesId: Long,
 
     @ColumnInfo(name = "egg_group_id")
     val eggGroupId: Long,
@@ -41,8 +41,8 @@ internal data class BreedingEggGroupCrossRef(
     companion object {
         internal fun Breeding.toCrossRef() = this.eggGroups.map {
             BreedingEggGroupCrossRef(
-                breedingId = this.id,
-                eggGroupId = it.id
+                speciesId = this.id,
+                eggGroupId = it.id,
             )
         }
     }

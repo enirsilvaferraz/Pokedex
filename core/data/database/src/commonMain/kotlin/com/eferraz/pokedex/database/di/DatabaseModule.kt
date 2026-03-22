@@ -38,6 +38,9 @@ public class DatabaseModule {
     internal fun providePokemonDao(database: AppDatabase) = database.pokemonDao()
 
     @Single
+    internal fun provideSpeciesDao(database: AppDatabase) = database.speciesDao()
+
+    @Single
     internal fun providePokemonDetailedDao(database: AppDatabase) = database.pokemonDetailedDao()
 
     @Single

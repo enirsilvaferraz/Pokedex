@@ -25,15 +25,6 @@ kotlin {
 
     @OptIn(ExperimentalKotlinGradlePluginApi::class)
     dependencies {
-
         api(projects.domain.entity)
-
-        implementation(libs.paging.common)
-    }
-
-    sourceSets {
-        jvmTest.dependencies {
-            implementation(libs.androidx.paging.testing)
-        }
     }
 }

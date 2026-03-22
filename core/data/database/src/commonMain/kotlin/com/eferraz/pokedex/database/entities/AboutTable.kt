@@ -12,30 +12,25 @@ internal data class AboutTable(
     @ColumnInfo(name = "about_id")
     val id: Long,
 
-    @ColumnInfo(name = "description")
-    val description: String,
-
-    @ColumnInfo(name = "genera")
-    val species: String,
-
-    @ColumnInfo(name = "category")
-    val category: String,
-
     @ColumnInfo(name = "weight")
     val weight: Float,
 
     @ColumnInfo(name = "height")
-    val height: Float
+    val height: Float,
 ) {
+
+    fun toModel(abilities: List<AbilityTable>): About = About(
+        id = id,
+        height = height,
+        weight = weight,
+        abilities = abilities.map { it.toModel() },
+    )
 
     companion object {
         internal fun About.toTable() = AboutTable(
             id = id,
-            description = description,
-            species = species,
-            category = category,
             height = height,
-            weight = weight
+            weight = weight,
         )
     }
 }

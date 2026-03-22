@@ -10,3 +10,14 @@ plugins {
     alias(libs.plugins.room) apply false
     alias(libs.plugins.koin.compiler) apply false
 }
+
+subprojects {
+    configurations.configureEach {
+        resolutionStrategy.eachDependency {
+            if (requested.group == "org.jetbrains.skiko") {
+                useVersion(libs.versions.skiko.get())
+                because("Alinha Skiko com Compose Multiplatform (evita conflito transitivo Coil → Skiko antigo).")
+            }
+        }
+    }
+}

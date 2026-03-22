@@ -1,43 +1,38 @@
 package com.eferraz.pokedex.ui.pokedex
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberUpdatedState
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
-import com.eferraz.pokedex.components.PokemonItemListView
-import com.eferraz.pokedex.entity.BasePokemon
+import com.eferraz.pokedex.components.templates.AppScaffold
+import com.eferraz.pokedex.components.templates.FailureScreen
+import com.eferraz.pokedex.components.templates.LoadingScreen
 import com.eferraz.pokedex.entity.detail.Type
 import com.eferraz.pokedex.entity.summary.PokemonSummary
-import com.eferraz.pokedex.helpers.AppScaffold
+import com.eferraz.pokedex.components.templates.PokedexTheme
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
+import pokedex.features.composeapp.generated.resources.Res
+import pokedex.features.composeapp.generated.resources.pokedex_title
 
 @Composable
 internal fun PokedexScreen(
     modifier: Modifier = Modifier,
-    onClick: (BasePokemon) -> Unit,
+    onClick: (PokemonSummary) -> Unit,
 ) {
 
     val vm: PokedexViewModel = koinViewModel()
@@ -50,43 +45,51 @@ internal fun PokedexScreen(
     )
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun PokedexScreen(
     modifier: Modifier = Modifier,
     stateFlow: StateFlow<PokedexViewModel.UiState>,
-    onClick: (BasePokemon) -> Unit,
+    onClick: (PokemonSummary) -> Unit,
     onIntent: (PokedexViewModel.Intent) -> Unit,
 ) {
 
     val state by stateFlow.collectAsState()
 
-    AppScaffold(
-        modifier = modifier,
-        title = "Pokedex",
-    ) { innerModifier ->
+    PokedexTheme {
 
-        when (val s = state) {
+        AppScaffold(
+            modifier = modifier,
+            title = stringResource(Res.string.pokedex_title),
+            containerColor = MaterialTheme.colorScheme.surface,
+            onContainerColor = MaterialTheme.colorScheme.onSurface
+        ) { innerModifier ->
 
-            PokedexViewModel.UiState.Error -> {
-                FailureScreen(
-                    modifier = innerModifier,
-                    onClick = remember { { onIntent(PokedexViewModel.Intent.Retry) } },
-                )
-            }
+            when (val innerState = state) {
 
-            PokedexViewModel.UiState.Loading -> {
-                LoadingScreen(
-                    modifier = innerModifier,
-                )
-            }
+                PokedexViewModel.UiState.Error -> {
+                    FailureScreen(
+                        modifier = innerModifier,
+                        onContainerColor = MaterialTheme.colorScheme.onSurface,
+                        onClick = remember { { onIntent(PokedexViewModel.Intent.Retry) } },
+                    )
+                }
 
-            is PokedexViewModel.UiState.Success -> {
-                SuccessScreen(
-                    modifier = innerModifier,
-                    summariesById = s.summaries,
-                    onClick = onClick,
-                    onItemVisible = remember { { onIntent(PokedexViewModel.Intent.ItemVisible(it)) } },
-                )
+                PokedexViewModel.UiState.Loading -> {
+                    LoadingScreen(
+                        modifier = innerModifier,
+                        onContainerColor = MaterialTheme.colorScheme.onSurface
+                    )
+                }
+
+                is PokedexViewModel.UiState.Success -> {
+                    SuccessScreen(
+                        modifier = innerModifier,
+                        summariesById = innerState.summaries,
+                        onClick = onClick,
+                        onItemVisible = remember { { onIntent(PokedexViewModel.Intent.ItemVisible(it)) } },
+                    )
+                }
             }
         }
     }
@@ -95,9 +98,9 @@ private fun PokedexScreen(
 @Composable
 private fun SuccessScreen(
     modifier: Modifier,
-    summariesById: Map<Long, BasePokemon>,
-    onClick: (BasePokemon) -> Unit,
-    onItemVisible: (BasePokemon) -> Unit,
+    summariesById: Map<Long, PokemonSummary>,
+    onClick: (PokemonSummary) -> Unit,
+    onItemVisible: (PokemonSummary) -> Unit,
 ) {
 
     val rowsInListOrder = remember(summariesById) {
@@ -106,7 +109,7 @@ private fun SuccessScreen(
 
     LazyColumn(
         modifier = modifier,
-        contentPadding = PaddingValues(24.dp),
+        contentPadding = PaddingValues(bottom = 36.dp),
     ) {
 
         items(
@@ -129,101 +132,47 @@ private fun SuccessScreen(
     }
 }
 
-@Composable
-private fun LoadingScreen(
-    modifier: Modifier,
-) {
-
-    Box(
-        modifier = modifier.fillMaxSize(),
-        contentAlignment = Alignment.Center,
-    ) {
-        CircularProgressIndicator()
-    }
-}
-
-@Composable
-private fun FailureScreen(
-    modifier: Modifier,
-    onClick: () -> Unit,
-) {
-    Column(
-        modifier = modifier.fillMaxSize().padding(24.dp),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center,
-    ) {
-
-        Text(
-            text = "Não foi possível carregar a lista.",
-            style = MaterialTheme.typography.bodyLarge,
-            textAlign = TextAlign.Center,
-        )
-
-        TextButton(onClick = onClick) {
-            Text("Tentar novamente")
-        }
-    }
-}
-
 @Preview
 @Composable
-private fun NewPokedexScreenPreview(
-    @PreviewParameter(NewPokedexStatePreviewProvider::class) state: PokedexViewModel.UiState,
+private fun PokedexScreenPreview(
+    @PreviewParameter(PokedexStatePreviewProvider::class) state: PokedexViewModel.UiState,
 ) {
-    val stateFlow = remember(state) { MutableStateFlow(state) }
     PokedexScreen(
-        stateFlow = stateFlow,
+        stateFlow = remember(state) { MutableStateFlow(state) },
         onClick = {},
         onIntent = {},
     )
 }
 
-@Preview
-@Composable
-private fun NewPokedexSuccessScreenPreview() {
-    val items = newPokedexPreviewPokemonList()
-    val success = PokedexViewModel.UiState.Success(
-        summaries = items.associateBy { it.id },
-    )
-    val stateFlow = remember { MutableStateFlow<PokedexViewModel.UiState>(success) }
-    PokedexScreen(
-        stateFlow = stateFlow,
-        onClick = {},
-        onIntent = {},
-    )
-}
+private class PokedexStatePreviewProvider : PreviewParameterProvider<PokedexViewModel.UiState> {
 
-private fun newPokedexPreviewPokemonList(): List<PokemonSummary> = listOf(
-    PokemonSummary(
-        id = 1,
-        name = "bulbasaur",
-        type1 = Type(12, "grass"),
-        artwork = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png",
-        type2 = Type(4, "poison"),
-    ),
-    PokemonSummary(
-        id = 4,
-        name = "charmander",
-        type1 = Type(10, "fire"),
-        artwork = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/4.png",
-        type2 = null,
-    ),
-    PokemonSummary(
-        id = 25,
-        name = "pikachu",
-        type1 = Type(13, "electric"),
-        artwork = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/25.png",
-        type2 = null,
-    ),
-)
+    override val values: Sequence<PokedexViewModel.UiState> = sequenceOf(
+        PokedexViewModel.UiState.Loading,
+        PokedexViewModel.UiState.Error,
+        PokedexViewModel.UiState.Success(summaries = pokemonList().associateBy { it.id }),
+    )
 
-private class NewPokedexStatePreviewProvider : PreviewParameterProvider<PokedexViewModel.UiState> {
-    override val values: Sequence<PokedexViewModel.UiState> = run {
-        val previewItems = newPokedexPreviewPokemonList()
-        sequenceOf(
-            PokedexViewModel.UiState.Loading,
-            PokedexViewModel.UiState.Error,
-            PokedexViewModel.UiState.Success(summaries = previewItems.associateBy { it.id },),
-        )
-    }
+    private fun pokemonList(): List<PokemonSummary> = listOf(
+        PokemonSummary(
+            id = 1,
+            name = "bulbasaur",
+            type1 = Type(12, "grass"),
+            artwork = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png",
+            type2 = Type(4, "poison"),
+        ),
+        PokemonSummary(
+            id = 4,
+            name = "charmander",
+            type1 = Type(10, "fire"),
+            artwork = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/4.png",
+            type2 = null,
+        ),
+        PokemonSummary(
+            id = 25,
+            name = "pikachu",
+            type1 = Type(13, "electric"),
+            artwork = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/25.png",
+            type2 = null,
+        ),
+    )
 }

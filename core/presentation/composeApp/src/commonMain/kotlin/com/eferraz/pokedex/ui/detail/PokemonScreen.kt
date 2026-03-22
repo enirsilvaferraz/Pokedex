@@ -3,85 +3,147 @@ package com.eferraz.pokedex.ui.detail
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Arrangement.spacedBy
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.FlowRow
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.MediumTopAppBar
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBarDefaults
-import androidx.compose.material3.TopAppBarScrollBehavior
-import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.key
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.input.nestedscroll.nestedScroll
-import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewParameter
+import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
-import com.eferraz.pokedex.helpers.PokedexTheme
-import com.eferraz.pokedex.helpers.edgeToEdgePadding
+import com.eferraz.pokedex.components.templates.AppScaffold
+import com.eferraz.pokedex.components.templates.FailureScreen
+import com.eferraz.pokedex.components.templates.LoadingScreen
+import com.eferraz.pokedex.components.templates.PokedexTheme
+import com.eferraz.pokedex.core.params.PokemonSummaryParam
 import com.eferraz.pokedex.ui.detail.components.CardComponent
 import com.eferraz.pokedex.ui.detail.components.CardTitleComponent
-import com.eferraz.pokedex.ui.detail.vos.PokemonDetailVo
-import com.eferraz.pokedex.ui.detail.widgets.TypeTagsWidget
+import com.eferraz.pokedex.ui.detail.components.TypeTagsWidget
+import com.eferraz.pokedex.ui.detail.data.PokemonDetailDataView
+import com.eferraz.pokedex.ui.detail.data.PokemonDetailStructureView
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import org.jetbrains.compose.resources.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
 import org.koin.core.parameter.parametersOf
 import pokedex.features.composeapp.generated.resources.Res
 import pokedex.features.composeapp.generated.resources.detail_about
-import pokedex.features.composeapp.generated.resources.detail_back_button
+import pokedex.features.composeapp.generated.resources.detail_about_abilities
+import pokedex.features.composeapp.generated.resources.detail_about_category
+import pokedex.features.composeapp.generated.resources.detail_about_height
+import pokedex.features.composeapp.generated.resources.detail_about_species
+import pokedex.features.composeapp.generated.resources.detail_about_weight
 import pokedex.features.composeapp.generated.resources.detail_breeding
+import pokedex.features.composeapp.generated.resources.detail_breeding_egg_groups
+import pokedex.features.composeapp.generated.resources.detail_breeding_female
+import pokedex.features.composeapp.generated.resources.detail_breeding_male
 import pokedex.features.composeapp.generated.resources.detail_moves
 import pokedex.features.composeapp.generated.resources.detail_stats
+import pokedex.features.composeapp.generated.resources.detail_stats_atk
+import pokedex.features.composeapp.generated.resources.detail_stats_def
+import pokedex.features.composeapp.generated.resources.detail_stats_hp
+import pokedex.features.composeapp.generated.resources.detail_stats_sp_atk
+import pokedex.features.composeapp.generated.resources.detail_stats_sp_def
+import pokedex.features.composeapp.generated.resources.detail_stats_speed
+import pokedex.features.composeapp.generated.resources.detail_stats_total
 
 @Composable
-internal fun PokemonRoute(
+internal fun PokemonScreen(
     modifier: Modifier = Modifier,
-    id: Long,
+    ref: PokemonSummaryParam,
     onNavigateBack: () -> Unit = {},
 ) {
 
-    val vm: PokemonViewModel = koinViewModel(parameters = { parametersOf(id) })
-    val state by vm.state.collectAsState()
+    val vm: PokemonViewModel = koinViewModel(parameters = { parametersOf(ref) })
 
     PokemonScreen(
         modifier = modifier,
-        state = state,
-        onNavigateBack = onNavigateBack
+        stateFlow = vm.state,
+        onNavigateBack = onNavigateBack,
+        onIntent = remember { { vm.dispatch(it) } },
     )
 }
 
 @Composable
 private fun PokemonScreen(
-    modifier: Modifier,
-    state: PokemonViewModel.State,
+    modifier: Modifier = Modifier,
+    stateFlow: StateFlow<PokemonViewModel.State>,
     onNavigateBack: () -> Unit,
+    onIntent: (PokemonViewModel.Intent) -> Unit,
 ) {
 
+    val state by stateFlow.collectAsState()
+
     PokedexTheme {
-        when (state) {
-            PokemonViewModel.Error -> {} // TODO implementar tela de error
-            PokemonViewModel.Loading -> {} // TODO implementar tela de loading
-            is PokemonViewModel.Success -> SuccessScreen(modifier, state.vo, onNavigateBack)
+
+        AppScaffold(
+            modifier = modifier,
+            title = {
+                Row {
+
+                    Text(
+                        text = state.structure.title,
+                        style = MaterialTheme.typography.headlineLarge,
+                        modifier = Modifier.weight(1f)
+                    )
+
+                    Text(
+                        text = state.structure.id,
+                        style = MaterialTheme.typography.headlineLarge,
+                        modifier = Modifier.padding(end = 24.dp)
+                    )
+                }
+            },
+            onNavigateBack = onNavigateBack,
+            containerColor = state.structure.background,
+            onContainerColor = state.structure.onBackground
+        ) { innerModifier ->
+
+            when (val innerState = state) {
+
+                is PokemonViewModel.State.Error -> {
+                    FailureScreen(
+                        modifier = innerModifier,
+                        onContainerColor = state.structure.onBackground,
+                        onClick = remember { { onIntent(PokemonViewModel.Intent.Retry) } },
+                    )
+                }
+
+                is PokemonViewModel.State.Loading -> {
+                    LoadingScreen(
+                        modifier = innerModifier,
+                        onContainerColor = state.structure.onBackground
+                    )
+                }
+
+                is PokemonViewModel.State.Success -> {
+                    SuccessScreen(
+                        modifier = innerModifier,
+                        vo = innerState.data,
+                        onNavigateBack = onNavigateBack,
+                    )
+                }
+            }
         }
     }
 }
@@ -90,144 +152,83 @@ private fun PokemonScreen(
 @OptIn(ExperimentalMaterial3Api::class)
 private fun SuccessScreen(
     modifier: Modifier,
-    vo: PokemonDetailVo,
+    vo: PokemonDetailDataView,
     onNavigateBack: () -> Unit,
 ) {
 
-    val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior(rememberTopAppBarState())
+    Column(
+        modifier = modifier.verticalScroll(rememberScrollState()),
+        verticalArrangement = spacedBy(16.dp),
+    ) {
 
-    Scaffold(
-        modifier = modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
-        topBar = {
-            TopBar(
-                name = vo.header.name,
-                id = vo.header.id,
-                onNavigateBack = onNavigateBack,
-                scrollBehavior = scrollBehavior
+        TypeTagsWidget(types = vo.types)
+
+        WidgetTemplate {
+            AsyncImage(
+                modifier = Modifier.fillMaxWidth().height(200.dp),
+                model = vo.image.url,
+                contentDescription = vo.image.contentDescription
             )
-        },
-        containerColor = vo.background.color
-    ) { padding ->
-
-        LazyColumn(
-            modifier = Modifier.edgeToEdgePadding(padding, LocalLayoutDirection.current),
-            verticalArrangement = spacedBy(16.dp),
-            contentPadding = PaddingValues(start = 24.dp, end = 24.dp, bottom = 32.dp)
-        ) {
-
-            item {
-                TypeTagsWidget(types = vo.types)
-            }
-
-            item {
-                WidgetTemplate {
-                    AsyncImage(
-                        modifier = Modifier.fillMaxWidth().height(200.dp),
-                        model = vo.image.url,
-                        contentDescription = vo.image.contentDescription
-                    )
-                }
-            }
-
-            item {
-                WidgetTemplate {
-                    Text(
-                        text = vo.description,
-                        style = MaterialTheme.typography.bodyMedium
-                    )
-                }
-            }
-
-            item {
-                WidgetTemplate(
-                    title = stringResource(Res.string.detail_about),
-                    items = vo.about,
-                    onItem = {
-                        FieldValueComponent(
-                            field = stringResource(it.field),
-                            value = it.value
-                        )
-                    }
-                )
-            }
-
-            item {
-                WidgetTemplate(
-                    title = stringResource(Res.string.detail_breeding),
-                    items = vo.breeding,
-                    onItem = {
-                        FieldValueComponent(
-                            field = stringResource(it.field),
-                            value = it.value
-                        )
-                    }
-                )
-            }
-
-            item {
-                WidgetTemplate(
-                    title = stringResource(Res.string.detail_stats),
-                    items = vo.stats,
-                    onItem = {
-                        ChartComponent(
-                            field = stringResource(it.field),
-                            value = it.value,
-                            progress = it.progress,
-                            color = it.color
-                        )
-                    }
-                )
-            }
-
-            item {
-                WidgetTemplate(
-                    title = stringResource(Res.string.detail_moves),
-                    columns = 2,
-                    items = vo.moves,
-                    onItem = {
-                        GridFieldValueComponent(
-                            key = it.id,
-                            value = it.name
-                        )
-                    }
-                )
-            }
         }
-    }
-}
 
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-private fun TopBar(
-    name: String,
-    id: String,
-    onNavigateBack: () -> Unit,
-    scrollBehavior: TopAppBarScrollBehavior,
-) {
-    MediumTopAppBar(
-        title = {
-            Row {
-                Text(name, color = Color.White, modifier = Modifier.weight(1f))
-                Text(id, color = Color.White, modifier = Modifier.padding(end = 24.dp))
-            }
-        },
-        navigationIcon = {
-            IconButton(onClick = onNavigateBack) {
-                Icon(
-                    imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                    contentDescription = stringResource(Res.string.detail_back_button),
-                    tint = Color.White
+        WidgetTemplate {
+            Text(
+                text = vo.description,
+                style = MaterialTheme.typography.bodyMedium
+            )
+        }
+
+        WidgetTemplate(
+            title = stringResource(Res.string.detail_about),
+            items = vo.about,
+            onItem = {
+                FieldValueComponent(
+                    field = stringResource(it.field),
+                    value = it.value
                 )
             }
-        },
-        colors = TopAppBarDefaults.topAppBarColors(
-            containerColor = Color.Transparent,
-            scrolledContainerColor = Color.Transparent,
-        ),
-        scrollBehavior = scrollBehavior
-    )
-}
+        )
 
+        WidgetTemplate(
+            title = stringResource(Res.string.detail_breeding),
+            items = vo.breeding,
+            onItem = {
+                FieldValueComponent(
+                    field = stringResource(it.field),
+                    value = it.value
+                )
+            }
+        )
+
+        WidgetTemplate(
+            title = stringResource(Res.string.detail_stats),
+            items = vo.stats,
+            onItem = {
+                ChartComponent(
+                    field = stringResource(it.field),
+                    value = it.value,
+                    progress = it.progress,
+                    color = it.color
+                )
+            }
+        )
+
+        WidgetTemplate(
+            title = stringResource(Res.string.detail_moves),
+            columns = 2,
+            items = vo.moves,
+            onItem = {
+                GridFieldValueComponent(
+                    key = it.id,
+                    value = it.name
+                )
+            }
+        )
+
+        Spacer(Modifier.padding(bottom = 32.dp))
+    }
+
+}
 
 @Composable
 internal fun WidgetTemplate(
@@ -305,7 +306,7 @@ internal fun FieldValueComponent(
     modifier: Modifier = Modifier,
     field: String,
     value: String,
-){
+) {
 
     Row(verticalAlignment = CenterVertically) {
 
@@ -360,32 +361,66 @@ internal fun ChartComponent(
     }
 }
 
-//@Preview
-//@Composable
-//private fun SuccessScreenPreview() {
-//    PokemonScreen(
-//        modifier = Modifier,
-//        state = PokemonViewModel.Success(pokemon),
-//        onNavigateBack = {}
-//    )
-//}
-
 @Preview
 @Composable
-private fun LoadingScreenPreview() {
+private fun PokemonScreenPreview(
+    @PreviewParameter(PokemonStatePreviewProvider::class) state: PokemonViewModel.State,
+) {
     PokemonScreen(
-        modifier = Modifier,
-        state = PokemonViewModel.Loading,
-        onNavigateBack = {}
+        stateFlow = remember(state) { MutableStateFlow(state) },
+        onNavigateBack = {},
+        onIntent = {},
     )
 }
 
-@Preview
-@Composable
-private fun FailureScreenPreview() {
-    PokemonScreen(
-        modifier = Modifier,
-        state = PokemonViewModel.Error,
-        onNavigateBack = {}
+private class PokemonStatePreviewProvider : PreviewParameterProvider<PokemonViewModel.State> {
+
+    val structure1 = PokemonDetailStructureView(PokemonSummaryParam(1, "Bulbasaur", "", "Grass"))
+    val structure2 = PokemonDetailStructureView(PokemonSummaryParam(25, "Pikachu", "", "Electric"))
+
+    override val values: Sequence<PokemonViewModel.State> = sequenceOf(
+        PokemonViewModel.State.Loading(structure1),
+        PokemonViewModel.State.Error(structure1),
+        PokemonViewModel.State.Success(structure1, data = previewDetailVo()),
+        PokemonViewModel.State.Loading(structure2),
+        PokemonViewModel.State.Error(structure2),
+        PokemonViewModel.State.Success(structure2, data = previewDetailVo()),
     )
 }
+
+private fun previewDetailVo(): PokemonDetailDataView = PokemonDetailDataView(
+    types = listOf(
+        PokemonDetailDataView.Type("Grass"),
+        PokemonDetailDataView.Type("Poison"),
+    ),
+    image = PokemonDetailDataView.ArtWork(
+        url = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png",
+        contentDescription = "Bulbasaur",
+    ),
+    description = "A strange seed was planted on its back at birth.",
+    about = listOf(
+        PokemonDetailDataView.FieldValue(Res.string.detail_about_species, "Seed"),
+        PokemonDetailDataView.FieldValue(Res.string.detail_about_category, "Seed Pokémon"),
+        PokemonDetailDataView.FieldValue(Res.string.detail_about_height, "70 cm"),
+        PokemonDetailDataView.FieldValue(Res.string.detail_about_weight, "6.9 kg"),
+        PokemonDetailDataView.FieldValue(Res.string.detail_about_abilities, "Overgrow"),
+    ),
+    breeding = listOf(
+        PokemonDetailDataView.FieldValue(Res.string.detail_breeding_male, "87.5%"),
+        PokemonDetailDataView.FieldValue(Res.string.detail_breeding_female, "12.5%"),
+        PokemonDetailDataView.FieldValue(Res.string.detail_breeding_egg_groups, "Monster, Grass"),
+    ),
+    stats = listOf(
+        PokemonDetailDataView.Stat(Res.string.detail_stats_hp, 45),
+        PokemonDetailDataView.Stat(Res.string.detail_stats_atk, 49),
+        PokemonDetailDataView.Stat(Res.string.detail_stats_def, 49),
+        PokemonDetailDataView.Stat(Res.string.detail_stats_sp_atk, 65),
+        PokemonDetailDataView.Stat(Res.string.detail_stats_sp_def, 65),
+        PokemonDetailDataView.Stat(Res.string.detail_stats_speed, 45),
+        PokemonDetailDataView.Stat(Res.string.detail_stats_total, 318, 600),
+    ),
+    moves = listOf(
+        PokemonDetailDataView.Move("#001", "Tackle"),
+        PokemonDetailDataView.Move("#002", "Growl"),
+    ),
+)

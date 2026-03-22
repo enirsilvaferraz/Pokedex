@@ -26,7 +26,7 @@ internal class PokeApi(
         url("pokemon/$id")
     }.body<PokemonResponse>()
 
-    suspend fun speciesById(id: Long) = config.client.get {
+    suspend fun species(id: Long) = config.client.get {
         url("pokemon-species/$id")
     }.body<PokemonSpeciesDetail>()
 }

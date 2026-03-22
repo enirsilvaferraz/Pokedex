@@ -15,51 +15,51 @@ import com.eferraz.pokedex.entity.detail.PokemonDetailed
             parentColumns = ["pokemon_id"],
             childColumns = ["pokemon_id"],
             onDelete = ForeignKey.CASCADE,
-            onUpdate = ForeignKey.CASCADE
+            onUpdate = ForeignKey.CASCADE,
         ),
         ForeignKey(
             entity = TypeTable::class,
             parentColumns = ["type_id"],
             childColumns = ["type1"],
             onDelete = ForeignKey.CASCADE,
-            onUpdate = ForeignKey.CASCADE
+            onUpdate = ForeignKey.CASCADE,
         ),
         ForeignKey(
             entity = TypeTable::class,
             parentColumns = ["type_id"],
             childColumns = ["type2"],
             onDelete = ForeignKey.CASCADE,
-            onUpdate = ForeignKey.CASCADE
+            onUpdate = ForeignKey.CASCADE,
+        ),
+        ForeignKey(
+            entity = SpeciesTable::class,
+            parentColumns = ["species_id"],
+            childColumns = ["species"],
+            onDelete = ForeignKey.CASCADE,
+            onUpdate = ForeignKey.CASCADE,
         ),
         ForeignKey(
             entity = AboutTable::class,
             parentColumns = ["about_id"],
             childColumns = ["about"],
             onDelete = ForeignKey.CASCADE,
-            onUpdate = ForeignKey.CASCADE
-        ),
-        ForeignKey(
-            entity = BreedingTable::class,
-            parentColumns = ["breeding_id"],
-            childColumns = ["breeding"],
-            onDelete = ForeignKey.CASCADE,
-            onUpdate = ForeignKey.CASCADE
+            onUpdate = ForeignKey.CASCADE,
         ),
         ForeignKey(
             entity = StatsTable::class,
             parentColumns = ["stats_id"],
             childColumns = ["stats"],
             onDelete = ForeignKey.CASCADE,
-            onUpdate = ForeignKey.CASCADE
+            onUpdate = ForeignKey.CASCADE,
         ),
     ],
     indices = [
         Index(value = ["type1"]),
         Index(value = ["type2"]),
+        Index(value = ["species"]),
         Index(value = ["about"]),
-        Index(value = ["breeding"]),
-        Index(value = ["stats"])
-    ]
+        Index(value = ["stats"]),
+    ],
 )
 internal data class PokemonDetailedTable(
 
@@ -76,11 +76,11 @@ internal data class PokemonDetailedTable(
     @ColumnInfo(name = "type2")
     val typeID2: Long? = null,
 
+    @ColumnInfo(name = "species")
+    val speciesID: Long? = null,
+
     @ColumnInfo(name = "about")
     val aboutID: Long,
-
-    @ColumnInfo(name = "breeding")
-    val breedingID: Long,
 
     @ColumnInfo(name = "stats")
     val statsID: Long,
@@ -93,8 +93,8 @@ internal data class PokemonDetailedTable(
             image = image,
             typeID1 = type1.id,
             typeID2 = type2?.id,
+            speciesID = species?.id,
             aboutID = about.id,
-            breedingID = breeding.id,
             statsID = stats.id,
         )
     }

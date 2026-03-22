@@ -2,37 +2,66 @@ package com.eferraz.pokedex.ui.detail
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.eferraz.pokedex.ui.detail.vos.PokemonDetailVo
-import com.eferraz.pokedex.usecases.repositories.PokemonSummaryRepository
+import com.eferraz.pokedex.core.params.PokemonSummaryParam
+import com.eferraz.pokedex.ui.detail.data.PokemonDetailDataView
+import com.eferraz.pokedex.ui.detail.data.PokemonDetailStructureView
+import com.eferraz.pokedex.usecases.GetPokemonDetailsUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import org.koin.core.annotation.KoinViewModel
 import org.koin.core.annotation.InjectedParam
+import org.koin.core.annotation.KoinViewModel
 import org.koin.core.annotation.Provided
 
 @KoinViewModel
 internal class PokemonViewModel(
-    @InjectedParam private val id: Long,
-    @Provided private val useCase: PokemonSummaryRepository,
+    @InjectedParam private val ref: PokemonSummaryParam,
+    @Provided private val useCase: GetPokemonDetailsUseCase,
 ) : ViewModel() {
 
-    private val _state = MutableStateFlow<State>(Loading)
-    val state = _state.asStateFlow()
+    val structure: PokemonDetailStructureView by lazy { PokemonDetailStructureView(ref) }
+
+    val state: StateFlow<State> field = MutableStateFlow<State>(State.Loading(structure))
 
     init {
-        viewModelScope.launch {
-            runCatching {
-//                _state.update { Success(PokemonDetailVo(useCase.get(id))) }
-            }.getOrElse {
-                _state.update { Error }
-            }
+        dispatch(Intent.InitialLoad)
+    }
+
+    internal fun dispatch(intent: Intent) = when (intent) {
+        Intent.InitialLoad -> executeLoad()
+        Intent.Retry -> {
+            state.update { State.Loading(structure) }
+            executeLoad()
         }
     }
 
-    internal sealed interface State
-    internal object Loading : State
-    internal data class Success(val vo: PokemonDetailVo) : State
-    internal object Error : State
+    private fun executeLoad() {
+
+        viewModelScope.launch {
+
+            useCase(GetPokemonDetailsUseCase.Params(ref.id))
+                .onSuccess { detailed ->
+                    state.update { State.Success(structure, PokemonDetailDataView(detailed)) }
+                }
+                .onFailure {
+                    state.update { State.Error(structure) }
+                }
+        }
+    }
+
+    internal sealed interface State {
+
+        val structure: PokemonDetailStructureView
+
+        data class Loading(override val structure: PokemonDetailStructureView) : State
+        data class Success(override val structure: PokemonDetailStructureView, val data: PokemonDetailDataView) : State
+        data class Error(override val structure: PokemonDetailStructureView) : State
+    }
+
+
+    internal sealed interface Intent {
+        data object InitialLoad : Intent
+        data object Retry : Intent
+    }
 }

@@ -13,6 +13,7 @@ import com.eferraz.pokedex.database.daos.MoveDao
 import com.eferraz.pokedex.database.daos.PokemonDetailedDao
 import com.eferraz.pokedex.database.daos.PokemonSummaryDao
 import com.eferraz.pokedex.database.daos.PokemonWithMovesDao
+import com.eferraz.pokedex.database.daos.SpeciesDao
 import com.eferraz.pokedex.database.daos.StatsDao
 import com.eferraz.pokedex.database.daos.TypeDao
 import com.eferraz.pokedex.database.entities.AbilityTable
@@ -25,6 +26,7 @@ import com.eferraz.pokedex.database.entities.MoveTable
 import com.eferraz.pokedex.database.entities.PokemonDetailedTable
 import com.eferraz.pokedex.database.entities.PokemonMovesCrossRef
 import com.eferraz.pokedex.database.entities.PokemonSummaryTable
+import com.eferraz.pokedex.database.entities.SpeciesTable
 import com.eferraz.pokedex.database.entities.StatsTable
 import com.eferraz.pokedex.database.entities.TypeTable
 import com.eferraz.pokedex.database.views.PokemonSummaryView
@@ -41,6 +43,7 @@ import com.eferraz.pokedex.database.views.PokemonSummaryView
         PokemonMovesCrossRef::class,
         PokemonSummaryTable::class,
         PokemonDetailedTable::class,
+        SpeciesTable::class,
         StatsTable::class,
         TypeTable::class
     ],
@@ -65,6 +68,8 @@ internal abstract class AppDatabase : RoomDatabase() {
     abstract fun moveDao(): MoveDao
 
     abstract fun pokemonDao(): PokemonSummaryDao
+
+    abstract fun speciesDao(): SpeciesDao
 
     abstract fun pokemonDetailedDao(): PokemonDetailedDao
 

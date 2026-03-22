@@ -1,12 +1,10 @@
 package com.eferraz.pokedex.network.responses.species
 
-import com.eferraz.pokedex.network.responses.species.FlavorText
-import com.eferraz.pokedex.network.responses.species.Genus
+import com.eferraz.pokedex.entity.detail.Breeding
+import com.eferraz.pokedex.entity.detail.EggGroup
+import com.eferraz.pokedex.entity.detail.Species
 import com.eferraz.pokedex.network.responses.NamedApiResource
-import com.eferraz.pokedex.network.responses.species.PalParkEncounterArea
 import com.eferraz.pokedex.network.responses.pokedex.PokedexName
-import com.eferraz.pokedex.network.responses.species.PokemonSpeciesDexEntry
-import com.eferraz.pokedex.network.responses.species.PokemonSpeciesVariety
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -63,5 +61,21 @@ internal data class PokemonSpeciesDetail(
     @SerialName("genera")
     val genera: List<Genus>,
     @SerialName("varieties")
-    val varieties: List<PokemonSpeciesVariety>
-)
+    val varieties: List<PokemonSpeciesVariety>,
+) {
+
+    internal fun toModel() = Species(
+        id = id.toLong(),
+        description = flavorTextEntries.firstOrNull { it.language.name == "en" }?.flavorText.cleanUp(),
+        species = genera.firstOrNull { it.language.name == "en" }?.genus.orEmpty(),
+        category = shape?.name.orEmpty(),
+        breeding = Breeding(
+            id = id.toLong(),
+            genderRatio = genderRate.toFloat(),
+            eggGroups = eggGroups.map { EggGroup(id = it.getId(), name = it.name.orEmpty()) },
+        ),
+    )
+
+    private fun String?.cleanUp() =
+        this?.replace("\n", " ")?.replace(Regex("\\f"), " ").orEmpty()
+}

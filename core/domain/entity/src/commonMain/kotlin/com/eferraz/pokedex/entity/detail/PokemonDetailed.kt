@@ -9,8 +9,8 @@ public data class PokemonDetailed(
     public val image: String,
     public val type1: Type,
     public val type2: Type?,
+    public val species: Species?,
     val about: About,
-    val breeding: Breeding,
     val stats: Stats,
     val moves: List<Move>,
 ) : BasePokemon {

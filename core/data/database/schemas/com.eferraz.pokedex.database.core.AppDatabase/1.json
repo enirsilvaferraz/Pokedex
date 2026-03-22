@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "d5cfe3d6db92935202d5d305872632f1",
+    "identityHash": "8326df7ae2f876c2d432fb4602de6999",
     "entities": [
       {
         "tableName": "ability",
@@ -99,30 +99,12 @@
       },
       {
         "tableName": "about",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`about_id` INTEGER NOT NULL, `description` TEXT NOT NULL, `genera` TEXT NOT NULL, `category` TEXT NOT NULL, `weight` REAL NOT NULL, `height` REAL NOT NULL, PRIMARY KEY(`about_id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`about_id` INTEGER NOT NULL, `weight` REAL NOT NULL, `height` REAL NOT NULL, PRIMARY KEY(`about_id`))",
         "fields": [
           {
             "fieldPath": "id",
             "columnName": "about_id",
             "affinity": "INTEGER",
-            "notNull": true
-          },
-          {
-            "fieldPath": "description",
-            "columnName": "description",
-            "affinity": "TEXT",
-            "notNull": true
-          },
-          {
-            "fieldPath": "species",
-            "columnName": "genera",
-            "affinity": "TEXT",
-            "notNull": true
-          },
-          {
-            "fieldPath": "category",
-            "columnName": "category",
-            "affinity": "TEXT",
             "notNull": true
           },
           {
@@ -147,11 +129,11 @@
       },
       {
         "tableName": "breeding_egg_groups",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`breeding_id` INTEGER NOT NULL, `egg_group_id` INTEGER NOT NULL, PRIMARY KEY(`breeding_id`, `egg_group_id`), FOREIGN KEY(`breeding_id`) REFERENCES `breeding`(`breeding_id`) ON UPDATE CASCADE ON DELETE CASCADE , FOREIGN KEY(`egg_group_id`) REFERENCES `egg_group`(`egg_group_id`) ON UPDATE CASCADE ON DELETE CASCADE )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`species_id` INTEGER NOT NULL, `egg_group_id` INTEGER NOT NULL, PRIMARY KEY(`species_id`, `egg_group_id`), FOREIGN KEY(`species_id`) REFERENCES `breeding`(`species_id`) ON UPDATE CASCADE ON DELETE CASCADE , FOREIGN KEY(`egg_group_id`) REFERENCES `egg_group`(`egg_group_id`) ON UPDATE CASCADE ON DELETE CASCADE )",
         "fields": [
           {
-            "fieldPath": "breedingId",
-            "columnName": "breeding_id",
+            "fieldPath": "speciesId",
+            "columnName": "species_id",
             "affinity": "INTEGER",
             "notNull": true
           },
@@ -165,7 +147,7 @@
         "primaryKey": {
           "autoGenerate": false,
           "columnNames": [
-            "breeding_id",
+            "species_id",
             "egg_group_id"
           ]
         },
@@ -186,10 +168,10 @@
             "onDelete": "CASCADE",
             "onUpdate": "CASCADE",
             "columns": [
-              "breeding_id"
+              "species_id"
             ],
             "referencedColumns": [
-              "breeding_id"
+              "species_id"
             ]
           },
           {
@@ -207,11 +189,11 @@
       },
       {
         "tableName": "breeding",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`breeding_id` INTEGER NOT NULL, `gender_ratio` REAL NOT NULL, PRIMARY KEY(`breeding_id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`species_id` INTEGER NOT NULL, `gender_ratio` REAL NOT NULL, PRIMARY KEY(`species_id`), FOREIGN KEY(`species_id`) REFERENCES `species`(`species_id`) ON UPDATE CASCADE ON DELETE CASCADE )",
         "fields": [
           {
-            "fieldPath": "id",
-            "columnName": "breeding_id",
+            "fieldPath": "speciesId",
+            "columnName": "species_id",
             "affinity": "INTEGER",
             "notNull": true
           },
@@ -225,9 +207,33 @@
         "primaryKey": {
           "autoGenerate": false,
           "columnNames": [
-            "breeding_id"
+            "species_id"
           ]
-        }
+        },
+        "indices": [
+          {
+            "name": "index_breeding_species_id",
+            "unique": false,
+            "columnNames": [
+              "species_id"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_breeding_species_id` ON `${TABLE_NAME}` (`species_id`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "species",
+            "onDelete": "CASCADE",
+            "onUpdate": "CASCADE",
+            "columns": [
+              "species_id"
+            ],
+            "referencedColumns": [
+              "species_id"
+            ]
+          }
+        ]
       },
       {
         "tableName": "egg_group",
@@ -363,7 +369,7 @@
       },
       {
         "tableName": "pokemon_detail",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`pokemon_id` INTEGER NOT NULL, `image` TEXT NOT NULL, `type1` INTEGER NOT NULL, `type2` INTEGER, `about` INTEGER NOT NULL, `breeding` INTEGER NOT NULL, `stats` INTEGER NOT NULL, PRIMARY KEY(`pokemon_id`), FOREIGN KEY(`pokemon_id`) REFERENCES `pokemon_ref`(`pokemon_id`) ON UPDATE CASCADE ON DELETE CASCADE , FOREIGN KEY(`type1`) REFERENCES `type`(`type_id`) ON UPDATE CASCADE ON DELETE CASCADE , FOREIGN KEY(`type2`) REFERENCES `type`(`type_id`) ON UPDATE CASCADE ON DELETE CASCADE , FOREIGN KEY(`about`) REFERENCES `about`(`about_id`) ON UPDATE CASCADE ON DELETE CASCADE , FOREIGN KEY(`breeding`) REFERENCES `breeding`(`breeding_id`) ON UPDATE CASCADE ON DELETE CASCADE , FOREIGN KEY(`stats`) REFERENCES `stats`(`stats_id`) ON UPDATE CASCADE ON DELETE CASCADE )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`pokemon_id` INTEGER NOT NULL, `image` TEXT NOT NULL, `type1` INTEGER NOT NULL, `type2` INTEGER, `species` INTEGER, `about` INTEGER NOT NULL, `stats` INTEGER NOT NULL, PRIMARY KEY(`pokemon_id`), FOREIGN KEY(`pokemon_id`) REFERENCES `pokemon_ref`(`pokemon_id`) ON UPDATE CASCADE ON DELETE CASCADE , FOREIGN KEY(`type1`) REFERENCES `type`(`type_id`) ON UPDATE CASCADE ON DELETE CASCADE , FOREIGN KEY(`type2`) REFERENCES `type`(`type_id`) ON UPDATE CASCADE ON DELETE CASCADE , FOREIGN KEY(`species`) REFERENCES `species`(`species_id`) ON UPDATE CASCADE ON DELETE CASCADE , FOREIGN KEY(`about`) REFERENCES `about`(`about_id`) ON UPDATE CASCADE ON DELETE CASCADE , FOREIGN KEY(`stats`) REFERENCES `stats`(`stats_id`) ON UPDATE CASCADE ON DELETE CASCADE )",
         "fields": [
           {
             "fieldPath": "pokemonId",
@@ -389,14 +395,13 @@
             "affinity": "INTEGER"
           },
           {
-            "fieldPath": "aboutID",
-            "columnName": "about",
-            "affinity": "INTEGER",
-            "notNull": true
+            "fieldPath": "speciesID",
+            "columnName": "species",
+            "affinity": "INTEGER"
           },
           {
-            "fieldPath": "breedingID",
-            "columnName": "breeding",
+            "fieldPath": "aboutID",
+            "columnName": "about",
             "affinity": "INTEGER",
             "notNull": true
           },
@@ -433,6 +438,15 @@
             "createSql": "CREATE INDEX IF NOT EXISTS `index_pokemon_detail_type2` ON `${TABLE_NAME}` (`type2`)"
           },
           {
+            "name": "index_pokemon_detail_species",
+            "unique": false,
+            "columnNames": [
+              "species"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_pokemon_detail_species` ON `${TABLE_NAME}` (`species`)"
+          },
+          {
             "name": "index_pokemon_detail_about",
             "unique": false,
             "columnNames": [
@@ -440,15 +454,6 @@
             ],
             "orders": [],
             "createSql": "CREATE INDEX IF NOT EXISTS `index_pokemon_detail_about` ON `${TABLE_NAME}` (`about`)"
-          },
-          {
-            "name": "index_pokemon_detail_breeding",
-            "unique": false,
-            "columnNames": [
-              "breeding"
-            ],
-            "orders": [],
-            "createSql": "CREATE INDEX IF NOT EXISTS `index_pokemon_detail_breeding` ON `${TABLE_NAME}` (`breeding`)"
           },
           {
             "name": "index_pokemon_detail_stats",
@@ -495,6 +500,17 @@
             ]
           },
           {
+            "table": "species",
+            "onDelete": "CASCADE",
+            "onUpdate": "CASCADE",
+            "columns": [
+              "species"
+            ],
+            "referencedColumns": [
+              "species_id"
+            ]
+          },
+          {
             "table": "about",
             "onDelete": "CASCADE",
             "onUpdate": "CASCADE",
@@ -503,17 +519,6 @@
             ],
             "referencedColumns": [
               "about_id"
-            ]
-          },
-          {
-            "table": "breeding",
-            "onDelete": "CASCADE",
-            "onUpdate": "CASCADE",
-            "columns": [
-              "breeding"
-            ],
-            "referencedColumns": [
-              "breeding_id"
             ]
           },
           {
@@ -528,6 +533,42 @@
             ]
           }
         ]
+      },
+      {
+        "tableName": "species",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`species_id` INTEGER NOT NULL, `description` TEXT NOT NULL, `genera` TEXT NOT NULL, `category` TEXT NOT NULL, PRIMARY KEY(`species_id`))",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "species_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "description",
+            "columnName": "description",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "species",
+            "columnName": "genera",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "category",
+            "columnName": "category",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "species_id"
+          ]
+        }
       },
       {
         "tableName": "stats",
@@ -616,7 +657,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'd5cfe3d6db92935202d5d305872632f1')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '8326df7ae2f876c2d432fb4602de6999')"
     ]
   }
 }

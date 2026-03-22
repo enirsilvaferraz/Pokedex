@@ -2,7 +2,6 @@ package com.eferraz.pokedex.ui.pokedex
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.eferraz.pokedex.entity.BasePokemon
 import com.eferraz.pokedex.entity.summary.PokemonSummary
 import com.eferraz.pokedex.usecases.UpdatePokemonTypeUseCase
 import com.eferraz.pokedex.usecases.ObservePokemonListUseCase
@@ -50,7 +49,7 @@ internal class PokedexViewModel(
     }
 
     private fun onItemVisible(intent: Intent.ItemVisible) {
-        (intent.pokemon as? PokemonSummary)?.takeIf { it.isPlaceholder() }?.let { summary ->
+        intent.pokemon.takeIf { it.isPlaceholder() }?.let { summary ->
             viewModelScope.launch {
                 updatePokemonTypeUseCase(summary)
             }
@@ -60,12 +59,12 @@ internal class PokedexViewModel(
     sealed interface UiState {
         data object Loading : UiState
         data object Error : UiState
-        data class Success(val summaries: Map<Long, BasePokemon>) : UiState
+        data class Success(val summaries: Map<Long, PokemonSummary>) : UiState
     }
 
     sealed interface Intent {
         data object InitialLoad : Intent
         data object Retry : Intent
-        data class ItemVisible(val pokemon: BasePokemon) : Intent
+        data class ItemVisible(val pokemon: PokemonSummary) : Intent
     }
 }
