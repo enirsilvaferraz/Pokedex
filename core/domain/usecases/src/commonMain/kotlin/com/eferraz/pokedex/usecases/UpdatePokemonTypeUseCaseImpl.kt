@@ -10,12 +10,12 @@ import kotlinx.coroutines.sync.withPermit
 import org.koin.core.annotation.Factory
 
 @Factory
-internal class MigratePokemonSummaryToCompleteUseCaseImpl(
+internal class UpdatePokemonTypeUseCaseImpl(
     dispatcher: CoroutineDispatcher,
     private val repository: PokemonDetailedRepository,
     private val mutex: Mutex,
     private val semaphore: Semaphore,
-) : MigratePokemonSummaryToCompleteUseCase(dispatcher) {
+) : UpdatePokemonTypeUseCase(dispatcher) {
 
     private val inFlight = mutableSetOf<Long>()
 

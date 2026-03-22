@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.eferraz.pokedex.entity.BasePokemon
 import com.eferraz.pokedex.entity.summary.PokemonSummary
-import com.eferraz.pokedex.usecases.MigratePokemonSummaryToCompleteUseCase
+import com.eferraz.pokedex.usecases.UpdatePokemonTypeUseCase
 import com.eferraz.pokedex.usecases.ObservePokemonListUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -18,7 +18,7 @@ import org.koin.core.annotation.Provided
 @KoinViewModel
 internal class PokedexViewModel(
     @Provided private val observeUseCase: ObservePokemonListUseCase,
-    @Provided private val migrateToCompleteUseCase: MigratePokemonSummaryToCompleteUseCase,
+    @Provided private val updatePokemonTypeUseCase: UpdatePokemonTypeUseCase,
 ) : ViewModel() {
 
     val state: StateFlow<UiState> field = MutableStateFlow<UiState>(UiState.Loading)
@@ -52,7 +52,7 @@ internal class PokedexViewModel(
     private fun onItemVisible(intent: Intent.ItemVisible) {
         (intent.pokemon as? PokemonSummary)?.takeIf { it.isPlaceholder() }?.let { summary ->
             viewModelScope.launch {
-                migrateToCompleteUseCase(summary)
+                updatePokemonTypeUseCase(summary)
             }
         }
     }

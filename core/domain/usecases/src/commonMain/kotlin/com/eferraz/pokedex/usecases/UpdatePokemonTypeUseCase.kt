@@ -4,6 +4,6 @@ import com.eferraz.pokedex.entity.summary.PokemonSummary
 import com.eferraz.pokedex.usecases.core.AppUseCase
 import kotlinx.coroutines.CoroutineDispatcher
 
-public abstract class MigratePokemonSummaryToCompleteUseCase(
+public abstract class UpdatePokemonTypeUseCase(
     dispatcher: CoroutineDispatcher,
 ) : AppUseCase<PokemonSummary, Unit>(dispatcher)
