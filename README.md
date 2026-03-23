@@ -27,11 +27,19 @@ O app está acessível nas **três plataformas** (Android, iOS e Desktop). **Bas
 
 Gravação do app em execução: navegação entre lista e detalhe, enriquecimento progressivo dos tipos ao rolar e carregamento das informações de espécie na tela de detalhe.
 
-<video src="https://raw.githubusercontent.com/enirsilvaferraz/Pokedex/main/docs/pokedex-demo.mp4" controls playsinline width="100%">
-  <a href="https://raw.githubusercontent.com/enirsilvaferraz/Pokedex/main/docs/pokedex-demo.mp4">Abrir vídeo da demonstração (MP4)</a>
-</video>
+O GitHub **não mostra** o elemento `<video>` no README (o HTML é filtrado). Para haver **pré-visualização na página**, use uma destas opções:
 
-[Abrir ou baixar o MP4](https://raw.githubusercontent.com/enirsilvaferraz/Pokedex/main/docs/pokedex-demo.mp4) — caso o player acima não apareça no GitHub, use o link (o `<video>` precisa de URL absoluta para `raw.githubusercontent.com`, não de caminho relativo).
+| Abordagem | Notas |
+|-----------|--------|
+| **Link direto** (abaixo) | Sempre visível; abre ou descarrega o MP4 a partir do repositório. |
+| **GIF** no repositório | `![demonstração](docs/pokedex-demo.gif)` — o GitHub mostra imagens/GIFs de forma fiável. Gere um GIF curto a partir do vídeo (ex.: `ffmpeg`) e faça commit. |
+| **Miniatura clicável** | Adicione `docs/pokedex-demo-poster.jpg` (captura) e use: `[![demo](docs/pokedex-demo-poster.jpg)](URL_DO_MP4)`. |
+| **YouTube / Vimeo** | Carregue o vídeo na plataforma e use o padrão *thumbnail + link* (funciona em todo o lado). |
+| **URL de upload do GitHub** | Ao editar o README **no site** do GitHub, arraste um MP4 para o editor; o GitHub gera um URL em `user-images.githubusercontent.com` que **pode** ser usado numa etiqueta `video` no Markdown. Limite típico no plano gratuito: **~10 MB** por ficheiro — o `pokedex-demo.mp4` atual é maior; comprima antes ou use uma versão curta só para o README. |
+
+[![Ver demonstração em vídeo](https://img.shields.io/badge/▶_Ver_demonstração-MP4-0366d6?style=for-the-badge)](https://raw.githubusercontent.com/enirsilvaferraz/Pokedex/main/docs/pokedex-demo.mp4)
+
+**[Abrir vídeo da demonstração (MP4 no repositório)](https://raw.githubusercontent.com/enirsilvaferraz/Pokedex/main/docs/pokedex-demo.mp4)**
 
 ---
 
