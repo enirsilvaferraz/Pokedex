@@ -57,4 +57,4 @@ Inicializar o grafo **uma vez** no processo evita múltiplos `startKoin` e garan
 |-----------|----------|
 | [`:apps:umbrellaApp`](../umbrellaApp/README.md) | Agregador KMP e `App()`. |
 | [`:features:composeApp`](../../presentation/composeApp/README.md) | UI Compose. |
-| [`build-logic`](../../../build-logic/README.md) | Plugins e convenções Gradle. |
+| [`build-logic`](https://github.com/enirsilvaferraz/build-logic) | Plugins e convenções Gradle. |

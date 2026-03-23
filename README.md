@@ -92,7 +92,7 @@ graph TD
 
 ### Módulos
 
-#### `build-logic` ([README](build-logic/README.md))
+#### `build-logic` ([repositório](https://github.com/enirsilvaferraz/build-logic))
 
 **Objetivo:** padronizar o build do monorepo e centralizar o **catálogo de versões**, para que todos os módulos usem as mesmas ferramentas e bibliotecas sem copiar configuração Gradle. O catálogo no mesmo lugar que os plugins convencionais permite **reaproveitar o conjunto em outros projetos** e manter **versões compatíveis** entre repositórios ou entre times de um ecossistema multi-módulo.
 
