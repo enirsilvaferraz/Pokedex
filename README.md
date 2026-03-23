@@ -27,11 +27,11 @@ O app está acessível nas **três plataformas** (Android, iOS e Desktop). **Bas
 
 Gravação do app em execução: navegação entre lista e detalhe, enriquecimento progressivo dos tipos ao rolar e carregamento das informações de espécie na tela de detalhe.
 
-**[Abrir vídeo da demonstração](https://raw.githubusercontent.com/enirsilvaferraz/Pokedex/main/docs/pokedex-demo.mov)** — no GitHub, caminhos relativos em `<video>` não apontam para o arquivo bruto; o formato `.mov` também pode não tocar embutido em alguns navegadores. Use o link para assistir ou baixar com garantia.
-
-<video src="https://raw.githubusercontent.com/enirsilvaferraz/Pokedex/main/docs/pokedex-demo.mov" controls playsinline width="100%">
-  <a href="https://raw.githubusercontent.com/enirsilvaferraz/Pokedex/main/docs/pokedex-demo.mov">Abrir vídeo da demonstração</a>
+<video src="https://raw.githubusercontent.com/enirsilvaferraz/Pokedex/main/docs/pokedex-demo.mp4" controls playsinline width="100%">
+  <a href="https://raw.githubusercontent.com/enirsilvaferraz/Pokedex/main/docs/pokedex-demo.mp4">Abrir vídeo da demonstração (MP4)</a>
 </video>
+
+[Abrir ou baixar o MP4](https://raw.githubusercontent.com/enirsilvaferraz/Pokedex/main/docs/pokedex-demo.mp4) — caso o player acima não apareça no GitHub, use o link (o `<video>` precisa de URL absoluta para `raw.githubusercontent.com`, não de caminho relativo).
 
 ---
 
