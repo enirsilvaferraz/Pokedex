@@ -8,10 +8,6 @@ plugins {
 
 kotlin {
 
-    compilerOptions {
-        freeCompilerArgs.add("-Xskip-prerelease-check")
-    }
-
     @OptIn(ExperimentalKotlinGradlePluginApi::class)
     dependencies {
         implementation(projects.features.composeApp)
@@ -21,10 +17,4 @@ kotlin {
         implementation(projects.data.network)
         implementation(projects.data.database)
     }
-}
-
-kotlin.android {
-    namespace = "com.eferraz.pokedex.umbrella"
-    compileSdk = libs.versions.android.compileSdk.get().toInt()
-    androidResources.enable = true
 }
