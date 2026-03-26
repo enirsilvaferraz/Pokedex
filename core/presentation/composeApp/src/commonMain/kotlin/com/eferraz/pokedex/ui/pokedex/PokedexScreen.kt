@@ -10,7 +10,6 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
@@ -41,7 +40,7 @@ internal fun PokedexScreen(
         modifier = modifier,
         stateFlow = vm.state,
         onClick = onClick,
-        onIntent = remember { { vm.dispatch(it) } },
+        onIntent = vm::dispatch,
     )
 }
 
@@ -71,7 +70,7 @@ private fun PokedexScreen(
                     FailureScreen(
                         modifier = innerModifier,
                         onContainerColor = MaterialTheme.colorScheme.onSurface,
-                        onClick = remember { { onIntent(PokedexViewModel.Intent.Retry) } },
+                        onClick = { onIntent(PokedexViewModel.Intent.Retry) },
                     )
                 }
 
@@ -87,7 +86,7 @@ private fun PokedexScreen(
                         modifier = innerModifier,
                         summariesById = innerState.summaries,
                         onClick = onClick,
-                        onItemVisible = remember { { onIntent(PokedexViewModel.Intent.ItemVisible(it)) } },
+                        onItemVisible = { onIntent(PokedexViewModel.Intent.ItemVisible(it)) },
                     )
                 }
             }
@@ -119,14 +118,13 @@ private fun SuccessScreen(
 
             val uiModel = remember(row) { row.toPokedexListItemUi() }
 
-            val latestRequest by rememberUpdatedState(onItemVisible)
             LaunchedEffect(row.id) {
-                latestRequest(row)
+                onItemVisible(row)
             }
 
             PokemonItemListView(
                 model = uiModel,
-                onClick = remember(row) { { onClick(row) } },
+                onClick = { onClick(row) },
             )
         }
     }
