@@ -24,6 +24,5 @@ kotlin {
         implementation(projects.data.database)
 
         implementation(libs.kotlinx.coroutines.core)
-        implementation(libs.paging.common)
     }
 }

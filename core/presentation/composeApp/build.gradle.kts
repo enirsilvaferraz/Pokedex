@@ -18,11 +18,6 @@ kotlin.android {
 
 kotlin {
 
-    compilerOptions {
-        freeCompilerArgs.add("-Xreturn-value-checker=check")
-        freeCompilerArgs.add("-Xexplicit-backing-fields")
-    }
-
     @OptIn(ExperimentalKotlinGradlePluginApi::class)
     dependencies {
 
@@ -32,14 +27,7 @@ kotlin {
         implementation(libs.coil.compose)
         implementation(libs.coil.network.ktor3)
 
-        implementation(libs.paging.common)
-        implementation(libs.paging.compose)
-
         implementation(projects.domain.entity)
         implementation(projects.domain.usecases)
     }
-}
-
-dependencies {
-    "androidRuntimeClasspath"(libs.androidx.ui.tooling)
 }

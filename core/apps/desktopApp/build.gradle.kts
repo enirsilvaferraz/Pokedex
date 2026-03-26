@@ -1,9 +1,16 @@
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.compose.multiplatform)
     kotlin("jvm")
+}
+
+tasks.withType<KotlinCompile>().configureEach {
+    compilerOptions {
+        freeCompilerArgs.add("-Xskip-prerelease-check")
+    }
 }
 
 dependencies {
