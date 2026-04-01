@@ -44,4 +44,3 @@ public fun InternalApp() {
         }
     }
 }
-

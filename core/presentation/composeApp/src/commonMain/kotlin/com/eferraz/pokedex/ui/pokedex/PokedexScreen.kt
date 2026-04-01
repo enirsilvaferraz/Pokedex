@@ -18,9 +18,9 @@ import androidx.compose.ui.unit.dp
 import com.eferraz.pokedex.components.templates.AppScaffold
 import com.eferraz.pokedex.components.templates.FailureScreen
 import com.eferraz.pokedex.components.templates.LoadingScreen
+import com.eferraz.pokedex.components.templates.PokedexTheme
 import com.eferraz.pokedex.entity.detail.Type
 import com.eferraz.pokedex.entity.summary.PokemonSummary
-import com.eferraz.pokedex.components.templates.PokedexTheme
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import org.jetbrains.compose.resources.stringResource

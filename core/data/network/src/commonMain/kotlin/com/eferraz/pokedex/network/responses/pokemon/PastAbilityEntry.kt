@@ -1,6 +1,5 @@
 package com.eferraz.pokedex.network.responses.pokemon
 
-import com.eferraz.pokedex.network.responses.pokemon.Ability
 import com.eferraz.pokedex.network.responses.NamedApiResource
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable

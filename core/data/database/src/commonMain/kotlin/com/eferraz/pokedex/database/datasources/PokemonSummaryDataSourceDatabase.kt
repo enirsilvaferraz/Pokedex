@@ -7,4 +7,3 @@ public interface PokemonSummaryDataSourceDatabase {
     public fun get(limit: Int, offset: Int): Flow<List<PokemonSummary>>
     public suspend fun upsert(vararg pokemons: PokemonSummary)
 }
-

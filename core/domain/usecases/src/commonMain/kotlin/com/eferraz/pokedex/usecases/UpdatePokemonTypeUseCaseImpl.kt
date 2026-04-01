@@ -24,17 +24,19 @@ internal class UpdatePokemonTypeUseCaseImpl(
         // Verifica se o id já foi adicionado ao semaforo para processamento
         val shouldProcess = mutex.withLock { inFlight.add(param.id) }
 
-        if (shouldProcess) try {
+        if (shouldProcess) {
+            try {
 
-            // Adiciona ao semaforo para processamento
-            semaphore.withPermit {
-                repository.fetch(param.id)
+                // Adiciona ao semaforo para processamento
+                semaphore.withPermit {
+                    repository.fetch(param.id)
+                }
+
+            } finally {
+
+                // Sinaliza como processado. Só é chamado após a conclusão do bloco try
+                mutex.withLock { inFlight.remove(param.id) }
             }
-
-        } finally {
-
-            // Sinaliza como processado. Só é chamado após a conclusão do bloco try
-            mutex.withLock { inFlight.remove(param.id) }
         }
     }
 }

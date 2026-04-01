@@ -1,9 +1,5 @@
 package com.eferraz.pokedex.network.responses.pokemon
 
-import com.eferraz.pokedex.network.responses.pokemon.DreamWorld
-import com.eferraz.pokedex.network.responses.pokemon.Home
-import com.eferraz.pokedex.network.responses.pokemon.OfficialArtwork
-import com.eferraz.pokedex.network.responses.pokemon.ShowdownSprites
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 

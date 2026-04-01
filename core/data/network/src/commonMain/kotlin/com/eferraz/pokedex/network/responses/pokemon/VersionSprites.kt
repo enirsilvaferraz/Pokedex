@@ -1,6 +1,5 @@
 package com.eferraz.pokedex.network.responses.pokemon
 
-import com.eferraz.pokedex.network.responses.pokemon.GenerationSprites
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 

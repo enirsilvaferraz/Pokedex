@@ -3,8 +3,8 @@ package com.eferraz.pokedex.ui.pokedex
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.eferraz.pokedex.entity.summary.PokemonSummary
-import com.eferraz.pokedex.usecases.UpdatePokemonTypeUseCase
 import com.eferraz.pokedex.usecases.ObservePokemonListUseCase
+import com.eferraz.pokedex.usecases.UpdatePokemonTypeUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch

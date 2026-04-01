@@ -1,10 +1,8 @@
 package com.eferraz.pokedex.helpers
 
-import androidx.compose.ui.text.intl.Locale
 import platform.Foundation.NSNumber
 import platform.Foundation.NSNumberFormatter
 import platform.Foundation.NSNumberFormatterDecimalStyle
-
 
 internal actual fun Float.formatDecimal() =
     NSNumberFormatter().apply {

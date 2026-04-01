@@ -2,9 +2,7 @@ package com.eferraz.pokedex.database.datasources
 
 import com.eferraz.pokedex.database.daos.PokemonSummaryDao
 import com.eferraz.pokedex.database.entities.PokemonSummaryTable.Companion.toRefTable
-import com.eferraz.pokedex.entity.BasePokemon
 import com.eferraz.pokedex.entity.summary.PokemonSummary
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import org.koin.core.annotation.Factory
 

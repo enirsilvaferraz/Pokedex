@@ -3,8 +3,8 @@ package com.eferraz.pokedex.database.entities
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.eferraz.pokedex.entity.detail.PokemonDetailed
 import com.eferraz.pokedex.entity.BasePokemon
+import com.eferraz.pokedex.entity.detail.PokemonDetailed
 
 @Entity(tableName = "pokemon_ref")
 internal data class PokemonSummaryTable(

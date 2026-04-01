@@ -12,7 +12,6 @@ import com.eferraz.pokedex.database.entities.SpeciesTable.Companion.toTable
 import com.eferraz.pokedex.entity.detail.Species
 import org.koin.core.annotation.Factory
 
-
 @Factory
 internal class PokemonSpeciesDataSourceDatabaseImpl(
     private val speciesDao: SpeciesDao,

@@ -27,7 +27,6 @@ import org.jetbrains.compose.resources.stringResource
 import pokedex.features.composeapp.generated.resources.Res
 import pokedex.features.composeapp.generated.resources.detail_back_button
 
-
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun AppScaffold(
@@ -75,12 +74,14 @@ internal fun AppScaffold(
             MediumTopAppBar(
                 title = title,
                 navigationIcon = {
-                    if (onNavigateBack != null) IconButton(onClick = onNavigateBack) {
-                        Icon(
-                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                            contentDescription = stringResource(Res.string.detail_back_button),
-                            tint = onContainerColor
-                        )
+                    if (onNavigateBack != null) {
+                        IconButton(onClick = onNavigateBack) {
+                            Icon(
+                                imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                                contentDescription = stringResource(Res.string.detail_back_button),
+                                tint = onContainerColor
+                            )
+                        }
                     }
                 },
                 colors = TopAppBarDefaults.topAppBarColors(

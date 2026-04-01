@@ -25,4 +25,3 @@ internal fun toModel(resource: NamedApiResource) =
         id = resource.getId(),
         name = resource.name.orEmpty(),
     )
-

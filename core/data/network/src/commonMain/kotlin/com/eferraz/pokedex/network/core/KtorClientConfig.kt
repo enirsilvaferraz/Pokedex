@@ -21,13 +21,13 @@ internal class KtorClientConfig : ClientConfig {
 
     private fun configure(): HttpClient = HttpClient(httpEngine()) {
 
-        //Timeout plugin to set up timeout milliseconds for client
+        // Timeout plugin to set up timeout milliseconds for client
         install(HttpTimeout) {
             socketTimeoutMillis = 60_000
             requestTimeoutMillis = 60_000
         }
 
-        //Logging plugin combined with kermit(KMP Logger library)
+        // Logging plugin combined with kermit(KMP Logger library)
         install(Logging) {
             logger = Logger.DEFAULT
             level = LogLevel.ALL
@@ -38,21 +38,23 @@ internal class KtorClientConfig : ClientConfig {
             }
         }
 
-        //We can configure the BASE_URL and also
-        //the deafult headers by defaultRequest builder
+        // We can configure the BASE_URL and also
+        // the deafult headers by defaultRequest builder
         defaultRequest {
             header("Content-Type", "application/json")
             url("https://pokeapi.co/api/v2/")
         }
 
-        //ContentNegotiation plugin for negotiationing media types between the client and server
+        // ContentNegotiation plugin for negotiationing media types between the client and server
         install(ContentNegotiation) {
-            json(Json {
-                prettyPrint = true
-                isLenient = true
-                ignoreUnknownKeys = true
-                explicitNulls = false
-            })
+            json(
+                Json {
+                    prettyPrint = true
+                    isLenient = true
+                    ignoreUnknownKeys = true
+                    explicitNulls = false
+                }
+            )
         }
     }
 }

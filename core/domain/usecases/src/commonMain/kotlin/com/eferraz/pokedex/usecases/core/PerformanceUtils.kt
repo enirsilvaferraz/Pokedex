@@ -6,7 +6,7 @@ import kotlin.time.ExperimentalTime
 /**
  * Mede o tempo de execução de uma função não suspend e retorna o tempo em milissegundos
  * junto com o resultado da função. Imprime o resultado no console com o label fornecido.
- * 
+ *
  * @param label String identificadora para exibir no console
  * @param block Função a ser medida
  * @return Pair contendo o tempo em milissegundos e o resultado da função
@@ -24,7 +24,7 @@ public inline fun <T> measureTimeMillis(label: String, block: () -> T): Pair<Lon
 /**
  * Mede o tempo de execução de uma função suspend e retorna o tempo em milissegundos
  * junto com o resultado da função. Imprime o resultado no console com o label fornecido.
- * 
+ *
  * @param label String identificadora para exibir no console
  * @param block Função suspend a ser medida
  * @return Pair contendo o tempo em milissegundos e o resultado da função
@@ -46,4 +46,3 @@ public suspend inline fun <T> measureTimeMillis(label: String, block: suspend ()
 @PublishedApi
 internal suspend inline fun <T> measureTimeMillisSuspend(label: String, block: suspend () -> T): Pair<Long, T> =
     measureTimeMillis(label, block)
-

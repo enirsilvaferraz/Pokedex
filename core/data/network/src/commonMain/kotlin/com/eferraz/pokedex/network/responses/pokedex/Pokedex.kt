@@ -1,8 +1,5 @@
 package com.eferraz.pokedex.network.responses.pokedex
 
-import com.eferraz.pokedex.network.responses.pokedex.PokedexDescription
-import com.eferraz.pokedex.network.responses.pokedex.PokedexPokemonEntry
-import com.eferraz.pokedex.network.responses.pokedex.PokedexName
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 

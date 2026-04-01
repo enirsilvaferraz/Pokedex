@@ -8,5 +8,5 @@ public abstract class GetPokemonDetailsUseCase(
     dispatcher: CoroutineDispatcher,
 ) : AppUseCase<GetPokemonDetailsUseCase.Params, PokemonDetailed>(dispatcher) {
 
-    public data class Params(val id:Long)
+    public data class Params(val id: Long)
 }

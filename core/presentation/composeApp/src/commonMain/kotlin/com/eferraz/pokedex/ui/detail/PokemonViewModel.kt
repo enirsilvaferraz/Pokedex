@@ -59,7 +59,6 @@ internal class PokemonViewModel(
         data class Error(override val structure: PokemonDetailStructureView) : State
     }
 
-
     internal sealed interface Intent {
         data object InitialLoad : Intent
         data object Retry : Intent
