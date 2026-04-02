@@ -1,0 +1,13 @@
+<?xml version="1.0" ?>
+<SmellBaseline>
+  <ManuallySuppressedIssues/>
+  <CurrentIssues>
+    <ID>ArgumentListWrapping:PokemonResponse.kt:PokemonResponse$(id = it.type.getId(), name = it.type.name.orEmpty())</ID>
+    <ID>FunctionLiteral:PokemonResponse.kt:PokemonResponse$&lt;anonymous&gt;</ID>
+    <ID>MagicNumber:KtorClientConfig.kt:KtorClientConfig$60_000</ID>
+    <ID>MaxLineLength:PokemonResponse.kt:PokemonResponse$type2 = types.firstOrNull { it.slot == 2 }?.let { Type(id = it.type.getId(), name = it.type.name.orEmpty()) }</ID>
+    <ID>MaximumLineLength:PokemonResponse.kt:PokemonResponse$,</ID>
+    <ID>ValueParameterComment:FlavorText.kt:FlavorText$// 'version' in the JSON also has 'name' and 'url'</ID>
+    <ID>ValueParameterComment:GameSprites.kt:GameSprites$// Reusing ShowdownSprites for animated as structure is similar</ID>
+  </CurrentIssues>
+</SmellBaseline>

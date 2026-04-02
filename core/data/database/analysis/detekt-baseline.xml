@@ -1,0 +1,12 @@
+<?xml version="1.0" ?>
+<SmellBaseline>
+  <ManuallySuppressedIssues/>
+  <CurrentIssues>
+    <ID>Filename:PlatformDataBaseBuilderExpect.ios.kt:com.eferraz.pokedex.database.core.PlatformDataBaseBuilderExpect.ios.kt</ID>
+    <ID>Filename:PlatformDataBaseBuilderExpect.jvm.kt:com.eferraz.pokedex.database.core.PlatformDataBaseBuilderExpect.jvm.kt</ID>
+    <ID>MatchingDeclarationName:PlatformDataBaseBuilderExpect.ios.kt:PlatformDataBaseBuilder : DataBaseBuilder</ID>
+    <ID>MatchingDeclarationName:PlatformDataBaseBuilderExpect.jvm.kt:PlatformDataBaseBuilder : DataBaseBuilder</ID>
+    <ID>TooManyFunctions:AppDatabase.kt:AppDatabase : RoomDatabase</ID>
+    <ID>TooManyFunctions:DatabaseModule.kt:DatabaseModule</ID>
+  </CurrentIssues>
+</SmellBaseline>

@@ -1,0 +1,46 @@
+<?xml version="1.0" ?>
+<SmellBaseline>
+  <ManuallySuppressedIssues/>
+  <CurrentIssues>
+    <ID>LongMethod:PokemonScreen.kt:@Composable @OptIn(ExperimentalMaterial3Api::class) private fun SuccessScreen</ID>
+    <ID>MagicNumber:Formatters.kt:10</ID>
+    <ID>MagicNumber:Formatters.kt:100</ID>
+    <ID>MagicNumber:Formatters.kt:3</ID>
+    <ID>MagicNumber:PokedexScreen.kt:PokedexStatePreviewProvider$10</ID>
+    <ID>MagicNumber:PokedexScreen.kt:PokedexStatePreviewProvider$12</ID>
+    <ID>MagicNumber:PokedexScreen.kt:PokedexStatePreviewProvider$13</ID>
+    <ID>MagicNumber:PokedexScreen.kt:PokedexStatePreviewProvider$4</ID>
+    <ID>MagicNumber:PokemonDetailDataView.kt:PokemonDetailDataView$600</ID>
+    <ID>MagicNumber:PokemonItemListView.kt:72</ID>
+    <ID>MagicNumber:PokemonScreen.kt:0.7f</ID>
+    <ID>MagicNumber:PokemonScreen.kt:318</ID>
+    <ID>MagicNumber:PokemonScreen.kt:45</ID>
+    <ID>MagicNumber:PokemonScreen.kt:49</ID>
+    <ID>MagicNumber:PokemonScreen.kt:600</ID>
+    <ID>MagicNumber:PokemonScreen.kt:65</ID>
+    <ID>MagicNumber:PokemonScreen.kt:PokemonStatePreviewProvider$25</ID>
+    <ID>MagicNumber:TypeCardColors.kt:0xFF6390F0</ID>
+    <ID>MagicNumber:TypeCardColors.kt:0xFF6F35FC</ID>
+    <ID>MagicNumber:TypeCardColors.kt:0xFF705746</ID>
+    <ID>MagicNumber:TypeCardColors.kt:0xFF735797</ID>
+    <ID>MagicNumber:TypeCardColors.kt:0xFF7AC74C</ID>
+    <ID>MagicNumber:TypeCardColors.kt:0xFF888888</ID>
+    <ID>MagicNumber:TypeCardColors.kt:0xFF96D9D6</ID>
+    <ID>MagicNumber:TypeCardColors.kt:0xFFA33EA1</ID>
+    <ID>MagicNumber:TypeCardColors.kt:0xFFA6B91A</ID>
+    <ID>MagicNumber:TypeCardColors.kt:0xFFA8A77A</ID>
+    <ID>MagicNumber:TypeCardColors.kt:0xFFA98FF3</ID>
+    <ID>MagicNumber:TypeCardColors.kt:0xFFB6A136</ID>
+    <ID>MagicNumber:TypeCardColors.kt:0xFFB7B7CE</ID>
+    <ID>MagicNumber:TypeCardColors.kt:0xFFBDBCBC</ID>
+    <ID>MagicNumber:TypeCardColors.kt:0xFFC22E28</ID>
+    <ID>MagicNumber:TypeCardColors.kt:0xFFD685AD</ID>
+    <ID>MagicNumber:TypeCardColors.kt:0xFFE2BF65</ID>
+    <ID>MagicNumber:TypeCardColors.kt:0xFFEE8130</ID>
+    <ID>MagicNumber:TypeCardColors.kt:0xFFF7D02C</ID>
+    <ID>MagicNumber:TypeCardColors.kt:0xFFF95587</ID>
+    <ID>MagicNumber:TypeCardColors.kt:0xFFFFD700</ID>
+    <ID>UnusedParameter:PokemonScreen.kt:modifier: Modifier = Modifier</ID>
+    <ID>UnusedParameter:PokemonScreen.kt:onNavigateBack: () -&gt; Unit</ID>
+  </CurrentIssues>
+</SmellBaseline>
