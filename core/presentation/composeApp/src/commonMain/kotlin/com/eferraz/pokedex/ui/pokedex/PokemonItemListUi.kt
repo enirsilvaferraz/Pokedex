@@ -26,23 +26,25 @@ internal sealed class PokemonItemListUi {
     ) : PokemonItemListUi()
 }
 
-internal fun BasePokemon.toPokedexListItemUi(): PokemonItemListUi = when (this) {
+internal fun BasePokemon.toPokedexListItemUi(): PokemonItemListUi =
 
-    is PokemonSummary -> if (isPlaceholder()) {
-        PokemonItemListUi.PlaceholderRow(
-            id = id,
-            name = name,
-            artworkUrl = artwork,
-        )
-    } else {
-        PokemonItemListUi.SummaryRow(
-            id = id,
-            name = name,
-            artworkUrl = artwork,
-            type1Name = type1?.name ?: error("type1 obrigatório quando não é placeholder"),
-            type2Name = type2?.name,
-        )
+    when (this) {
+
+        is PokemonSummary -> if (isPlaceholder()) {
+            PokemonItemListUi.PlaceholderRow(
+                id = id,
+                name = name,
+                artworkUrl = artwork,
+            )
+        } else {
+            PokemonItemListUi.SummaryRow(
+                id = id,
+                name = name,
+                artworkUrl = artwork,
+                type1Name = type1?.name ?: error("type1 obrigatório quando não é placeholder"),
+                type2Name = type2?.name,
+            )
+        }
+
+        else -> throw IllegalStateException("Unknown type") // todo sensivel
     }
-
-    else -> throw IllegalStateException("Unknown type") // todo sensivel
-}

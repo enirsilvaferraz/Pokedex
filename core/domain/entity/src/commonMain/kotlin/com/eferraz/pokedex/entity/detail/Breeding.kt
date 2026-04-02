@@ -5,6 +5,14 @@ public data class Breeding(
     val genderRatio: Float,
     val eggGroups: List<EggGroup>,
 ) {
-    public val female: Float get() = genderRatio / 8
-    public val male: Float get() = 1 - female
+
+    public val female: Float
+        get() = genderRatio / FEMALE_RATIO
+
+    public val male: Float
+        get() = 1 - female
+
+    private companion object {
+        const val FEMALE_RATIO = 8
+    }
 }

@@ -17,7 +17,8 @@ public data class PokemonDetailed(
 
     public val artwork: String get() = image
 
-    public fun types(): List<Type> = listOfNotNull(type1, type2)
+    public fun types(): List<Type> =
+        listOfNotNull(type1, type2)
 
     public fun toSummary(): PokemonSummary =
         PokemonSummary(id = id, name = name, type1 = type1, artwork = image, type2 = type2)

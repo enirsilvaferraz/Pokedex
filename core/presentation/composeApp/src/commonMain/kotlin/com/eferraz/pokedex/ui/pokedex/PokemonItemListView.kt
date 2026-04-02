@@ -208,7 +208,9 @@ private fun PokemonItemListViewPreview(
 }
 
 @Composable
-private fun PokemonItemListViewPreviewContent(model: PokemonItemListUi) {
+private fun PokemonItemListViewPreviewContent(
+    model: PokemonItemListUi
+) {
     PokedexTheme {
         Surface(modifier = Modifier.padding(16.dp)) {
             PokemonItemListView(

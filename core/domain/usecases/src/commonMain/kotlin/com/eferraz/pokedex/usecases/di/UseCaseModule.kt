@@ -13,11 +13,14 @@ import org.koin.core.annotation.Module
 public class UseCaseModule {
 
     @Factory
-    public fun provideCoroutineDispatcher(): CoroutineDispatcher = Dispatchers.Default
+    public fun provideCoroutineDispatcher(): CoroutineDispatcher =
+        Dispatchers.Default
 
     @Factory
-    public fun provideMutex(): Mutex = Mutex()
+    public fun provideMutex(): Mutex =
+        Mutex()
 
     @Factory
-    public fun provideSemaphore(): Semaphore = Semaphore(permits = 5)
+    public fun provideSemaphore(): Semaphore =
+        Semaphore(permits = 5)
 }

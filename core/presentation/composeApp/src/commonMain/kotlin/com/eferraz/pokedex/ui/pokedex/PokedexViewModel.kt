@@ -26,11 +26,12 @@ internal class PokedexViewModel(
         dispatch(Intent.InitialLoad)
     }
 
-    internal fun dispatch(intent: Intent) = when (intent) {
-        Intent.InitialLoad -> onInitLoad()
-        Intent.Retry -> onRetry() // todo testar isso
-        is Intent.ItemVisible -> onItemVisible(intent)
-    }
+    internal fun dispatch(intent: Intent) =
+        when (intent) {
+            Intent.InitialLoad -> onInitLoad()
+            Intent.Retry -> onRetry() // todo testar isso
+            is Intent.ItemVisible -> onItemVisible(intent)
+        }
 
     private fun onInitLoad() {
         observeUseCase()

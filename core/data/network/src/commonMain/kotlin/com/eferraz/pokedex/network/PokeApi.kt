@@ -16,17 +16,20 @@ internal class PokeApi(
     private val config: ClientConfig,
 ) {
 
-    suspend fun pokemon(limit: Int, offset: Int) = config.client.get {
-        url("pokemon")
-        parameter("limit", limit)
-        parameter("offset", offset)
-    }.body<ServiceOffsetResult<NamedApiResource>>()
+    suspend fun pokemon(limit: Int, offset: Int) =
+        config.client.get {
+            url("pokemon")
+            parameter("limit", limit)
+            parameter("offset", offset)
+        }.body<ServiceOffsetResult<NamedApiResource>>()
 
-    suspend fun pokemon(id: Long) = config.client.get {
-        url("pokemon/$id")
-    }.body<PokemonResponse>()
+    suspend fun pokemon(id: Long) =
+        config.client.get {
+            url("pokemon/$id")
+        }.body<PokemonResponse>()
 
-    suspend fun species(id: Long) = config.client.get {
-        url("pokemon-species/$id")
-    }.body<PokemonSpeciesDetail>()
+    suspend fun species(id: Long) =
+        config.client.get {
+            url("pokemon-species/$id")
+        }.body<PokemonSpeciesDetail>()
 }

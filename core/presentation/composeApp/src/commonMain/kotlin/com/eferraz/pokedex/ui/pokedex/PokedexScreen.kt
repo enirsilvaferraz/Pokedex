@@ -150,27 +150,28 @@ private class PokedexStatePreviewProvider : PreviewParameterProvider<PokedexView
         PokedexViewModel.UiState.Success(summaries = pokemonList().associateBy { it.id }),
     )
 
-    private fun pokemonList(): List<PokemonSummary> = listOf(
-        PokemonSummary(
-            id = 1,
-            name = "bulbasaur",
-            type1 = Type(12, "grass"),
-            artwork = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png",
-            type2 = Type(4, "poison"),
-        ),
-        PokemonSummary(
-            id = 4,
-            name = "charmander",
-            type1 = Type(10, "fire"),
-            artwork = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/4.png",
-            type2 = null,
-        ),
-        PokemonSummary(
-            id = 25,
-            name = "pikachu",
-            type1 = Type(13, "electric"),
-            artwork = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/25.png",
-            type2 = null,
-        ),
-    )
+    private fun pokemonList(): List<PokemonSummary> =
+        listOf(
+            PokemonSummary(
+                id = 1,
+                name = "bulbasaur",
+                type1 = Type(12, "grass"),
+                artwork = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png",
+                type2 = Type(4, "poison"),
+            ),
+            PokemonSummary(
+                id = 4,
+                name = "charmander",
+                type1 = Type(10, "fire"),
+                artwork = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/4.png",
+                type2 = null,
+            ),
+            PokemonSummary(
+                id = 25,
+                name = "pikachu",
+                type1 = Type(13, "electric"),
+                artwork = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/25.png",
+                type2 = null,
+            ),
+        )
 }

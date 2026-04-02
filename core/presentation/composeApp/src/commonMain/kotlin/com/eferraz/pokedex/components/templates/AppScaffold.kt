@@ -48,8 +48,8 @@ internal fun AppScaffold(
             )
         },
         onNavigateBack = onNavigateBack,
-        containerColor = MaterialTheme.colorScheme.surface,
-        onContainerColor = MaterialTheme.colorScheme.onSurface,
+        containerColor = containerColor,
+        onContainerColor = onContainerColor,
         content = content
     )
 }
