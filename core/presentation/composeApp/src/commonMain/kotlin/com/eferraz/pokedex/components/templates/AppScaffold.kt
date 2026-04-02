@@ -30,11 +30,11 @@ import pokedex.features.composeapp.generated.resources.detail_back_button
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun AppScaffold(
-    modifier: Modifier = Modifier,
     title: String,
-    onNavigateBack: (() -> Unit)? = null,
     containerColor: Color,
     onContainerColor: Color,
+    modifier: Modifier = Modifier,
+    onNavigateBack: (() -> Unit)? = null,
     content: @Composable (modifier: Modifier) -> Unit,
 ) {
 
@@ -57,11 +57,11 @@ internal fun AppScaffold(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun AppScaffold(
-    modifier: Modifier = Modifier,
     title: @Composable () -> Unit,
-    onNavigateBack: (() -> Unit)? = null,
     containerColor: Color,
     onContainerColor: Color,
+    modifier: Modifier = Modifier,
+    onNavigateBack: (() -> Unit)? = null,
     content: @Composable (modifier: Modifier) -> Unit,
 ) {
 

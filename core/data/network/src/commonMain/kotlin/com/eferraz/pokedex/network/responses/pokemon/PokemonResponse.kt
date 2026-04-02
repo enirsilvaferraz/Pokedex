@@ -60,7 +60,12 @@ internal data class PokemonResponse(
             name = name,
             image = sprites.other?.officialArtwork?.frontDefault ?: sprites.frontDefault,
             type1 = types.first { it.slot == 1 }.let { Type(id = it.type.getId(), name = it.type.name.orEmpty()) },
-            type2 = types.firstOrNull { it.slot == 2 }?.let { Type(id = it.type.getId(), name = it.type.name.orEmpty()) },
+            type2 = types.firstOrNull { it.slot == 2 }?.let {
+                Type(
+                    id = it.type.getId(),
+                    name = it.type.name.orEmpty()
+                )
+            },
             species = null,
             about = About(
                 id = id,

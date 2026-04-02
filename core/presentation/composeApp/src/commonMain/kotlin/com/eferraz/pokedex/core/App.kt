@@ -17,16 +17,18 @@ public fun InternalApp() {
     NavHost(navController = navController, startDestination = PokemonListRouting) {
 
         composable<PokemonListRouting> {
-            PokedexScreen {
-                navController.navigate(
-                    PokemonDetailRouting(
-                        id = it.id,
-                        name = it.name,
-                        artwork = it.artwork,
-                        type1 = it.type1?.name,
-                    ),
-                )
-            }
+            PokedexScreen(
+                onClick = {
+                    navController.navigate(
+                        PokemonDetailRouting(
+                            id = it.id,
+                            name = it.name,
+                            artwork = it.artwork,
+                            type1 = it.type1?.name,
+                        ),
+                    )
+                }
+            )
         }
 
         composable<PokemonDetailRouting> { backStackEntry ->
@@ -38,9 +40,10 @@ public fun InternalApp() {
                     artwork = route.artwork,
                     type1 = route.type1,
                 ),
-            ) {
-                navController.popBackStack()
-            }
+                onNavigateBack = {
+                    navController.popBackStack()
+                },
+            )
         }
     }
 }

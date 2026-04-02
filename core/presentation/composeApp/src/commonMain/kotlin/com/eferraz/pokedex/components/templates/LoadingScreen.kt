@@ -13,8 +13,8 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 internal fun LoadingScreen(
-    modifier: Modifier,
     onContainerColor: Color,
+    modifier: Modifier = Modifier,
 ) {
 
     Column(

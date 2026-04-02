@@ -21,9 +21,9 @@ import pokedex.features.composeapp.generated.resources.pokedex_retry
 
 @Composable
 internal fun FailureScreen(
-    modifier: Modifier,
     onClick: () -> Unit,
-    onContainerColor: Color
+    onContainerColor: Color,
+    modifier: Modifier = Modifier,
 ) {
 
     Column(

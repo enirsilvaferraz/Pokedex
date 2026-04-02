@@ -22,8 +22,8 @@ import com.eferraz.pokedex.ui.detail.data.PokemonDetailDataView
 
 @Composable
 internal fun TypeTagsWidget(
-    modifier: Modifier = Modifier,
     types: List<PokemonDetailDataView.Type>,
+    modifier: Modifier = Modifier,
 ) {
 
     Row(

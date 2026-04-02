@@ -20,10 +20,7 @@ import androidx.compose.ui.unit.dp
 import com.eferraz.pokedex.components.templates.PokedexTheme
 
 @Composable
-internal fun CardComponent(
-    modifier: Modifier = Modifier,
-    content: @Composable ColumnScope.() -> Unit,
-) {
+internal fun CardComponent(modifier: Modifier = Modifier, content: @Composable ColumnScope.() -> Unit,) {
     Card(
         modifier = modifier.fillMaxWidth(),
         shape = RoundedCornerShape(20.dp),

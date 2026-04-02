@@ -69,9 +69,9 @@ import pokedex.features.composeapp.generated.resources.detail_stats_total
 
 @Composable
 internal fun PokemonScreen(
-    modifier: Modifier = Modifier,
     ref: PokemonSummaryParam,
     onNavigateBack: () -> Unit = {},
+    modifier: Modifier = Modifier,
 ) {
 
     val vm: PokemonViewModel = koinViewModel(parameters = { parametersOf(ref) })
@@ -86,10 +86,10 @@ internal fun PokemonScreen(
 
 @Composable
 private fun PokemonScreen(
-    modifier: Modifier = Modifier,
     stateFlow: StateFlow<PokemonViewModel.State>,
     onNavigateBack: () -> Unit,
     onIntent: (PokemonViewModel.Intent) -> Unit,
+    modifier: Modifier = Modifier,
 ) {
 
     val state by stateFlow.collectAsState()
@@ -151,9 +151,9 @@ private fun PokemonScreen(
 @Composable
 @OptIn(ExperimentalMaterial3Api::class)
 private fun SuccessScreen(
-    modifier: Modifier,
     vo: PokemonDetailDataView,
     onNavigateBack: () -> Unit,
+    modifier: Modifier = Modifier,
 ) {
 
     Column(
@@ -249,11 +249,11 @@ internal fun WidgetTemplate(
 
 @Composable
 internal fun <T : Any> WidgetTemplate(
-    modifier: Modifier = Modifier,
-    title: String? = null,
-    columns: Int = 1,
     items: List<T>,
     onItem: @Composable (item: T) -> Unit,
+    modifier: Modifier = Modifier,
+    columns: Int = 1,
+    title: String? = null,
 ) {
 
     WidgetTemplate(
@@ -280,9 +280,9 @@ internal fun <T : Any> WidgetTemplate(
 
 @Composable
 internal fun GridFieldValueComponent(
-    modifier: Modifier = Modifier,
     key: String,
     value: String,
+    modifier: Modifier = Modifier,
 ) {
 
     Row(modifier = modifier) {
@@ -303,9 +303,9 @@ internal fun GridFieldValueComponent(
 
 @Composable
 internal fun FieldValueComponent(
-    modifier: Modifier = Modifier,
     field: String,
     value: String,
+    modifier: Modifier = Modifier,
 ) {
 
     Row(verticalAlignment = CenterVertically) {
@@ -327,11 +327,11 @@ internal fun FieldValueComponent(
 
 @Composable
 internal fun ChartComponent(
-    modifier: Modifier = Modifier,
     field: String,
     value: String,
     progress: Float,
     color: Color,
+    modifier: Modifier = Modifier,
 ) {
 
     Row(
@@ -363,9 +363,7 @@ internal fun ChartComponent(
 
 @Preview
 @Composable
-private fun PokemonScreenPreview(
-    @PreviewParameter(PokemonStatePreviewProvider::class) state: PokemonViewModel.State,
-) {
+private fun PokemonScreenPreview(@PreviewParameter(PokemonStatePreviewProvider::class) state: PokemonViewModel.State) {
     PokemonScreen(
         stateFlow = remember(state) { MutableStateFlow(state) },
         onNavigateBack = {},

@@ -47,9 +47,9 @@ import com.eferraz.pokedex.helpers.toBackground
 
 @Composable
 internal fun PokemonItemListView(
-    modifier: Modifier = Modifier,
     model: PokemonItemListUi,
     onClick: () -> Unit,
+    modifier: Modifier = Modifier,
 ) {
 
     val latestOnClick by rememberUpdatedState(onClick)
@@ -114,9 +114,9 @@ internal fun PokemonItemListView(
 
 @Composable
 private fun ListItemImage(
-    modifier: Modifier = Modifier,
     url: String,
     contentDescription: String,
+    modifier: Modifier = Modifier,
 ) {
 
     val context = LocalPlatformContext.current
@@ -151,9 +151,9 @@ private fun ListItemImage(
 
 @Composable
 private fun TypeTags(
-    modifier: Modifier = Modifier,
     type1: String?,
     type2: String?,
+    modifier: Modifier = Modifier,
 ) {
 
     if (type1.isNullOrEmpty() && type2.isNullOrEmpty()) {
@@ -178,8 +178,8 @@ private fun TypeTags(
 
 @Composable
 private fun TypeChip(
-    modifier: Modifier = Modifier,
     label: String,
+    modifier: Modifier = Modifier,
 ) {
 
     Box(

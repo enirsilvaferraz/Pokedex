@@ -10,6 +10,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
@@ -30,8 +31,8 @@ import pokedex.features.composeapp.generated.resources.pokedex_title
 
 @Composable
 internal fun PokedexScreen(
-    modifier: Modifier = Modifier,
     onClick: (PokemonSummary) -> Unit,
+    modifier: Modifier = Modifier,
 ) {
 
     val vm: PokedexViewModel = koinViewModel()
@@ -47,10 +48,10 @@ internal fun PokedexScreen(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun PokedexScreen(
-    modifier: Modifier = Modifier,
     stateFlow: StateFlow<PokedexViewModel.UiState>,
     onClick: (PokemonSummary) -> Unit,
     onIntent: (PokedexViewModel.Intent) -> Unit,
+    modifier: Modifier = Modifier,
 ) {
 
     val state by stateFlow.collectAsState()
@@ -96,10 +97,10 @@ private fun PokedexScreen(
 
 @Composable
 private fun SuccessScreen(
-    modifier: Modifier,
     summariesById: Map<Long, PokemonSummary>,
     onClick: (PokemonSummary) -> Unit,
     onItemVisible: (PokemonSummary) -> Unit,
+    modifier: Modifier = Modifier,
 ) {
 
     val rowsInListOrder = remember(summariesById) {
@@ -118,8 +119,9 @@ private fun SuccessScreen(
 
             val uiModel = remember(row) { row.toPokedexListItemUi() }
 
+            val latestOnItemVisible by rememberUpdatedState(onItemVisible)
             LaunchedEffect(row.id) {
-                onItemVisible(row)
+                latestOnItemVisible(row)
             }
 
             PokemonItemListView(

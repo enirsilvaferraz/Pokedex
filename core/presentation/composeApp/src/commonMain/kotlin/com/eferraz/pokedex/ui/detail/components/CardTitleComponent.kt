@@ -10,8 +10,8 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 internal fun CardTitleComponent(
-    modifier: Modifier = Modifier,
     title: String,
+    modifier: Modifier = Modifier,
 ) {
     Text(
         title,
