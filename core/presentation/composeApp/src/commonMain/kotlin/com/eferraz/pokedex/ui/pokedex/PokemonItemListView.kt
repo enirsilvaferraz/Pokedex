@@ -201,16 +201,12 @@ private fun TypeChip(
 
 @Preview
 @Composable
-private fun PokemonItemListViewPreview(
-    @PreviewParameter(PokemonListPreviewProvider::class) model: PokemonItemListUi,
-) {
+private fun PokemonItemListViewPreview(@PreviewParameter(PokemonListPreviewProvider::class) model: PokemonItemListUi,) {
     PokemonItemListViewPreviewContent(model = model)
 }
 
 @Composable
-private fun PokemonItemListViewPreviewContent(
-    model: PokemonItemListUi
-) {
+private fun PokemonItemListViewPreviewContent(model: PokemonItemListUi) {
     PokedexTheme {
         Surface(modifier = Modifier.padding(16.dp)) {
             PokemonItemListView(

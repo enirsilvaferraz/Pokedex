@@ -11,44 +11,58 @@ import org.koin.core.annotation.Single
 public class DatabaseModule {
 
     @Single
-    internal fun provideDatabase(): AppDatabase = PlatformDataBaseBuilder.build()
+    internal fun provideDatabase(): AppDatabase =
+        PlatformDataBaseBuilder.build()
 
     @Single
-    internal fun provideAbilityDao(database: AppDatabase) = database.abilityDao()
+    internal fun provideAbilityDao(database: AppDatabase) =
+        database.abilityDao()
 
     @Single
-    internal fun provideAboutDao(database: AppDatabase) = database.aboutDao()
+    internal fun provideAboutDao(database: AppDatabase) =
+        database.aboutDao()
 
     @Single
-    internal fun provideAboutWithAbilitiesDao(database: AppDatabase) = database.aboutWithAbilitiesDao()
+    internal fun provideAboutWithAbilitiesDao(database: AppDatabase) =
+        database.aboutWithAbilitiesDao()
 
     @Single
-    internal fun provideBreedingDao(database: AppDatabase) = database.breedingDao()
+    internal fun provideBreedingDao(database: AppDatabase) =
+        database.breedingDao()
 
     @Single
-    internal fun provideBreedingWithEggGroupsDao(database: AppDatabase) = database.breedingWithEggGroupsDao()
+    internal fun provideBreedingWithEggGroupsDao(database: AppDatabase) =
+        database.breedingWithEggGroupsDao()
 
     @Single
-    internal fun provideEggGroupDao(database: AppDatabase) = database.eggGroupDao()
+    internal fun provideEggGroupDao(database: AppDatabase) =
+        database.eggGroupDao()
 
     @Single
-    internal fun provideMoveDao(database: AppDatabase) = database.moveDao()
+    internal fun provideMoveDao(database: AppDatabase) =
+        database.moveDao()
 
     @Single
-    internal fun providePokemonDao(database: AppDatabase) = database.pokemonDao()
+    internal fun providePokemonDao(database: AppDatabase) =
+        database.pokemonDao()
 
     @Single
-    internal fun provideSpeciesDao(database: AppDatabase) = database.speciesDao()
+    internal fun provideSpeciesDao(database: AppDatabase) =
+        database.speciesDao()
 
     @Single
-    internal fun providePokemonDetailedDao(database: AppDatabase) = database.pokemonDetailedDao()
+    internal fun providePokemonDetailedDao(database: AppDatabase) =
+        database.pokemonDetailedDao()
 
     @Single
-    internal fun providePokemonWithMovesDao(database: AppDatabase) = database.pokemonWithMovesDao()
+    internal fun providePokemonWithMovesDao(database: AppDatabase) =
+        database.pokemonWithMovesDao()
 
     @Single
-    internal fun provideStatsDao(database: AppDatabase) = database.statsDao()
+    internal fun provideStatsDao(database: AppDatabase) =
+        database.statsDao()
 
     @Single
-    internal fun provideTypeDao(database: AppDatabase) = database.typeDao()
+    internal fun provideTypeDao(database: AppDatabase) =
+        database.typeDao()
 }

@@ -64,17 +64,18 @@ internal data class PokemonSpeciesDetail(
     val varieties: List<PokemonSpeciesVariety>,
 ) {
 
-    internal fun toModel() = Species(
-        id = id.toLong(),
-        description = flavorTextEntries.firstOrNull { it.language.name == "en" }?.flavorText.cleanUp(),
-        species = genera.firstOrNull { it.language.name == "en" }?.genus.orEmpty(),
-        category = shape?.name.orEmpty(),
-        breeding = Breeding(
+    internal fun toModel() =
+        Species(
             id = id.toLong(),
-            genderRatio = genderRate.toFloat(),
-            eggGroups = eggGroups.map { EggGroup(id = it.getId(), name = it.name.orEmpty()) },
-        ),
-    )
+            description = flavorTextEntries.firstOrNull { it.language.name == "en" }?.flavorText.cleanUp(),
+            species = genera.firstOrNull { it.language.name == "en" }?.genus.orEmpty(),
+            category = shape?.name.orEmpty(),
+            breeding = Breeding(
+                id = id.toLong(),
+                genderRatio = genderRate.toFloat(),
+                eggGroups = eggGroups.map { EggGroup(id = it.getId(), name = it.name.orEmpty()) },
+            ),
+        )
 
     private fun String?.cleanUp() =
         this?.replace("\n", " ")?.replace(Regex("\\f"), " ").orEmpty()

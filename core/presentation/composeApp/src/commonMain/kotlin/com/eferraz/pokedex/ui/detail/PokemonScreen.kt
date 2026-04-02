@@ -388,39 +388,40 @@ private class PokemonStatePreviewProvider : PreviewParameterProvider<PokemonView
     )
 }
 
-private fun previewDetailVo(): PokemonDetailDataView = PokemonDetailDataView(
-    types = listOf(
-        PokemonDetailDataView.Type("Grass"),
-        PokemonDetailDataView.Type("Poison"),
-    ),
-    image = PokemonDetailDataView.ArtWork(
-        url = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png",
-        contentDescription = "Bulbasaur",
-    ),
-    description = "A strange seed was planted on its back at birth.",
-    about = listOf(
-        PokemonDetailDataView.FieldValue(Res.string.detail_about_species, "Seed"),
-        PokemonDetailDataView.FieldValue(Res.string.detail_about_category, "Seed Pokémon"),
-        PokemonDetailDataView.FieldValue(Res.string.detail_about_height, "70 cm"),
-        PokemonDetailDataView.FieldValue(Res.string.detail_about_weight, "6.9 kg"),
-        PokemonDetailDataView.FieldValue(Res.string.detail_about_abilities, "Overgrow"),
-    ),
-    breeding = listOf(
-        PokemonDetailDataView.FieldValue(Res.string.detail_breeding_male, "87.5%"),
-        PokemonDetailDataView.FieldValue(Res.string.detail_breeding_female, "12.5%"),
-        PokemonDetailDataView.FieldValue(Res.string.detail_breeding_egg_groups, "Monster, Grass"),
-    ),
-    stats = listOf(
-        PokemonDetailDataView.Stat(Res.string.detail_stats_hp, 45),
-        PokemonDetailDataView.Stat(Res.string.detail_stats_atk, 49),
-        PokemonDetailDataView.Stat(Res.string.detail_stats_def, 49),
-        PokemonDetailDataView.Stat(Res.string.detail_stats_sp_atk, 65),
-        PokemonDetailDataView.Stat(Res.string.detail_stats_sp_def, 65),
-        PokemonDetailDataView.Stat(Res.string.detail_stats_speed, 45),
-        PokemonDetailDataView.Stat(Res.string.detail_stats_total, 318, 600),
-    ),
-    moves = listOf(
-        PokemonDetailDataView.Move("#001", "Tackle"),
-        PokemonDetailDataView.Move("#002", "Growl"),
-    ),
-)
+private fun previewDetailVo(): PokemonDetailDataView =
+    PokemonDetailDataView(
+        types = listOf(
+            PokemonDetailDataView.Type("Grass"),
+            PokemonDetailDataView.Type("Poison"),
+        ),
+        image = PokemonDetailDataView.ArtWork(
+            url = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png",
+            contentDescription = "Bulbasaur",
+        ),
+        description = "A strange seed was planted on its back at birth.",
+        about = listOf(
+            PokemonDetailDataView.FieldValue(Res.string.detail_about_species, "Seed"),
+            PokemonDetailDataView.FieldValue(Res.string.detail_about_category, "Seed Pokémon"),
+            PokemonDetailDataView.FieldValue(Res.string.detail_about_height, "70 cm"),
+            PokemonDetailDataView.FieldValue(Res.string.detail_about_weight, "6.9 kg"),
+            PokemonDetailDataView.FieldValue(Res.string.detail_about_abilities, "Overgrow"),
+        ),
+        breeding = listOf(
+            PokemonDetailDataView.FieldValue(Res.string.detail_breeding_male, "87.5%"),
+            PokemonDetailDataView.FieldValue(Res.string.detail_breeding_female, "12.5%"),
+            PokemonDetailDataView.FieldValue(Res.string.detail_breeding_egg_groups, "Monster, Grass"),
+        ),
+        stats = listOf(
+            PokemonDetailDataView.Stat(Res.string.detail_stats_hp, 45),
+            PokemonDetailDataView.Stat(Res.string.detail_stats_atk, 49),
+            PokemonDetailDataView.Stat(Res.string.detail_stats_def, 49),
+            PokemonDetailDataView.Stat(Res.string.detail_stats_sp_atk, 65),
+            PokemonDetailDataView.Stat(Res.string.detail_stats_sp_def, 65),
+            PokemonDetailDataView.Stat(Res.string.detail_stats_speed, 45),
+            PokemonDetailDataView.Stat(Res.string.detail_stats_total, 318, 600),
+        ),
+        moves = listOf(
+            PokemonDetailDataView.Move("#001", "Tackle"),
+            PokemonDetailDataView.Move("#002", "Growl"),
+        ),
+    )

@@ -30,16 +30,18 @@ internal data class BreedingTable(
     val genderRatio: Float,
 ) {
 
-    fun toModel(eggGroups: List<EggGroupTable>): Breeding = Breeding(
-        id = speciesId,
-        genderRatio = genderRatio,
-        eggGroups = eggGroups.map { it.toModel() },
-    )
+    fun toModel(eggGroups: List<EggGroupTable>): Breeding =
+        Breeding(
+            id = speciesId,
+            genderRatio = genderRatio,
+            eggGroups = eggGroups.map { it.toModel() },
+        )
 
     companion object {
-        internal fun Breeding.toTable() = BreedingTable(
-            speciesId = id,
-            genderRatio = genderRatio,
-        )
+        internal fun Breeding.toTable() =
+            BreedingTable(
+                speciesId = id,
+                genderRatio = genderRatio,
+            )
     }
 }

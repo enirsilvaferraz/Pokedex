@@ -19,14 +19,16 @@ internal data class PokemonSummaryTable(
 
     companion object {
 
-        internal fun BasePokemon.toRefTable() = PokemonSummaryTable(
-            id = id,
-            name = name,
-        )
+        internal fun BasePokemon.toRefTable() =
+            PokemonSummaryTable(
+                id = id,
+                name = name,
+            )
 
-        internal fun PokemonDetailed.toRefTable() = PokemonSummaryTable(
-            id = id,
-            name = name,
-        )
+        internal fun PokemonDetailed.toRefTable() =
+            PokemonSummaryTable(
+                id = id,
+                name = name,
+            )
     }
 }

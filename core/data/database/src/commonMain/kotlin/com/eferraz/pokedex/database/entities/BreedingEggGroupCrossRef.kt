@@ -39,11 +39,12 @@ internal data class BreedingEggGroupCrossRef(
 ) {
 
     companion object {
-        internal fun Breeding.toCrossRef() = this.eggGroups.map {
-            BreedingEggGroupCrossRef(
-                speciesId = this.id,
-                eggGroupId = it.id,
-            )
-        }
+        internal fun Breeding.toCrossRef() =
+            this.eggGroups.map {
+                BreedingEggGroupCrossRef(
+                    speciesId = this.id,
+                    eggGroupId = it.id,
+                )
+            }
     }
 }

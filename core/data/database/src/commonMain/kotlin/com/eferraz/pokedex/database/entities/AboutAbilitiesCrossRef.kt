@@ -35,11 +35,12 @@ internal data class AboutAbilitiesCrossRef(
 ) {
 
     companion object {
-        internal fun About.toCrossRef() = this.abilities.map {
-            AboutAbilitiesCrossRef(
-                aboutId = this.id,
-                abilityId = it.id
-            )
-        }
+        internal fun About.toCrossRef() =
+            this.abilities.map {
+                AboutAbilitiesCrossRef(
+                    aboutId = this.id,
+                    abilityId = it.id
+                )
+            }
     }
 }

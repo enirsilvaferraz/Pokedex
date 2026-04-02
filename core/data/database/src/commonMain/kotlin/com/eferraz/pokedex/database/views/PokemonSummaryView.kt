@@ -29,10 +29,11 @@ internal data class PokemonSummaryView(
     val type2Name: String?,
 ) {
 
-    fun toModel() = PokemonSummary(
-        id = id,
-        name = name,
-        type1 = type1Id?.let { Type(id = it, name = type1Name.orEmpty()) },
-        type2 = type2Id?.let { Type(id = it, name = type2Name.orEmpty()) },
-    )
+    fun toModel() =
+        PokemonSummary(
+            id = id,
+            name = name,
+            type1 = type1Id?.let { Type(id = it, name = type1Name.orEmpty()) },
+            type2 = type2Id?.let { Type(id = it, name = type2Name.orEmpty()) },
+        )
 }

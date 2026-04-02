@@ -28,13 +28,14 @@ internal class PokemonViewModel(
         dispatch(Intent.InitialLoad)
     }
 
-    internal fun dispatch(intent: Intent) = when (intent) {
-        Intent.InitialLoad -> executeLoad()
-        Intent.Retry -> {
-            state.update { State.Loading(structure) }
-            executeLoad()
+    internal fun dispatch(intent: Intent) =
+        when (intent) {
+            Intent.InitialLoad -> executeLoad()
+            Intent.Retry -> {
+                state.update { State.Loading(structure) }
+                executeLoad()
+            }
         }
-    }
 
     private fun executeLoad() {
 

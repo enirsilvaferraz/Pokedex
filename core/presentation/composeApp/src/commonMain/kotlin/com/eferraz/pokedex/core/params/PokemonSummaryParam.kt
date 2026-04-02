@@ -13,11 +13,12 @@ internal data class PokemonSummaryParam(
 
     companion object {
 
-        fun PokemonSummary.toParam() = PokemonSummaryParam(
-            id = id,
-            name = name,
-            artwork = artwork,
-            type1 = type1?.name
-        )
+        fun PokemonSummary.toParam() =
+            PokemonSummaryParam(
+                id = id,
+                name = name,
+                artwork = artwork,
+                type1 = type1?.name
+            )
     }
 }

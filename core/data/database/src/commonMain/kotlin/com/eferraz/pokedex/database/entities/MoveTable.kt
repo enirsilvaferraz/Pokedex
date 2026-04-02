@@ -16,15 +16,17 @@ internal data class MoveTable(
     val name: String,
 ) {
 
-    fun toModel(): Move = Move(
-        id = id,
-        name = name
-    )
-
-    companion object {
-        internal fun Move.toTable() = MoveTable(
+    fun toModel(): Move =
+        Move(
             id = id,
             name = name
         )
+
+    companion object {
+        internal fun Move.toTable() =
+            MoveTable(
+                id = id,
+                name = name
+            )
     }
 }

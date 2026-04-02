@@ -16,5 +16,6 @@ internal interface DataBaseBuilder : KoinComponent {
 
     fun buildPlatform(): RoomDatabase.Builder<AppDatabase>
 
-    fun databaseName() = "pokedex.db"
+    fun databaseName() =
+        "pokedex.db"
 }

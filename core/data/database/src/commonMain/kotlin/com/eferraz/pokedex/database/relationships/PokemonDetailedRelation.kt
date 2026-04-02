@@ -118,17 +118,18 @@ internal data class PokemonDetailedRelation(
     val moves: List<MoveTable>,
 ) {
 
-    fun toModel(): PokemonDetailedModel = PokemonDetailedModel(
-        id = id,
-        name = name,
-        image = image,
-        type1 = type1.toModel(),
-        type2 = type2?.toModel(),
-        species = species?.let { st ->
-            breedingRow?.let { br -> st.toModel(br.toModel(eggGroups)) }
-        },
-        about = aboutRow.toModel(abilities),
-        stats = stats.toModel(),
-        moves = moves.map { it.toModel() },
-    )
+    fun toModel(): PokemonDetailedModel =
+        PokemonDetailedModel(
+            id = id,
+            name = name,
+            image = image,
+            type1 = type1.toModel(),
+            type2 = type2?.toModel(),
+            species = species?.let { st ->
+                breedingRow?.let { br -> st.toModel(br.toModel(eggGroups)) }
+            },
+            about = aboutRow.toModel(abilities),
+            stats = stats.toModel(),
+            moves = moves.map { it.toModel() },
+        )
 }

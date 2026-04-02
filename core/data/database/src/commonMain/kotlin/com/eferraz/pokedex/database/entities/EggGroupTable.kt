@@ -16,15 +16,17 @@ internal data class EggGroupTable(
     val name: String,
 ) {
 
-    fun toModel(): EggGroup = EggGroup(
-        id = id,
-        name = name
-    )
+    fun toModel(): EggGroup =
+        EggGroup(
+            id = id,
+            name = name
+        )
 
     companion object {
-        internal fun EggGroup.toTable() = EggGroupTable(
-            id = id,
-            name = name,
-        )
+        internal fun EggGroup.toTable() =
+            EggGroupTable(
+                id = id,
+                name = name,
+            )
     }
 }

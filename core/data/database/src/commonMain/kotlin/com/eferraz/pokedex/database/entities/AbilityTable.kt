@@ -16,15 +16,17 @@ internal data class AbilityTable(
     val name: String,
 ) {
 
-    fun toModel(): Ability = Ability(
-        id = id,
-        name = name
-    )
-
-    companion object {
-        internal fun Ability.toTable() = AbilityTable(
+    fun toModel(): Ability =
+        Ability(
             id = id,
             name = name
         )
+
+    companion object {
+        internal fun Ability.toTable() =
+            AbilityTable(
+                id = id,
+                name = name
+            )
     }
 }

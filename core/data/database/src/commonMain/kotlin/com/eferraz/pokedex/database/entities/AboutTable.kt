@@ -19,18 +19,20 @@ internal data class AboutTable(
     val height: Float,
 ) {
 
-    fun toModel(abilities: List<AbilityTable>): About = About(
-        id = id,
-        height = height,
-        weight = weight,
-        abilities = abilities.map { it.toModel() },
-    )
-
-    companion object {
-        internal fun About.toTable() = AboutTable(
+    fun toModel(abilities: List<AbilityTable>): About =
+        About(
             id = id,
             height = height,
             weight = weight,
+            abilities = abilities.map { it.toModel() },
         )
+
+    companion object {
+        internal fun About.toTable() =
+            AboutTable(
+                id = id,
+                height = height,
+                weight = weight,
+            )
     }
 }

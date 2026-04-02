@@ -18,14 +18,16 @@ internal data class TypeTable(
 
     companion object {
 
-        internal fun Type.toTable() = TypeTable(
-            id = id,
-            name = name
-        )
+        internal fun Type.toTable() =
+            TypeTable(
+                id = id,
+                name = name
+            )
 
-        fun TypeTable.toModel(): Type = Type(
-            id = id,
-            name = name
-        )
+        fun TypeTable.toModel(): Type =
+            Type(
+                id = id,
+                name = name
+            )
     }
 }

@@ -54,28 +54,29 @@ internal data class PokemonResponse(
     val weight: Int,
 ) {
 
-    fun toModel(): PokemonDetailed = PokemonDetailed(
-        id = id,
-        name = name,
-        image = sprites.other?.officialArtwork?.frontDefault ?: sprites.frontDefault,
-        type1 = types.first { it.slot == 1 }.let { Type(id = it.type.getId(), name = it.type.name.orEmpty()) },
-        type2 = types.firstOrNull { it.slot == 2 }?.let { Type(id = it.type.getId(), name = it.type.name.orEmpty()) },
-        species = null,
-        about = About(
+    fun toModel(): PokemonDetailed =
+        PokemonDetailed(
             id = id,
-            height = height.toFloat(),
-            weight = weight.toFloat(),
-            abilities = abilities.map { Ability(id = it.ability.getId(), name = it.ability.name.orEmpty()) }
-        ),
-        stats = Stats(
-            id = id,
-            hp = stats.find { it.stat.name == "hp" }?.baseStat ?: 0,
-            attack = stats.find { it.stat.name == "attack" }?.baseStat ?: 0,
-            defense = stats.find { it.stat.name == "defense" }?.baseStat ?: 0,
-            specialAttack = stats.find { it.stat.name == "special-attack" }?.baseStat ?: 0,
-            specialDefense = stats.find { it.stat.name == "special-defense" }?.baseStat ?: 0,
-            speed = stats.find { it.stat.name == "speed" }?.baseStat ?: 0
-        ),
-        moves = moves.map { Move(id = it.move.getId(), name = it.move.name.orEmpty()) }
-    )
+            name = name,
+            image = sprites.other?.officialArtwork?.frontDefault ?: sprites.frontDefault,
+            type1 = types.first { it.slot == 1 }.let { Type(id = it.type.getId(), name = it.type.name.orEmpty()) },
+            type2 = types.firstOrNull { it.slot == 2 }?.let { Type(id = it.type.getId(), name = it.type.name.orEmpty()) },
+            species = null,
+            about = About(
+                id = id,
+                height = height.toFloat(),
+                weight = weight.toFloat(),
+                abilities = abilities.map { Ability(id = it.ability.getId(), name = it.ability.name.orEmpty()) }
+            ),
+            stats = Stats(
+                id = id,
+                hp = stats.find { it.stat.name == "hp" }?.baseStat ?: 0,
+                attack = stats.find { it.stat.name == "attack" }?.baseStat ?: 0,
+                defense = stats.find { it.stat.name == "defense" }?.baseStat ?: 0,
+                specialAttack = stats.find { it.stat.name == "special-attack" }?.baseStat ?: 0,
+                specialDefense = stats.find { it.stat.name == "special-defense" }?.baseStat ?: 0,
+                speed = stats.find { it.stat.name == "speed" }?.baseStat ?: 0
+            ),
+            moves = moves.map { Move(id = it.move.getId(), name = it.move.name.orEmpty()) }
+        )
 }

@@ -31,18 +31,8 @@ internal data class StatsTable(
     val speed: Int
 ) {
 
-    fun toModel(): Stats = Stats(
-        id = id,
-        hp = hp,
-        attack = attack,
-        defense = defense,
-        specialAttack = specialAttack,
-        specialDefense = specialDefense,
-        speed = speed
-    )
-
-    companion object {
-        internal fun Stats.toTable() = StatsTable(
+    fun toModel(): Stats =
+        Stats(
             id = id,
             hp = hp,
             attack = attack,
@@ -51,5 +41,17 @@ internal data class StatsTable(
             specialDefense = specialDefense,
             speed = speed
         )
+
+    companion object {
+        internal fun Stats.toTable() =
+            StatsTable(
+                id = id,
+                hp = hp,
+                attack = attack,
+                defense = defense,
+                specialAttack = specialAttack,
+                specialDefense = specialDefense,
+                speed = speed
+            )
     }
 }

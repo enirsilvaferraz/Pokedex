@@ -105,8 +105,9 @@ internal fun AppScaffold(
     }
 }
 
-private fun Modifier.edgeToEdgePadding(innerPadding: PaddingValues, current: LayoutDirection): Modifier = padding(
-    top = innerPadding.calculateTopPadding(),
-    start = innerPadding.calculateStartPadding(current),
-    end = innerPadding.calculateEndPadding(current),
-)
+private fun Modifier.edgeToEdgePadding(innerPadding: PaddingValues, current: LayoutDirection): Modifier =
+    padding(
+        top = innerPadding.calculateTopPadding(),
+        start = innerPadding.calculateStartPadding(current),
+        end = innerPadding.calculateEndPadding(current),
+    )

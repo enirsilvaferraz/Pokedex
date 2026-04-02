@@ -23,20 +23,22 @@ internal data class SpeciesTable(
     val category: String,
 ) {
 
-    fun toModel(breeding: Breeding): Species = Species(
-        id = id,
-        description = description,
-        species = species,
-        category = category,
-        breeding = breeding,
-    )
-
-    companion object {
-        internal fun Species.toTable() = SpeciesTable(
+    fun toModel(breeding: Breeding): Species =
+        Species(
             id = id,
             description = description,
             species = species,
             category = category,
+            breeding = breeding,
         )
+
+    companion object {
+        internal fun Species.toTable() =
+            SpeciesTable(
+                id = id,
+                description = description,
+                species = species,
+                category = category,
+            )
     }
 }

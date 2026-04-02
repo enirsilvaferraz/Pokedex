@@ -88,14 +88,15 @@ internal data class PokemonDetailedTable(
 
     companion object {
 
-        internal fun PokemonDetailed.toDetailTable() = PokemonDetailedTable(
-            pokemonId = id,
-            image = image,
-            typeID1 = type1.id,
-            typeID2 = type2?.id,
-            speciesID = species?.id,
-            aboutID = about.id,
-            statsID = stats.id,
-        )
+        internal fun PokemonDetailed.toDetailTable() =
+            PokemonDetailedTable(
+                pokemonId = id,
+                image = image,
+                typeID1 = type1.id,
+                typeID2 = type2?.id,
+                speciesID = species?.id,
+                aboutID = about.id,
+                statsID = stats.id,
+            )
     }
 }
