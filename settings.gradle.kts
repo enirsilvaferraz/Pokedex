@@ -18,6 +18,13 @@ pluginManagement {
     }
 }
 
+includeBuild("build-logic") {
+    dependencySubstitution {
+        substitute(module("com.eferraz.buildlogic:detekt-rules:1.0.0-SNAPSHOT"))
+            .using(project(":detekt-rules"))
+    }
+}
+
 dependencyResolutionManagement {
     @Suppress("UnstableApiUsage")
     repositories {

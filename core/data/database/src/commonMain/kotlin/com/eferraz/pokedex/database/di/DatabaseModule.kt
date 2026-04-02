@@ -6,6 +6,7 @@ import org.koin.core.annotation.ComponentScan
 import org.koin.core.annotation.Module
 import org.koin.core.annotation.Single
 
+@Suppress("TooManyFunctionsInFile")
 @Module
 @ComponentScan("com.eferraz.pokedex.database")
 public class DatabaseModule {

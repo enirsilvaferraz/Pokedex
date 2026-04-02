@@ -31,6 +31,7 @@ import com.eferraz.pokedex.database.entities.StatsTable
 import com.eferraz.pokedex.database.entities.TypeTable
 import com.eferraz.pokedex.database.views.PokemonSummaryView
 
+@Suppress("TooManyFunctionsInFile")
 @Database(
     entities = [
         AbilityTable::class,
