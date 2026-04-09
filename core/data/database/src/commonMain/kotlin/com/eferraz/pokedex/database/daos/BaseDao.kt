@@ -1,6 +1,6 @@
 package com.eferraz.pokedex.database.daos
 
-import androidx.room.Upsert
+import androidx.room3.Upsert
 
 internal interface BaseDao<T : Any> {
 

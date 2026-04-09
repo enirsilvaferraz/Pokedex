@@ -1,8 +1,8 @@
 package com.eferraz.pokedex.database.core
 
-import androidx.room.ConstructedBy
-import androidx.room.Database
-import androidx.room.RoomDatabase
+import androidx.room3.ConstructedBy
+import androidx.room3.Database
+import androidx.room3.RoomDatabase
 import com.eferraz.pokedex.database.daos.AbilityDao
 import com.eferraz.pokedex.database.daos.AboutDao
 import com.eferraz.pokedex.database.daos.AboutWithAbilitiesDao

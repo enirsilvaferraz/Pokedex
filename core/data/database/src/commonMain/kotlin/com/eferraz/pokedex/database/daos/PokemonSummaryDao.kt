@@ -1,7 +1,7 @@
 package com.eferraz.pokedex.database.daos
 
-import androidx.room.Dao
-import androidx.room.Query
+import androidx.room3.Dao
+import androidx.room3.Query
 import com.eferraz.pokedex.database.entities.PokemonSummaryTable
 import com.eferraz.pokedex.database.views.PokemonSummaryView
 import kotlinx.coroutines.flow.Flow

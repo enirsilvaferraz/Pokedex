@@ -1,8 +1,8 @@
 package com.eferraz.pokedex.database.relationships
 
-import androidx.room.ColumnInfo
-import androidx.room.Junction
-import androidx.room.Relation
+import androidx.room3.ColumnInfo
+import androidx.room3.Junction
+import androidx.room3.Relation
 import com.eferraz.pokedex.database.entities.AbilityTable
 import com.eferraz.pokedex.database.entities.AboutAbilitiesCrossRef
 import com.eferraz.pokedex.database.entities.AboutTable

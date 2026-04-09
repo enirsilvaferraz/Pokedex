@@ -1,7 +1,7 @@
 package com.eferraz.pokedex.database.datasources
 
-import androidx.room.immediateTransaction
-import androidx.room.useWriterConnection
+import androidx.room3.immediateTransaction
+import androidx.room3.useWriterConnection
 import com.eferraz.pokedex.database.core.AppDatabase
 import com.eferraz.pokedex.database.daos.AbilityDao
 import com.eferraz.pokedex.database.daos.AboutDao

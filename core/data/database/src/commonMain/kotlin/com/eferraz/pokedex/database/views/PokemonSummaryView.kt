@@ -1,6 +1,6 @@
 package com.eferraz.pokedex.database.views
 
-import androidx.room.DatabaseView
+import androidx.room3.DatabaseView
 import com.eferraz.pokedex.entity.detail.Type
 import com.eferraz.pokedex.entity.summary.PokemonSummary
 
